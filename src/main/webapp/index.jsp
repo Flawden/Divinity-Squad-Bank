@@ -1,7 +1,7 @@
 <%@ page import="java.util.ResourceBundle" %>
 
-<%  String name = "main";
-    ResourceBundle bundle = ResourceBundle.getBundle(name);
+<%  String mainNameSpace = "en/main";
+    ResourceBundle bundle = ResourceBundle.getBundle(mainNameSpace);
 %>
 
 <!DOCTYPE html>

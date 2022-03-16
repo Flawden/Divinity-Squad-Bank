@@ -6,14 +6,16 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%  String name = "main";
-    ResourceBundle bundle = ResourceBundle.getBundle(name);
+<%  String authNameSpace = "en/auth";
+    String mainNameSpace = "en/main";
+    ResourceBundle bundle = ResourceBundle.getBundle(authNameSpace);
+    ResourceBundle mainbundle = ResourceBundle.getBundle(mainNameSpace);
 %>
 <html>
 <head>
     <link rel="stylesheet" href="../resources/css/authorization_menu.css">
     <link type="image/x-icon" href="../resources/img/ico/Logo.svg" rel="icon">
-    <title><%= bundle.getString("bank_name") %> authorization</title>
+    <title><%= mainbundle.getString("bank_name") %> <%= bundle.getString("authorization") %></title>
 </head>
 <body>
 
@@ -21,17 +23,17 @@
     <main class="page">
         <div class="registration-cssave">
             <form action="/" method="post">
-                <h3 class="text-center">Authorization</h3>
+                <h3 class="text-center"><%= bundle.getString("log_in") %></h3>
                 <div class="form-group">
-                    <input class="form-control item" type="email" name="email" id="email" placeholder="Email" required>
+                    <input class="form-control item" type="email" name="email" id="email" placeholder="<%= bundle.getString("email") %>" required>
                 </div>
                 <div class="form-group">
-                    <input class="form-control item" type="password" name="Password" minlength="6" id="password" placeholder="Пароль" required>
+                    <input class="form-control item" type="password" name="Password" minlength="6" id="password" placeholder="<%= bundle.getString("password") %>" required>
                 </div>
                 <div class="form-group">
-                    <a href="#">Forgot password</a>
-                    <div class="not_register">Not registered yet? <a href="#">SIGN UP</a></div>
-                    <button class="btn btn-primary btn-block create-account" type="submit">Log in</button>
+                    <a href="#"><%= bundle.getString("forgot_password") %></a>
+                    <div class="not_register">Not registered yet? <a href="../mainpages/registration.jsp"><%= bundle.getString("sign_up") %></a></div>
+                    <button class="btn btn-primary btn-block create-account" type="submit"><%= bundle.getString("log_in") %></button>
                 </div>
             </form>
         </div>

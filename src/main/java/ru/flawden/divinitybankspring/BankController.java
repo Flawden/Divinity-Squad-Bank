@@ -7,8 +7,13 @@ import org.springframework.web.bind.annotation.GetMapping;
 public class BankController {
 
     @GetMapping("/authorization")
-    public String sayHello() {
+    public String auth() {
         return "authorization";
+    }
+
+    @GetMapping("/registration")
+    public String registration() {
+        return "registration";
     }
 
 }
