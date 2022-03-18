@@ -1,6 +1,6 @@
 <%@ page import="java.util.ResourceBundle" %>
 
-<%  String mainNameSpace = "en/main";
+<%  String mainNameSpace = "localization/en/main";
     ResourceBundle bundle = ResourceBundle.getBundle(mainNameSpace);
 %>
 
@@ -36,8 +36,8 @@
                         <ul class="menu__list">
                             <li class="menu__link"><a href=""><%= bundle.getString("first_header_element") %></a></li>
                             <li class="menu__link"><a href=""><%= bundle.getString("second_header_element") %></a></li>
-                            <li class="menu__link"><a href="mainpages/authorization.jsp"><%= bundle.getString("third_header_element") %></a></li>
-                            <li class="menu__link"><a href="mainpages/registration.jsp"><%= bundle.getString("fourth_header_element") %></a></li>
+                            <li class="menu__link"><a href="${pageContext.request.contextPath}/authorization"><%= bundle.getString("third_header_element") %></a></li>
+                            <li class="menu__link"><a href="${pageContext.request.contextPath}/registration"><%= bundle.getString("fourth_header_element") %></a></li>
                         </ul>
                     </div>
                 </nav>

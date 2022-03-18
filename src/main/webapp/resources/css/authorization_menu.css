@@ -1,5 +1,5 @@
 html {
-  background-color: #8dacf5;
+  background-color: #3f93ff;
   background-blend-mode:overlay;
   display:flex;
   align-items:center;
@@ -41,7 +41,7 @@ body {
   padding:10px 20px;
   font-size:18px;
   font-weight:bold;
-  background-color:#3f93ff;
+  background-color:#05060a;
   border:none;
   color:white;
   margin-top:20px;
