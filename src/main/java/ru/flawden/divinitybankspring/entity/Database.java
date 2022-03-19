@@ -1,4 +1,4 @@
-package ru.flawden.divinitybankspring.user_objects;
+package ru.flawden.divinitybankspring.entity;
 
 import java.io.*;
 import java.util.ArrayList;
@@ -9,6 +9,15 @@ public class Database implements Serializable {
     private static Database instance;
     private final String path = "users.dat";
     public List<User> users = new ArrayList<>();
+    private transient User authUser;
+
+    public User getAuthUser() {
+        return authUser;
+    }
+
+    public void setAuthUser(User authUser) {
+        this.authUser = authUser;
+    }
 
     private Database() {
 

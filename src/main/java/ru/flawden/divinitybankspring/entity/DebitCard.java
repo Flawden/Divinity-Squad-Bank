@@ -1,4 +1,4 @@
-package ru.flawden.divinitybankspring.user_objects;
+package ru.flawden.divinitybankspring.entity;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
