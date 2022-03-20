@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import ru.flawden.divinitybankspring.entity.User;
 import ru.flawden.divinitybankspring.entity.Database;
 import javax.servlet.http.HttpServletRequest;
+import javax.xml.crypto.Data;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -20,7 +21,13 @@ public class mainController {
     @GetMapping("/authorization")
     public String auth() {
 
-        return "mainpages/authorization";
+        Database database = Database.getInstance();
+        if (database.getAuthUser() == null) {
+            return "mainpages/authorization";
+        } else {
+            return "profile/user_page";
+        }
+
     }
 
     @GetMapping("/registration")
@@ -41,20 +48,11 @@ public class mainController {
                 System.out.println(database.getAuthUser());
                 model.addAttribute("balance" , user.getBalance() + "$");
                 model.addAttribute("names" , user.getFirstName() + " " + user.getLastName());
-                model.addAttribute("test" , "<h2>Я готов с утром новым жить с начала начинать</h2>");
-                return "mainpages/user_page";
-            } else {
-                System.out.println("Ворюга ты сраная");
+                return "profile/user_page";
             }
         }
 
         return "mainpages/authorization";
-    }
-
-    @GetMapping("/user_page")
-    public String userPage() {
-
-        return "mainpages/user_page";
     }
 
     @RequestMapping(value = "/regVerification", method = RequestMethod.POST)
@@ -74,7 +72,7 @@ public class mainController {
         try {
             date = dateFormat.parse(birdthdate);
         } catch (ParseException e) {
-            System.out.println("Все наебнулось");
+            System.out.println("Incorrect date format");
         }
         database.users.add(new User(name, lastname, email, password, date, true));
 

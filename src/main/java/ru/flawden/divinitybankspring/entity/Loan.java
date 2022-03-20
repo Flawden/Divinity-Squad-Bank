@@ -64,7 +64,7 @@ public class Loan {
     @Override
     public String toString() {
         return "Credit:\n" +
-                "Credit for the amount of " + summ + ", for a period of" + creditTerm + " months.\n" +
+                "Credit for the amount of " + summ + ", for a period of " + creditTerm + " months.\n" +
                 "Monthly payment: " + monthlyPayment + " rub\n" +
                 "Taken: " + simpleDateFormat.format(issueDate) + "\n";
     }

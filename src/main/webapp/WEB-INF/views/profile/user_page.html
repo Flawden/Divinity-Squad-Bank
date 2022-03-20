@@ -25,9 +25,10 @@
 
                     <ul>
                         <li><a href="#" class="active">Main</a></li>
-                        <li><a href="#">Loan</a></li>
-                        <li><a href="#">DebitCards</a></li>
-                        <li><a href="#">Profile</a></li>
+                        <li><a href="/loan">Loan</a></li>
+                        <li><a href="/debit_card">DebitCards</a></li>
+                        <li><a href="/profile">Profile</a></li>
+                        <li><a href="/exit">Exit</a></li>
                     </ul>  
 
                 </div>
@@ -41,10 +42,9 @@
                 <div class="main__user block">
 
                     <h3 class="user__greeting">Greetings</h3>
-                    <p class="user__name" th:text="${names}">Name Lastname</p>
 
                     <div class="user__block">
-
+                        <p class="user__name" th:text="${names}">Name Lastname</p>
                     </div>
                   
 
@@ -65,7 +65,6 @@
                     <div class="card">
                         <div class="card__block">
                             <div class="card__name name">Vegetable marrow (0000):</div>
-                            <div class="test" th:text="${test}">Тестовое поле</div>
                         </div>
                        <div class="card__block">
                             <div class="card__sum sum">10 000$</div>
@@ -73,7 +72,7 @@
 
                     </div>
 
-                    <a href="#" class="debit__takenew takenew">Issue a card</a>
+                    <a href="/createDebit" class="debit__takenew takenew">Issue a card</a>
                     
                 </div>
 
@@ -86,7 +85,7 @@
                         <div class="loan__sum sum">30 000.00</div>
                     </div>
 
-                    <a href="#" class="loan__takenew takenew">Apply for a loan</a>
+                    <a href="/createloan" class="loan__takenew takenew">Apply for a loan</a>
                     
                 </div>
 
