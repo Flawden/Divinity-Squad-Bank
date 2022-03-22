@@ -1,9 +1,10 @@
 package ru.flawden.divinitybankspring.entity;
 
+import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-public class Loan {
+public class Loan implements Serializable {
 
     private static final long serialVersionUID = 812943703942L;
     private SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd.MM.yyyy");

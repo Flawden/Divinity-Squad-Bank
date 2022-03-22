@@ -1,10 +1,11 @@
 package ru.flawden.divinitybankspring.entity;
 
+import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
-public class DebitCard {
+public class DebitCard implements Serializable {
 
     private static final long serialVersionUID = 812943703942L;
     private Calendar calendar = Calendar.getInstance();

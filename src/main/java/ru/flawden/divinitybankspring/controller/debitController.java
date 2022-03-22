@@ -26,14 +26,14 @@ public class debitController {
     @GetMapping("/createDebit")
     public String createDebit(Model model) {
         Database database = Database.getInstance();
-        database.deserializeUsers();
+        database.deserializeDatabase();
         User user = database.getAuthUser();
         if (user == null) {
             return "mainpages/authorization";
         } else {
             DebitCreator debitCreator = new DebitCreator();
             debitCreator.doDebitCard();
-            database.serializeUsers(database.users);
+            database.serializeDatabase();
             model.addAttribute("balance" , user.getBalance() + "$");
             model.addAttribute("names" , user.getFirstName() + " " + user.getLastName());
         }

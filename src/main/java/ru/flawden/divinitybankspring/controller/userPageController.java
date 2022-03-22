@@ -22,6 +22,7 @@ public class userPageController {
     @GetMapping("/exit")
     public String exit() {
         Database database = Database.getInstance();
+        database.serializeDatabase();
         database.setAuthUser(null);
         return "/mainpages/authorization";
     }
@@ -35,7 +36,6 @@ public class userPageController {
         } else {
             model.addAttribute("balance" , user.getBalance() + "$");
             model.addAttribute("names" , user.getFirstName() + " " + user.getLastName());
-            model.addAttribute("test" , "<h2>Я готов с утром новым жить с начала начинать</h2>");
         }
         return "profile/profile";
     }
@@ -50,6 +50,7 @@ public class userPageController {
             model.addAttribute("balance" , user.getBalance() + "$");
             model.addAttribute("names" , user.getFirstName() + " " + user.getLastName());
         }
+        System.out.println(user);
         return "profile/user_page";
     }
 

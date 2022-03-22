@@ -30,17 +30,12 @@ public class mainController {
 
     }
 
-    @GetMapping("/registration")
-    public String registration() {
-        return "mainpages/registration";
-    }
-
     @RequestMapping(value = "/authVerification", method = RequestMethod.POST)
     public String authVerification(@RequestParam(value = "email") String email,
                                    @RequestParam(value = "password") String password,
                                    Model model) {
         Database database = Database.getInstance();
-        database.deserializeUsers();
+        database.deserializeDatabase();
 
         for (User user: database.users) {
             if (user.geteMail().equals(email) && user.getPassword().equals(password)) {
@@ -51,8 +46,14 @@ public class mainController {
                 return "profile/user_page";
             }
         }
-
+        System.out.println(database.users);
+        System.out.println("User doesn't exist");
         return "mainpages/authorization";
+    }
+
+    @GetMapping("/registration")
+    public String registration() {
+        return "mainpages/registration";
     }
 
     @RequestMapping(value = "/regVerification", method = RequestMethod.POST)
@@ -65,7 +66,7 @@ public class mainController {
         System.out.println(email + " " + password + " " + name + " " + lastname + " " + gender + " " + birdthdate);
 
         Database database = Database.getInstance();
-        database.deserializeUsers();
+        database.deserializeDatabase();
         SimpleDateFormat dateFormat = new SimpleDateFormat();
         dateFormat.applyPattern("yyyy-MM-dd");
         Date date = new Date();
@@ -76,10 +77,7 @@ public class mainController {
         }
         database.users.add(new User(name, lastname, email, password, date, true));
 
-        System.out.println(birdthdate);
-        System.out.println(database.users);
-
-        database.serializeUsers(database.users);
+        database.serializeDatabase();
         return "mainpages/registration";
     }
 

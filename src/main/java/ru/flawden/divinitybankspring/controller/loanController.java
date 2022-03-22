@@ -6,10 +6,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import ru.flawden.divinitybankspring.entity.CreditCreator;
-import ru.flawden.divinitybankspring.entity.Database;
-import ru.flawden.divinitybankspring.entity.Loan;
-import ru.flawden.divinitybankspring.entity.User;
+import ru.flawden.divinitybankspring.entity.*;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -48,7 +45,8 @@ public class loanController {
                              @RequestParam(value = "loanterm") String loanterm,
                              @RequestParam(value = "loanamount") String loanamount) {
         Database database = Database.getInstance();
-        database.deserializeUsers();
+//        Serializator serializator = new Serializator();
+        database.deserializeDatabase();
         CreditCreator creditCreator = new CreditCreator();
         User user = database.getAuthUser();
         int interestRate = creditCreator.returnInterestRate(product);
@@ -73,7 +71,7 @@ public class loanController {
 
             user.getLoanList().add(new Loan(new Date(), totalSum, interestRate, sumPerMonth, loanTerm));
         }
-        database.serializeUsers(database.users);
+        database.serializeDatabase();
         System.out.println(user.getLoanList());
         return "/profile/user_page";
     }
