@@ -3,10 +3,11 @@ package ru.flawden.divinitybankspring.entity;
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 
-public class User implements Serializable {
+public class User implements Serializable, Comparator<User> {
 
     private static final long serialVersionUID = 812943703942L;
     private double balance;
@@ -148,4 +149,8 @@ public class User implements Serializable {
                 "Balance: " + balance + "\n";
     }
 
+    @Override
+    public int compare(User o1, User o2) {
+        return o1.geteMail().compareTo(o2.geteMail());
+    }
 }

@@ -45,7 +45,6 @@ public class loanController {
                              @RequestParam(value = "loanterm") String loanterm,
                              @RequestParam(value = "loanamount") String loanamount) {
         Database database = Database.getInstance();
-//        Serializator serializator = new Serializator();
         database.deserializeDatabase();
         CreditCreator creditCreator = new CreditCreator();
         User user = database.getAuthUser();
@@ -55,8 +54,8 @@ public class loanController {
         } else {
             int loanAmount = Integer.parseInt(loanamount);
             int loanTerm = Integer.parseInt(loanterm);
-            SimpleDateFormat dateFormat = new SimpleDateFormat();
-            dateFormat.applyPattern("yyyy-MM-dd");
+//            SimpleDateFormat dateFormat = new SimpleDateFormat();
+//            dateFormat.applyPattern("yyyy-MM-dd");
             //Date loanTerm = new Date();
 //            try {
 //                loanTerm = dateFormat.parse(loanterm);

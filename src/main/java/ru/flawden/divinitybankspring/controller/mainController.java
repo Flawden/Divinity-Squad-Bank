@@ -62,11 +62,17 @@ public class mainController {
                                   @RequestParam(value = "gender") String gender,
                                   @RequestParam(value = "birdthdate") String birdthdate,
                                   @RequestParam(value = "email") String email,
-                                  @RequestParam(value = "password") String password) {
+                                  @RequestParam(value = "password") String password,
+                                  Model model) {
         System.out.println(email + " " + password + " " + name + " " + lastname + " " + gender + " " + birdthdate);
-
         Database database = Database.getInstance();
         database.deserializeDatabase();
+        for (User user: database.users) {
+            if(user.geteMail().equals(email)) {
+                model.addAttribute("errorReg", "User with email address " + email + " already exists");
+                return "mainpages/registration";
+            }
+        }
         SimpleDateFormat dateFormat = new SimpleDateFormat();
         dateFormat.applyPattern("yyyy-MM-dd");
         Date date = new Date();
@@ -75,10 +81,19 @@ public class mainController {
         } catch (ParseException e) {
             System.out.println("Incorrect date format");
         }
-        database.users.add(new User(name, lastname, email, password, date, true));
+
+        boolean userGender = true;
+
+        if (gender.equals("male")) {
+            userGender = true;
+        } else {
+            userGender = false;
+        }
+
+        database.users.add(new User(name, lastname, email, password, date, userGender));
 
         database.serializeDatabase();
-        return "mainpages/registration";
+        return "mainpages/authorization";
     }
 
 }
