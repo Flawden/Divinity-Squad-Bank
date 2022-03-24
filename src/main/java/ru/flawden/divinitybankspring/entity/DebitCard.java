@@ -7,21 +7,19 @@ import java.util.Date;
 
 public class DebitCard implements Serializable {
 
-    private static final long serialVersionUID = 812943703942L;
-    private Calendar calendar = Calendar.getInstance();
-    private Date createdDate;
-    private SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd.MM.yyyy");
-    private double balance;
+    private final Calendar createdDate;
+    private final SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd.MM.yyyy");
+    private Double balance;
     private String cardNumber;
     private Date expirationDate;
     private int cvv;
 
     public DebitCard(String cardNumber, int cvv) {
-        this.createdDate = calendar.getTime();
-        this.balance = 0;
+        this.createdDate = Calendar.getInstance();
+        this.balance = 0.0;
         this.cardNumber = cardNumber;
-        this.calendar.add(Calendar.YEAR, 1);
-        this.expirationDate = calendar.getTime();
+        this.createdDate.add(Calendar.YEAR, 1);
+        this.expirationDate = createdDate.getTime();
         this.cvv = cvv;
     }
 
@@ -29,7 +27,7 @@ public class DebitCard implements Serializable {
         return balance;
     }
 
-    public Date getCreatedDate() {return createdDate;}
+    public Calendar getCreatedDate() {return createdDate;}
 
     public void setBalance(double balance) {
         this.balance = balance;

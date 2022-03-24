@@ -1,46 +1,28 @@
-package ru.flawden.divinitybankspring.entity;
+package ru.flawden.divinitybankspring.entity.util;
 
 import java.util.Calendar;
 import java.util.Date;
 
-public class CreditCreator {
+public class LoanUtil {
 
-    public long returnTermInMonths(Date date) {
-
-        Date dateNow = new Date();
-
-        long time = dateNow.getTime() - date.getTime();
-
-        return time / 2592000000L;
-    }
-
-    public int returnInterestRate(String product) {
-
+    public int getInterestRate(String product) {
         int interestRate = 0;
 
         if (product.equals("carowner")) {
-
             return 9;
-
         } else if (product.equals("newhouse")) {
-
             return 6;
-
         } else if (product.equals("payday")) {
-
             return 25;
-
         }
 
         return interestRate;
     }
     public double calculateSumPerMonth(double totalSum, int term) {
-
         return totalSum / term;
     }
 
     public double calculateCreditSum(double sum, int term, int interestRate) {
-
         double dInterestRate = interestRate;
         sum = sum * (1 + (dInterestRate / 100));
 

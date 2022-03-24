@@ -6,13 +6,12 @@ import java.util.Date;
 
 public class Loan implements Serializable {
 
-    private static final long serialVersionUID = 812943703942L;
-    private SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd.MM.yyyy");
+    private final SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd.MM.yyyy");
     private Date issueDate;
-    private double summ;
-    private double interestRate;
-    private double monthlyPayment;
-    private int creditTerm;
+    private Double summ;
+    private Double interestRate;
+    private Double monthlyPayment;
+    private Integer creditTerm;
 
     public Loan(Date issueDate, double summ, double interestRate, double monthlyPayment, int creditTerm) {
         this.issueDate = new Date();

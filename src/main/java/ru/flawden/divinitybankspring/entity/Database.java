@@ -8,15 +8,12 @@ import java.util.Set;
 
 public class Database implements Serializable {
 
-    @Serial
-    private static final long serialVersionUID = 812943703942L;
-
     private static final String path = "users.dat";
     private static final String pathCard = "debit_card_list.dat";
     private static Database instance;
     public List<User> users = new ArrayList<>();
     public Set<String> cardNumbers = new HashSet<>();
-    private User authUser;
+    private User authUser; //Что он тут забыл?
 
     public User getAuthUser() {
         return authUser;
@@ -55,7 +52,7 @@ public class Database implements Serializable {
             os.writeObject(users);
             System.out.println("Serialize succes");
         } catch (IOException e) {
-            System.out.println("Error.");
+            System.out.println("Error."); // To replace
         }
     }
 
@@ -64,7 +61,7 @@ public class Database implements Serializable {
             os.writeObject(cardNumbers);
             System.out.println("Serialize succes");
         } catch (IOException e) {
-            System.out.println("Error.");
+            System.out.println("Error."); // To replace
         }
     }
 

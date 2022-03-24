@@ -1,9 +1,13 @@
-package ru.flawden.divinitybankspring.entity;
+package ru.flawden.divinitybankspring.entity.util;
+
+import ru.flawden.divinitybankspring.entity.Database;
+import ru.flawden.divinitybankspring.entity.DebitCard;
 
 import javax.xml.crypto.Data;
 import java.util.Random;
 
-public class DebitCreator {
+
+public class DebitCardUtil {
     public int createCVV() {
         Random rnd = new Random();
         int cvv = rnd.nextInt(111,999);

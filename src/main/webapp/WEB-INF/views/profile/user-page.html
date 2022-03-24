@@ -8,76 +8,54 @@
     <title>DSbank</title>
 </head>
 <body>
-    
-
     <div class="page">
-
         <div class="wrapper">
-            
             <!-- Header - start -->
-
             <div class="header">
-                 
-
                 <div class="nav">
-
                     <img src="../../../resources/img/ico/Logo.svg" alt="Logo">
 
                     <ul>
                         <li><a href="#" class="active">Main</a></li>
                         <li><a href="/loan">Loan</a></li>
-                        <li><a href="/debit_card">DebitCards</a></li>
+                        <li><a href="/debit-card">DebitCards</a></li>
                         <li><a href="/profile">Profile</a></li>
                         <li><a href="/exit">Exit</a></li>
-                    </ul>  
-
+                    </ul>
                 </div>
-
             </div>
-
             <!-- Main - start -->
-
             <div class="main">
-
                 <div class="main__user block">
-
                     <h3 class="user__greeting">Greetings</h3>
 
                     <div class="user__block">
                         <p class="user__name" th:text="${names}">Name Lastname</p>
                     </div>
-                  
-
                 </div>
         
                 <div class="main__balance block">
-
                     <h2 class="balance__header header">Available funds:</h2>
                   
                     <h3 class="balance__text name">Balance: <p class="balance__sum sum" th:text="${balance}">1 000 000 000.00$</p></h3>
-
                 </div>
 
                 <div class="main__card block">
-
                     <h2 class="card__header header">Debit cards:</h2>
-                  
+
                     <div class="card">
                         <div class="card__block">
                             <div class="card__name name">In developing</div>
                         </div>
                        <div class="card__block">
                             <div class="card__sum sum">In developing</div>
-                        </div> 
-
+                        </div>
                     </div>
 
-                    <a href="/createDebit" class="debit__takenew takenew">Issue a card</a>
-                    
+                    <a href="/create-debit" class="debit__takenew takenew">Issue a card</a>
                 </div>
 
                 <div class="main__loan block">
-
                     <h2 class="loan__header header">Loans:</h2>
                   
                     <div class="loan">
@@ -85,25 +63,16 @@
                         <div class="loan__sum sum">In developing</div>
                     </div>
 
-                    <a href="/createloan" class="loan__takenew takenew">Apply for a loan</a>
-                    
+                    <a href="/create-loan" class="loan__takenew takenew">Apply for a loan</a>
                 </div>
-
             </div>
 
             <!-- Main - finish -->
 
         </div>
-
     </div>
-
-
-
-
-
 
     <script type="text/javascript" src="js/jquery-3.6.0.min.js"></script>
     <script type="text/javascript" src="js/Script.js"></script>
-
 </body>
 </html>

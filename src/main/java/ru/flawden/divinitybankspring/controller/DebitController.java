@@ -4,41 +4,44 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import ru.flawden.divinitybankspring.entity.Database;
-import ru.flawden.divinitybankspring.entity.DebitCreator;
+import ru.flawden.divinitybankspring.entity.util.DebitCardUtil;
 import ru.flawden.divinitybankspring.entity.User;
 
 @Controller
-public class debitController {
+public class DebitController {
 
-    @GetMapping("/debit_card")
+    Database database = Database.getInstance();
+    DebitCardUtil debitCreator = new DebitCardUtil();
+
+    @GetMapping("/debit-card")
     public String returnDebitCard(Model model) {
-        Database database = Database.getInstance();
+
         User user = database.getAuthUser();
+
         if (user == null) {
-            return "mainpages/authorization";
+            return "redirect:/authorization";
         } else {
             String debit = database.getAuthUser().getDebitCardList().toString();
             model.addAttribute("debit" , debit);
         }
-        return "profile/debit_card";
+        return "profile/debit-card";
     }
 
-    @GetMapping("/createDebit")
+    @GetMapping("/create-debit")
     public String createDebit(Model model) {
-        Database database = Database.getInstance();
         database.deserializeDatabase();
         User user = database.getAuthUser();
+
         if (user == null) {
             return "mainpages/authorization";
         } else {
-            DebitCreator debitCreator = new DebitCreator();
             debitCreator.doDebitCard();
             database.serializeDatabase();
             model.addAttribute("balance" , user.getBalance() + "$");
             model.addAttribute("names" , user.getFirstName() + " " + user.getLastName());
         }
 
-        return "/profile/user_page";
+        return "/profile/user-page";
     }
 
 }
