@@ -24,8 +24,7 @@ public class UserPageController {
         if (user == null) {
             return "redirect:/authorization";
         } else {
-            model.addAttribute("balance" , user.getBalance() + "$");
-            model.addAttribute("names" , user.getFirstName() + " " + user.getLastName());
+            model.addAttribute("User" , user);
         }
         return "profile/profile";
     }
@@ -36,8 +35,7 @@ public class UserPageController {
         if (user == null) {
             return "redirect:/authorization";
         } else {
-            model.addAttribute("balance" , user.getBalance() + "$");
-            model.addAttribute("names" , user.getFirstName() + " " + user.getLastName());
+              model.addAttribute("User", user);
         }
         System.out.println(user);
         return "profile/user-page";

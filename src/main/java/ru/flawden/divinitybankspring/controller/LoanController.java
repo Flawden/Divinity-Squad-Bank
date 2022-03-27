@@ -21,7 +21,7 @@ public class LoanController {
         if (user == null) {
             return "mainpages/authorization";
         } else {
-            model.addAttribute("loan" , user.getLoanList());
+            model.addAttribute("User" , user);
         }
 
         return "profile/loan";
@@ -34,9 +34,7 @@ public class LoanController {
         if (user == null) {
             return "mainpages/authorization";
         } else {
-            String loan = user.getLoanList().toString();
-            System.out.println(loan);
-            model.addAttribute("loan" , loan);
+            model.addAttribute("User" , user);
         }
 
         return "profile/loan/create-loan";
@@ -60,7 +58,6 @@ public class LoanController {
             user.getLoanList().add(new Loan(new Date(), totalSum, interestRate, sumPerMonth, loanTerm));
         }
         database.serializeDatabase();
-        System.out.println(user.getLoanList());
         return "redirect:/user-page";
     }
 

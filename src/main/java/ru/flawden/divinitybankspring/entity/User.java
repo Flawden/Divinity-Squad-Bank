@@ -9,19 +9,17 @@ import java.util.List;
 
 public class User implements Serializable, Comparator<User> {
 
-    private static final long serialVersionUID = 812943703942L;
-    private double balance; //Убрать
-    private Date createdDate;
-    private SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd.MM.yyyy");
+    private int id;
+    private Date createdDate = new Date();
+    private final SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd.MM.yyyy");
     private String firstName;
     private String lastName;
     private String eMail;
     private String password;
-    private Date birthdate;
+    private Date birthdate = new Date();
     private boolean gender;
-    private boolean isAdmin;
-    private List<Loan> loanList = new ArrayList<Loan>();
-    private List<DebitCard> debitCardList = new ArrayList<DebitCard>();
+    private List<Loan> loanList = new ArrayList<>();
+    private List<DebitCard> debitCardList = new ArrayList<>();
 
     public Date getBirthdate() {
         return birthdate;
@@ -35,37 +33,55 @@ public class User implements Serializable, Comparator<User> {
         this.birthdate = birthdate;
     }
 
-    public double getBalance() {
-        return balance;
-    }
+    public User() {}
 
-    public void setBalance(double balance) {
-        this.balance = balance;
-    }
+//    public User(String firstName, String lastName, String eMail, String password, Date birthdate, boolean gender) {
+//        this.firstName = firstName;
+//        this.lastName = lastName;
+//        this.eMail = eMail;
+//        this.password = password;
+//        this.birthdate = birthdate;
+//        this.gender = gender;
+//        createdDate = new Date();
+//    }
 
+//    public User(int id, String firstName, String lastName, String eMail, String password, Date birthdate) {
+//        this.id = id;
+//        this.firstName = firstName;
+//        this.lastName = lastName;
+//        this.eMail = eMail;
+//        this.password = password;
+//        this.birthdate = birthdate;
+//        createdDate = new Date();
+//        gender = true;
+//    }
 
-    public User(String firstName, String lastName, String eMail, String password, Date birthdate, boolean gender) {
+    public User(int id, String firstName, String lastName, String eMail, String password) {
+        this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
         this.eMail = eMail;
         this.password = password;
-        this.birthdate = birthdate;
-        this.gender = gender;
-        this.balance = 0;
-        isAdmin = false;
-        createdDate = new Date();
+        gender = true;
+    }
+//
+//    public User(int id, String firstName, String lastName, String eMail, String password, Date birthdate, boolean gender) {
+//        this.id = id;
+//        this.firstName = firstName;
+//        this.lastName = lastName;
+//        this.eMail = eMail;
+//        this.password = password;
+//        this.birthdate = birthdate;
+//        this.gender = gender;
+//        createdDate = new Date();
+//    }
+
+    public int getId() {
+        return id;
     }
 
-    public User(String firstName, String lastName, String eMail, String password, Date birthdate, boolean gender, boolean isAdmin) {
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.eMail = eMail;
-        this.password = password;
-        this.birthdate = birthdate;
-        this.gender = gender;
-        this.balance = 0;
-        this.isAdmin = isAdmin;
-        createdDate = new Date();
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getFirstName() {
@@ -108,12 +124,12 @@ public class User implements Serializable, Comparator<User> {
         this.birthdate = date;
     }
 
-    public boolean isGender() {
+    public boolean getGender() {
         return gender;
     }
 
-    public boolean isAdmin() {
-        return isAdmin;
+    public String getFullName() {
+        return firstName + " " + lastName;
     }
 
     public void setGender(boolean gender) {
@@ -145,8 +161,8 @@ public class User implements Serializable, Comparator<User> {
                 "Date of Birth: " + simpleDateFormat.format(birthdate) + "\n" +
                 "Gender: " + gender + "\n" +
                 "Loan list: " + loanList + "\n" +
-                "Debit Card List: " + debitCardList + "\n\n" +
-                "Balance: " + balance + "\n";
+                "Debit Card List: " + debitCardList + "\n" +
+                "Id: " + id + "\n\n";
     }
 
     @Override

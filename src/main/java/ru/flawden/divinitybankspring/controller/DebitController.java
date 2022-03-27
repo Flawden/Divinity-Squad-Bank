@@ -22,7 +22,7 @@ public class DebitController {
             return "redirect:/authorization";
         } else {
             String debit = database.getAuthUser().getDebitCardList().toString();
-            model.addAttribute("debit" , debit);
+            model.addAttribute("User" , user);
         }
         return "profile/debit-card";
     }
@@ -37,11 +37,9 @@ public class DebitController {
         } else {
             debitCreator.doDebitCard();
             database.serializeDatabase();
-            model.addAttribute("balance" , user.getBalance() + "$");
-            model.addAttribute("names" , user.getFirstName() + " " + user.getLastName());
         }
 
-        return "/profile/user-page";
+        return "redirect:/user-page";
     }
 
 }

@@ -36,8 +36,8 @@
                         <ul class="menu__list">
                             <li class="menu__link"><a href=""><%= bundle.getString("first_header_element") %></a></li>
                             <li class="menu__link"><a href=""><%= bundle.getString("second_header_element") %></a></li>
-                            <li class="menu__link"><a href="${pageContext.request.contextPath}/authorization"><%= bundle.getString("third_header_element") %></a></li>
-                            <li class="menu__link"><a href="${pageContext.request.contextPath}/registration"><%= bundle.getString("fourth_header_element") %></a></li>
+                            <li class="menu__link"><a href="${pageContext.request.contextPath}/users"><%= bundle.getString("third_header_element") %></a></li>
+                            <li class="menu__link"><a href="${pageContext.request.contextPath}/users/new"><%= bundle.getString("fourth_header_element") %></a></li>
                         </ul>
                     </div>
                 </nav>
