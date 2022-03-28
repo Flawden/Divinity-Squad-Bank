@@ -3,20 +3,20 @@ package ru.flawden.divinitybankspring.dao;
 import org.springframework.stereotype.Component;
 import ru.flawden.divinitybankspring.entity.User;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 @Component
 public class UserDAO {
 
     private static int PEOPLE_COUNT = 0;
     private List<User> users;
+    public Set<String> cardNumbers;
 
     public User authUser;
 
     {
         users = new ArrayList<>();
+        cardNumbers = new HashSet<>();
 
         users.add(new User(++PEOPLE_COUNT, "Daniil", "Topchii", "topchiidv1998@gmail.com", "password"));
         users.add(new User(++PEOPLE_COUNT, "Fefo", "Fefo", "Fefofefo@gmail.com", "password"));

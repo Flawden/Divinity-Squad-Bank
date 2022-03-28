@@ -30,7 +30,7 @@ public class UsersController {
     @PostMapping()
     public String authVer(@ModelAttribute("authUtil") AuthUtil authUtil) {
         if (authUtil.checkAuth(userDAO)) {
-            return "/profile/user-page";
+            return "redirect:/user-page";
         } else {
             return "/mainpages/authorization";
         }
@@ -39,7 +39,6 @@ public class UsersController {
 
     @GetMapping("/{id}")
     public String show(@PathVariable("id") int id, Model model) {
-        System.out.println(userDAO.show(id));
         model.addAttribute("user", userDAO.show(id));
         return "/show";
     }

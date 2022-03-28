@@ -1,6 +1,7 @@
 package ru.flawden.divinitybankspring.entity.util;
 
-import ru.flawden.divinitybankspring.entity.Database;
+import org.springframework.beans.factory.annotation.Autowired;
+import ru.flawden.divinitybankspring.dao.UserDAO;
 import ru.flawden.divinitybankspring.entity.DebitCard;
 
 import javax.xml.crypto.Data;
@@ -8,6 +9,13 @@ import java.util.Random;
 
 
 public class DebitCardUtil {
+
+    UserDAO userDAO;
+
+    public DebitCardUtil(UserDAO userDAO) {
+        this.userDAO = userDAO;
+    }
+
     public int createCVV() {
         Random rnd = new Random();
         int cvv = rnd.nextInt(111,999);
@@ -16,7 +24,6 @@ public class DebitCardUtil {
     }
 
     public String createCardNumber() {
-        Database database = Database.getInstance();
         Random rnd = new Random();
         int part = 0;
         String num = "";
@@ -26,8 +33,8 @@ public class DebitCardUtil {
                 part = rnd.nextInt(1111,9999);
                 num += part + " ";
             }
-            if (!database.cardNumbers.contains(num)) {
-                database.cardNumbers.add(num);
+            if (!userDAO.cardNumbers.contains(num)) {
+                userDAO.cardNumbers.add(num);
                 break;
             }
         }
@@ -38,9 +45,8 @@ public class DebitCardUtil {
 
 
     public void doDebitCard() {
-        Database database = Database.getInstance();
         String num = createCardNumber();
         int cvv = createCVV();
-        database.getAuthUser().getDebitCardList().add(new DebitCard(num, cvv));
+        userDAO.authUser.getDebitCardList().add(new DebitCard(num, cvv));
     }
 }
