@@ -161,7 +161,7 @@ body {
   padding: 10px 20px;
   border-radius: 10%;
   background: #13181e;
-  font-size: 16 px;
+  font-size: 16px;
 }
 .header ul li .active:hover {
   color: #4040ff;
@@ -217,6 +217,10 @@ body {
   font-weight: 700;
   font-size: 20px;
   color: #80A6FF;
+}
+
+.user__block {
+  margin-bottom: 20px;
 }
 
 .main {

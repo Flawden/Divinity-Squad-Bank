@@ -35,8 +35,18 @@ public class UserDAO {
         users.add(user);
     }
 
-    public void update(int it, User user) {
+    public void update(int id, User userFromUpdated) {
+        User userForUpdate = show(id);
 
+        userForUpdate.setFirstName(userFromUpdated.getFirstName());
+        userForUpdate.setLastName(userFromUpdated.getLastName());
+        userForUpdate.seteMail(userFromUpdated.geteMail());
+        userForUpdate.setPassword(userFromUpdated.getPassword());
+        authUser = userForUpdate;
+    }
+
+    public void delete(int id) {
+        users.removeIf(p -> p.getId() == id);
     }
 
 }

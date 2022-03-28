@@ -45,6 +45,23 @@ public class UsersController {
         return "/profile/user-page";
     }
 
+    @GetMapping("/{id}/edit")
+    public String edit(@PathVariable("id") int id, Model model) {
+        User user = userDAO.show(id);
+        if (userDAO.authUser != user) {
+            return "redirect:/users";
+        }
+        model.addAttribute("user", user);
+        System.out.println("Get edit отправлен");
+        return "/mainpages/edit";
+    }
+
+    @PatchMapping("/{id}/edit")
+    public String update(@ModelAttribute("user") User user, @PathVariable("id") int id, Model model) {
+        userDAO.update(id, user);
+        return "redirect:/users/" + userDAO.authUser.getId();
+    }
+
     @GetMapping("/new")
     public String newUser(@ModelAttribute("user") User user) {
         return "mainpages/registration";
@@ -53,6 +70,12 @@ public class UsersController {
     @PostMapping("/new")
     public String create(@ModelAttribute("user") User user) {
         userDAO.save(user);
+        return "redirect:/users";
+    }
+
+    @DeleteMapping("/{id}")
+    public String delete(@PathVariable("id") int id, Model model) {
+        userDAO.delete(id);
         return "redirect:/users";
     }
 

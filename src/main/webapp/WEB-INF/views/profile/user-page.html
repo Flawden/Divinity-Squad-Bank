@@ -32,6 +32,13 @@
                     <div class="user__block">
                         <p class="user__name" th:text="${User.getFullName()}">Name Lastname</p>
                     </div>
+                    <div class="user__block">
+                        <a class="debit__takenew takenew" th:href="@{/users/{id}/edit(id=${User.getId()})}">Edit user</a>
+                        <form th:method="DELETE" th:action="@{/users/{id}(id=${User.getId()})}">
+                            <button class="takenew" type="submit">Delete user</button>
+                        </form>
+                    </div>
+
                 </div>
         
                 <div class="main__balance block">
