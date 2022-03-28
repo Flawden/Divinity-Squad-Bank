@@ -20,17 +20,13 @@ public class UserDAO {
 
         users.add(new User(++PEOPLE_COUNT, "Daniil", "Topchii", "topchiidv1998@gmail.com", "password"));
         users.add(new User(++PEOPLE_COUNT, "Fefo", "Fefo", "Fefofefo@gmail.com", "password"));
-        System.out.println(users);
     }
 
     public List<User> index() {
-        System.out.println("Я в индексе ДАО");
-        System.out.println(users);
         return users;
     }
 
     public User show(int id) {
-        System.out.println("Мы в SHOW");
         return users.stream().filter(user -> user.getId() == id).findAny().orElse(null);
     }
 

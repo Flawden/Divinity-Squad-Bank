@@ -23,14 +23,13 @@ public class UsersController {
 
     @GetMapping()
     public String index(@ModelAttribute("authUtil") AuthUtil authUtil) {
-        System.out.println(authUtil);
         return "/mainpages/authorization";
     }
 
     @PostMapping()
     public String authVer(@ModelAttribute("authUtil") AuthUtil authUtil) {
         if (authUtil.checkAuth(userDAO)) {
-            return "redirect:/user-page";
+            return "redirect:/users/" + userDAO.authUser.getId();
         } else {
             return "/mainpages/authorization";
         }
@@ -39,19 +38,20 @@ public class UsersController {
 
     @GetMapping("/{id}")
     public String show(@PathVariable("id") int id, Model model) {
-        model.addAttribute("user", userDAO.show(id));
-        return "/show";
+        if (userDAO.authUser != userDAO.show(id)) {
+            return "redirect:/users";
+        }
+        model.addAttribute("User", userDAO.show(id));
+        return "/profile/user-page";
     }
 
     @GetMapping("/new")
     public String newUser(@ModelAttribute("user") User user) {
-        System.out.println("New - get");
         return "mainpages/registration";
     }
 
     @PostMapping("/new")
     public String create(@ModelAttribute("user") User user) {
-        System.out.println("New - post");
         userDAO.save(user);
         return "redirect:/users";
     }

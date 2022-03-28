@@ -42,7 +42,6 @@ public class UserPageController {
         } else {
               model.addAttribute("User", user);
         }
-        System.out.println(user);
         return "profile/user-page";
     }
 
