@@ -38,7 +38,7 @@ public class UsersController {
 
     @GetMapping("/{id}")
     public String show(@PathVariable("id") int id, Model model) {
-        if (userDAO.authUser != userDAO.show(id)) {
+        if (!userDAO.authUser.equals(userDAO.show(id))) {
             return "redirect:/users";
         }
         model.addAttribute("User", userDAO.show(id));
@@ -48,7 +48,7 @@ public class UsersController {
     @GetMapping("/{id}/edit")
     public String edit(@PathVariable("id") int id, Model model) {
         User user = userDAO.show(id);
-        if (userDAO.authUser != user) {
+        if (!userDAO.authUser.equals(user)) {
             return "redirect:/users";
         }
         model.addAttribute("user", user);

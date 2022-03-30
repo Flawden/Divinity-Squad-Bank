@@ -2,10 +2,7 @@ package ru.flawden.divinitybankspring.entity;
 
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 public class User implements Serializable, Comparator<User> {
 
@@ -168,5 +165,18 @@ public class User implements Serializable, Comparator<User> {
     @Override
     public int compare(User o1, User o2) {
         return o1.geteMail().compareTo(o2.geteMail());
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        User user = (User) o;
+        return id == user.id && Objects.equals(eMail, user.eMail) && Objects.equals(password, user.password);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, eMail, password);
     }
 }
