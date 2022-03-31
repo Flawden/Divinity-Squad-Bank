@@ -1,5 +1,6 @@
 package ru.flawden.divinitybankspring.dao;
 
+import org.springframework.stereotype.Component;
 import ru.flawden.divinitybankspring.entity.Loan;
 import ru.flawden.divinitybankspring.entity.User;
 
@@ -8,6 +9,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
+@Component
 public class LoanDAO {
 
     private static final String URL = "jdbc:postgresql://localhost:5432/Users";

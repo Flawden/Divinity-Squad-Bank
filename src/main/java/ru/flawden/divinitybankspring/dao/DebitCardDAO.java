@@ -1,5 +1,6 @@
 package ru.flawden.divinitybankspring.dao;
 
+import org.springframework.stereotype.Component;
 import ru.flawden.divinitybankspring.entity.DebitCard;
 import ru.flawden.divinitybankspring.entity.User;
 
@@ -8,6 +9,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
+@Component
 public class DebitCardDAO {
 
     private static final String URL = "jdbc:postgresql://localhost:5432/Users";
@@ -26,12 +28,12 @@ public class DebitCardDAO {
         }
     }
 
-    public List<DebitCard> index() {
+    public List<DebitCard> index(String key) {
         List<DebitCard> debitCardList = new ArrayList<>();
 
         try {
             Statement statement = connection.createStatement();
-            String SQL = "SELECT * FROM \"DebitCard\"";
+            String SQL = "SELECT * FROM \"DebitCard\" WHERE key=" + "\'" + key + "\'";
             ResultSet resultSet = statement.executeQuery(SQL);
 
             while (resultSet.next()) {
@@ -75,10 +77,10 @@ public class DebitCardDAO {
         return debitCard;
     }
 
-    public void save(DebitCard debitCard) {
+    public void save(DebitCard debitCard, String key) {
         try {
             PreparedStatement preparedStatement =
-                    connection.prepareStatement("INSERT INTO \"DebitCard\"(createddate, balance, cardnumber, expirationdate, cvv) VALUES(?, ?, ?, ?, ?)");
+                    connection.prepareStatement("INSERT INTO \"DebitCard\"(createddate, balance, cardnumber, expirationdate, cvv, key) VALUES(?, ?, ?, ?, ?, ?)");
 
             preparedStatement.setDate(1, new java.sql.Date(debitCard.getCreatedDate()),
                     Calendar.getInstance());
@@ -87,6 +89,7 @@ public class DebitCardDAO {
             preparedStatement.setDate(4, new java.sql.Date(debitCard.getExpirationDate().getTime()),
                     Calendar.getInstance());
             preparedStatement.setInt(5, debitCard.getCvv());
+            preparedStatement.setString(6, key);
             preparedStatement.executeUpdate();
         } catch (SQLException throwables) {
             System.out.println("save error");

@@ -44,9 +44,10 @@ public class DebitCardUtil {
     }
 
 
-    public void doDebitCard() {
+    public DebitCard doDebitCard() {
         String num = createCardNumber();
         int cvv = createCVV();
-        userDAO.authUser.getDebitCardList().add(new DebitCard(num, cvv));
+        //userDAO.authUser.getDebitCardList().add(new DebitCard(num, cvv));
+        return new DebitCard(num, cvv);
     }
 }

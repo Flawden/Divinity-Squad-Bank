@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import ru.flawden.divinitybankspring.dao.LoanDAO;
 import ru.flawden.divinitybankspring.dao.UserDAO;
 import ru.flawden.divinitybankspring.entity.*;
 import ru.flawden.divinitybankspring.entity.util.LoanUtil;
@@ -13,12 +14,14 @@ import java.util.Date;
 @Controller
 public class LoanController {
 
-    LoanUtil creditCreator = new LoanUtil();
+    LoanUtil loanUtil = new LoanUtil();
     private final UserDAO userDAO;
+    private final LoanDAO loanDAO;
 
     @Autowired
-    public LoanController(UserDAO userDAO) {
+    public LoanController(UserDAO userDAO, LoanDAO loanDAO) {
         this.userDAO = userDAO;
+        this.loanDAO = loanDAO;
     }
 
 
@@ -53,15 +56,15 @@ public class LoanController {
                              @RequestParam(value = "loanterm") String loanterm,
                              @RequestParam(value = "loanamount") String loanamount) {
         User user = userDAO.authUser;
-        int interestRate = creditCreator.getInterestRate(product);
 
         if (user == null) {
             return "redirect:/authorization";
         } else {
+            int interestRate = loanUtil.getInterestRate(product);
             int loanAmount = Integer.parseInt(loanamount);
             int loanTerm = Integer.parseInt(loanterm);
-            double totalSum = creditCreator.calculateCreditSum(loanAmount, loanTerm, interestRate);
-            double sumPerMonth = creditCreator.calculateSumPerMonth(totalSum, loanTerm);
+            double totalSum = loanUtil.calculateCreditSum(loanAmount, loanTerm, interestRate);
+            double sumPerMonth = loanUtil.calculateSumPerMonth(totalSum, loanTerm);
             user.getLoanList().add(new Loan(new Date(), totalSum, interestRate, sumPerMonth, loanTerm));
         }
         return "redirect:/user-page";
