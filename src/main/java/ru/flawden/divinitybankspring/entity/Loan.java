@@ -13,6 +13,10 @@ public class Loan implements Serializable {
     private Double monthlyPayment;
     private Integer creditTerm;
 
+    public Loan() {
+
+    }
+
     public Loan(Date issueDate, double summ, double interestRate, double monthlyPayment, int creditTerm) {
         this.issueDate = new Date();
         this.summ = summ;
