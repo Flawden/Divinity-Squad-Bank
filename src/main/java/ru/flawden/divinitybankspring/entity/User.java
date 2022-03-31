@@ -6,9 +6,10 @@ import java.util.*;
 
 public class User implements Serializable, Comparator<User> {
 
+    //Убрать примитивы
     private int id;
     private Date registrationDate = new Date();
-    private final SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd.MM.yyyy");
+    private final SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd.MM.yyyy"); //Только там, где она непосредственно используется
     private String firstName;
     private String lastName;
     private String eMail;

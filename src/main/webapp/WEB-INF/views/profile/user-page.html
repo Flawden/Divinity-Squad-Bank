@@ -17,10 +17,10 @@
 
                     <ul>
                         <li><a href="#" class="active">Main</a></li>
-                        <li><a href="/loan">Loan</a></li>
-                        <li><a href="/debit-card">DebitCards</a></li>
-                        <li><a href="/profile">Profile</a></li>
-                        <li><a href="/exit">Exit</a></li>
+                        <li><a th:href="@{/users/{id}/loan(id=${User.getId()})}">Loan</a></li>
+                        <li><a th:href="@{/users/{id}/debit-card(id=${User.getId()})}">DebitCards</a></li>
+                        <li><a th:href="@{/users/{id}/profile(id=${User.getId()})}">Profile</a></li>
+                        <li><a th:href="@{/users/exit}">Exit</a></li>
                     </ul>
                 </div>
             </div>

@@ -1,15 +1,15 @@
-package ru.flawden.divinitybankspring.entity.util;
+package ru.flawden.divinitybankspring.dto;
 
 import ru.flawden.divinitybankspring.dao.UserDAO;
 import ru.flawden.divinitybankspring.entity.User;
 
 import java.util.List;
 
-public class AuthUtil {
+//Это не Util а DataClass
+public class UserDTO {
 
     private String email;
     private String password;
-    private List<User> users;
 
     public String getEmail() {
         return email;
@@ -27,18 +27,17 @@ public class AuthUtil {
         this.password = password;
     }
 
-    public AuthUtil() {
+    public UserDTO() {
     }
 
-    public AuthUtil(String email, String password) {
+    public UserDTO(String email, String password) {
         this.email = email;
         this.password = password;
     }
 
     public boolean checkAuth(UserDAO userDAO) {
-        users = userDAO.index();
 
-        for(User user: users) {
+        for(User user: userDAO.index()) {
             if (user.geteMail().equals(this.email) && user.getPassword().equals(this.password)) {
                 userDAO.authUser = user;
                 return true;

@@ -9,7 +9,7 @@
 <div class="wrapper">
     <main class="page">
         <div class="registration-cssave">
-            <form th:method="POST" th:action="@{/users}" th:object="${authUtil}">
+            <form th:method="POST" th:action="@{/users}" th:object="${userDTO}">
                 <h3 class="text-center">Log in</h3>
 
                 <div class="form-group">
@@ -22,7 +22,7 @@
 
                 <div class="form-group">
                     <a href="#">Forgot password?</a>
-                    <div class="not_register">Not registered yet? <a href="/users/new">SIGN UP</a></div>
+                    <div class="not_register">Not registered yet? <a href="/users/registration">SIGN UP</a></div>
                     <button class="btn btn-primary btn-block create-account" type="submit">Log in</button>
                 </div>
             </form>

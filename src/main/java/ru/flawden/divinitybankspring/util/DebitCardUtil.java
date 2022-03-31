@@ -1,15 +1,14 @@
-package ru.flawden.divinitybankspring.entity.util;
+package ru.flawden.divinitybankspring.util;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import ru.flawden.divinitybankspring.dao.UserDAO;
 import ru.flawden.divinitybankspring.entity.DebitCard;
 
-import javax.xml.crypto.Data;
 import java.util.Random;
 
 
 public class DebitCardUtil {
 
+    //В утилитарных классах не должно быть зависимостей.
     UserDAO userDAO;
 
     public DebitCardUtil(UserDAO userDAO) {
@@ -33,7 +32,7 @@ public class DebitCardUtil {
                 part = rnd.nextInt(1111,9999);
                 num += part + " ";
             }
-            if (!userDAO.cardNumbers.contains(num)) {
+            if (!userDAO.cardNumbers.contains(num)) { //Проверять содержание в БД и если нету - добавить
                 userDAO.cardNumbers.add(num);
                 break;
             }
@@ -47,7 +46,9 @@ public class DebitCardUtil {
     public DebitCard doDebitCard() {
         String num = createCardNumber();
         int cvv = createCVV();
-        //userDAO.authUser.getDebitCardList().add(new DebitCard(num, cvv));
         return new DebitCard(num, cvv);
     }
 }
+
+//Утилитарные классы хранят набор полезных методов. Не зависимости.
+//Папку Util выкинуть в корень

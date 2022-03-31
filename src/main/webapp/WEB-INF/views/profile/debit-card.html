@@ -15,11 +15,11 @@
                     <img src="../../../resources/img/ico/Logo.svg" alt="Logo">
 
                     <ul>
-                        <li><a href="/user-page">Main</a></li>
-                        <li><a href="/loan">Loan</a></li>
+                        <li><a th:href="@{/users/{id}(id=${User.getId()})}">Main</a></li>
+                        <li><a th:href="@{/users/{id}/loan(id=${User.getId()})}">Loan</a></li>
                         <li><a href="#" class="active">DebitCards</a></li>
-                        <li><a href="/profile">Profile</a></li>
-                        <li><a href="/exit">Exit</a></li>
+                        <li><a th:href="@{/users/{id}/profile(id=${User.getId()})}">Profile</a></li>
+                        <li><a th:href="@{/users/exit}">Exit</a></li>
                     </ul>
                 </div>
             </div>

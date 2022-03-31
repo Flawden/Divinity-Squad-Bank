@@ -10,7 +10,7 @@
 <div class="wrapper">
     <main class="page">
         <div class="registration-cssave">
-            <form th:method="POST" th:action="@{/users/new}" th:object="${user}">
+            <form th:method="POST" th:action="@{/users/registration}" th:object="${user}">
                 <h3 class="text-center">Sign up</h3>
                 <div class="form-group">
                     <input class="form-control item" type="text" th:field="*{firstName}" id="name" placeholder="Firstname" required>

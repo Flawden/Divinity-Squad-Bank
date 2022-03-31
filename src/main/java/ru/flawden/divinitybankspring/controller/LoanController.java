@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.*;
 import ru.flawden.divinitybankspring.dao.LoanDAO;
 import ru.flawden.divinitybankspring.dao.UserDAO;
 import ru.flawden.divinitybankspring.entity.*;
-import ru.flawden.divinitybankspring.entity.util.LoanUtil;
+import ru.flawden.divinitybankspring.util.LoanUtil;
 
 import java.util.Date;
 
@@ -25,7 +25,7 @@ public class LoanController {
     }
 
 
-    @GetMapping("/loan")
+    @GetMapping("users/{id}/loan")
     public String returnLoan(Model model) {
         User user = userDAO.authUser;
 
@@ -51,6 +51,7 @@ public class LoanController {
         return "profile/loan/create-loan";
     }
 
+    //Реквест парамы нахер
     @PostMapping("/create-loan-ver")
     public String createLoan(@RequestParam(value = "product") String product,
                              @RequestParam(value = "loanterm") String loanterm,

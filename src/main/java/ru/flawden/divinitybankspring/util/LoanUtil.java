@@ -1,7 +1,4 @@
-package ru.flawden.divinitybankspring.entity.util;
-
-import java.util.Calendar;
-import java.util.Date;
+package ru.flawden.divinitybankspring.util;
 
 public class LoanUtil {
 

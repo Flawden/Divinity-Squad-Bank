@@ -5,10 +5,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import ru.flawden.divinitybankspring.dao.UserDAO;
+import ru.flawden.divinitybankspring.dto.UserDTO;
 import ru.flawden.divinitybankspring.entity.User;
-import ru.flawden.divinitybankspring.entity.util.AuthUtil;
-
-import javax.sound.midi.MidiChannel;
 
 @Controller
 @RequestMapping("/users")
@@ -22,13 +20,13 @@ public class UsersController {
     }
 
     @GetMapping()
-    public String index(@ModelAttribute("authUtil") AuthUtil authUtil) {
+    public String index(@ModelAttribute("userDTO") UserDTO userDTO) {
         return "/mainpages/authorization";
     }
 
     @PostMapping()
-    public String authVer(@ModelAttribute("authUtil") AuthUtil authUtil) {
-        if (authUtil.checkAuth(userDAO)) {
+    public String authVer(@ModelAttribute("userDTO") UserDTO userDTO) {
+        if (userDTO.checkAuth(userDAO)) {
             return "redirect:/users/" + userDAO.authUser.getId();
         } else {
             return "/mainpages/authorization";
@@ -62,20 +60,37 @@ public class UsersController {
         return "redirect:/users/" + userDAO.authUser.getId();
     }
 
-    @GetMapping("/new")
+    @GetMapping("/registration")
     public String newUser(@ModelAttribute("user") User user) {
         return "mainpages/registration";
     }
 
-    @PostMapping("/new")
+    @PostMapping("/registration")
     public String create(@ModelAttribute("user") User user) {
         userDAO.save(user);
-        return "redirect:/users";
+        return "redirect:/users/";
     }
 
     @DeleteMapping("/{id}")
     public String delete(@PathVariable("id") int id, Model model) {
         userDAO.delete(id);
+        return "redirect:/users";
+    }
+
+    @GetMapping("{id}/profile")
+    public String returnProfile(Model model) {
+        User user = userDAO.authUser;
+        if (user == null) {
+            return "redirect:/authorization";
+        } else {
+            model.addAttribute("User" , user);
+        }
+        return "profile/profile";
+    }
+
+    @GetMapping("/exit")
+    public String exit() {
+        userDAO.authUser = null;
         return "redirect:/users";
     }
 
