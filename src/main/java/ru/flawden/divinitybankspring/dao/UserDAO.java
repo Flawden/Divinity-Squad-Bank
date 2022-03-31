@@ -4,6 +4,7 @@ import org.springframework.stereotype.Component;
 import ru.flawden.divinitybankspring.entity.User;
 
 import java.sql.*;
+import java.sql.Date;
 import java.util.*;
 
 @Component
@@ -74,6 +75,7 @@ public class UserDAO {
                 user.setLastName(resultSet.getString("lastname"));
                 user.seteMail(resultSet.getString("email"));
                 user.setPassword(resultSet.getString("password"));
+                user.setRegistrationDate(resultSet.getDate("registrationdate"));
             }
 
         } catch (SQLException e) {
@@ -85,12 +87,14 @@ public class UserDAO {
     public void save(User user) {
         try {
             PreparedStatement preparedStatement =
-                    connection.prepareStatement("INSERT INTO \"User\"(firstname, lastname, email, password) VALUES(?, ?, ?, ?)");
+                    connection.prepareStatement("INSERT INTO \"User\"(firstname, lastname, email, password, registrationdate) VALUES(?, ?, ?, ?, ?)");
 
             preparedStatement.setString(1, user.getFirstName());
             preparedStatement.setString(2, user.getLastName());
             preparedStatement.setString(3, user.geteMail());
             preparedStatement.setString(4, user.getPassword());
+            preparedStatement.setDate(5, new java.sql.Date(user.getRegistrationDate().getTime()),
+                    Calendar.getInstance());
             preparedStatement.executeUpdate();
         } catch (SQLException throwables) {
             System.out.println("save error");
@@ -98,21 +102,17 @@ public class UserDAO {
     }
 
     public void update(int id, User userFromUpdated) {
-//        User userForUpdate = show(id);
-//
-//        userForUpdate.setFirstName(userFromUpdated.getFirstName());
-//        userForUpdate.setLastName(userFromUpdated.getLastName());
-//        userForUpdate.seteMail(userFromUpdated.geteMail());
-//        userForUpdate.setPassword(userFromUpdated.getPassword());
 //        authUser = userForUpdate;
         try {
-            PreparedStatement preparedStatement = connection.prepareStatement("UPDATE \"User\" SET firstname=?, lastname=?, email=?, password=? WHERE id=?");
+            PreparedStatement preparedStatement = connection.prepareStatement("UPDATE \"User\" SET firstname=?, lastname=?, email=?, password=?, id=?, registrationdate=? WHERE id=?");
 
             preparedStatement.setString(1, userFromUpdated.getFirstName());
             preparedStatement.setString(2, userFromUpdated.getLastName());
             preparedStatement.setString(3, userFromUpdated.geteMail());
             preparedStatement.setString(4, userFromUpdated.getPassword());
             preparedStatement.setInt(5, userFromUpdated.getId());
+            preparedStatement.setDate(6, new java.sql.Date(userFromUpdated.getRegistrationDate().getTime()),
+                    Calendar.getInstance());
 
             preparedStatement.executeUpdate();
         } catch (SQLException throwables) {

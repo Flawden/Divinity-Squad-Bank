@@ -7,7 +7,7 @@ import java.util.*;
 public class User implements Serializable, Comparator<User> {
 
     private int id;
-    private Date createdDate = new Date();
+    private Date registrationDate = new Date();
     private final SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd.MM.yyyy");
     private String firstName;
     private String lastName;
@@ -22,8 +22,12 @@ public class User implements Serializable, Comparator<User> {
         return birthdate;
     }
 
-    public Date getCreatedDate() {
-        return createdDate;
+    public Date getRegistrationDate() {
+        return registrationDate;
+    }
+
+    public void setRegistrationDate(Date registrationDate) {
+        this.registrationDate = registrationDate;
     }
 
     public void setBirthdate(Date birthdate) {
@@ -59,7 +63,8 @@ public class User implements Serializable, Comparator<User> {
         this.lastName = lastName;
         this.eMail = eMail;
         this.password = password;
-        gender = true;
+        this.registrationDate = new Date();
+        this.gender = true;
     }
 //
 //    public User(int id, String firstName, String lastName, String eMail, String password, Date birthdate, boolean gender) {
