@@ -33,7 +33,7 @@ public class DebitController {
         if (user == null) {
             return "redirect:/authorization";
         } else {
-            userDAO.authUser.setDebitCardList(debitCardDAO.index(user.geteMail()));
+            userDAO.authUser.setDebitCardList(debitCardDAO.index(user.getEmail()));
             String debit = userDAO.authUser.getDebitCardList().toString();
             model.addAttribute("User" , user);
         }
@@ -48,7 +48,7 @@ public class DebitController {
         if (user == null) {
             return "mainpages/authorization";
         } else {
-            String key = user.geteMail();
+            String key = user.getEmail();
             DebitCard debitCard = debitCreator.doDebitCard();
             debitCardDAO.save(debitCard, key);
         }

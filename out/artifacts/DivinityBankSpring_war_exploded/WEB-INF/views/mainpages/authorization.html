@@ -1,0 +1,34 @@
+<html lang="en" xmlns:th="http://thymeleaf.org">
+<head>
+    <link rel="stylesheet" href="../../../resources/css/authorization_menu.css">
+    <link type="image/x-icon" href="../../../resources/img/ico/Logo.svg" rel="icon">
+    <title>DBauth</title>
+</head>
+<body>
+
+<div class="wrapper">
+    <main class="page">
+        <div class="registration-cssave">
+            <form th:method="POST" th:action="@{/users}" th:object="${userDTO}">
+                <h3 class="text-center">Log in</h3>
+
+                <div class="form-group">
+                    <input class="form-control item" type="email" th:field="*{email}" id="email" placeholder="Email" required>
+                </div>
+
+                <div class="form-group">
+                    <input class="form-control item" type="password" th:field="*{password}" minlength="6" id="password" placeholder="Password" required>
+                </div>
+
+                <div class="form-group">
+                    <a href="#">Forgot password?</a>
+                    <div class="not_register">Not registered yet? <a href="/users/registration">SIGN UP</a></div>
+                    <button class="btn btn-primary btn-block create-account" type="submit">Log in</button>
+                </div>
+            </form>
+        </div>
+    </main>>
+</div>
+
+</body>
+</html>

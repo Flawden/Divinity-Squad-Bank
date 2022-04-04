@@ -4,7 +4,7 @@ import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
-public class User implements Serializable, Comparator<User> {
+public class User implements Serializable{
 
     //Убрать примитивы
     private int id;
@@ -12,7 +12,7 @@ public class User implements Serializable, Comparator<User> {
     private final SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd.MM.yyyy"); //Только там, где она непосредственно используется
     private String firstName;
     private String lastName;
-    private String eMail;
+    private String email;
     private String password;
     private Date birthdate = new Date();
     private boolean gender;
@@ -62,7 +62,7 @@ public class User implements Serializable, Comparator<User> {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
-        this.eMail = eMail;
+        this.email = eMail;
         this.password = password;
         this.registrationDate = new Date();
         this.gender = true;
@@ -103,12 +103,12 @@ public class User implements Serializable, Comparator<User> {
         this.lastName = surName;
     }
 
-    public String geteMail() {
-        return eMail;
+    public String getEmail() {
+        return email;
     }
 
-    public void seteMail(String eMail) {
-        this.eMail = eMail;
+    public void setEmail(String eMail) {
+        this.email = eMail;
     }
 
     public String getPassword() {
@@ -159,7 +159,7 @@ public class User implements Serializable, Comparator<User> {
     public String toString() {
         return "First name: " + firstName + "\n" +
                 "Last name: " + lastName + "\n" +
-                "E-mail: " + eMail + "\n" +
+                "E-mail: " + email + "\n" +
                 "Password: " + password + "\n" +
                 "Date of Birth: " + simpleDateFormat.format(birthdate) + "\n" +
                 "Gender: " + gender + "\n" +
@@ -169,20 +169,15 @@ public class User implements Serializable, Comparator<User> {
     }
 
     @Override
-    public int compare(User o1, User o2) {
-        return o1.geteMail().compareTo(o2.geteMail());
-    }
-
-    @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         User user = (User) o;
-        return id == user.id && Objects.equals(eMail, user.eMail) && Objects.equals(password, user.password);
+        return id == user.id && Objects.equals(email, user.email) && Objects.equals(password, user.password);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, eMail, password);
+        return Objects.hash(id, email, password);
     }
 }

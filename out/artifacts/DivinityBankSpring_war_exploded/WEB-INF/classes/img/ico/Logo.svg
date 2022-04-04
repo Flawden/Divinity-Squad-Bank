@@ -1,0 +1,20 @@
+<svg width="100" height="100" xmlns="http://www.w3.org/2000/svg">
+ <g>
+  <title>background</title>
+  <rect x="-1" y="-1" width="102" height="102" id="canvas_background" fill="none"/>
+  <g id="canvasGrid" display="none">
+   <rect id="svg_3" width="100%" height="100%" x="0" y="0" stroke-width="0" fill="url(#gridpattern)"/>
+  </g>
+ </g>
+ <g>
+  <title>Layer 1</title>
+  <defs>
+   <style>@font-face {
+        font-family: Euphoria;
+        src: url('../../fonts/EuphoriaScript-Regular.ttf');
+      }</style>
+  </defs>
+  <text font-weight="bold" fill="#005fbf" stroke-width="0" x="190.760256" y="107.451012" id="svg_1" font-size="24" font-family="'Courier New', Courier, monospace" text-anchor="start" xml:space="preserve" transform="matrix(4.841463063795077,0,0,3.4031689092041844,-909.018747439737,-304.30785703059433) " stroke="#000">D</text>
+  <text opacity="0.9" font-weight="bold" fill="#007f00" stroke-width="0" x="194.775238" y="114.192636" id="svg_2" font-size="22" font-family="'Courier New', Courier, monospace" text-anchor="start" xml:space="preserve" transform="matrix(5.046515547951837,0,0,3.63971906661016,-954.2048215570802,-333.96978808128233) " stroke="#000">S</text>
+ </g>
+</svg>

@@ -32,10 +32,8 @@ public class DebitCardUtil {
                 part = rnd.nextInt(1111,9999);
                 num += part + " ";
             }
-            if (!userDAO.cardNumbers.contains(num)) { //Проверять содержание в БД и если нету - добавить
-                userDAO.cardNumbers.add(num);
-                break;
-            }
+            break;
+            //Написать логику по проверке номеров карт на уникальность
         }
 
         return num;
