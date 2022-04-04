@@ -3,7 +3,6 @@ package ru.flawden.divinitybankspring.dao;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
-import ru.flawden.divinitybankspring.dao.mapper.UserMapper;
 import ru.flawden.divinitybankspring.entity.User;
 
 import java.sql.*;
