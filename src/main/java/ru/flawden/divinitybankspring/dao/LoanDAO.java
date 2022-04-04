@@ -1,5 +1,7 @@
 package ru.flawden.divinitybankspring.dao;
 
+import org.springframework.jdbc.core.BeanPropertyRowMapper;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
 import ru.flawden.divinitybankspring.entity.Loan;
 import ru.flawden.divinitybankspring.entity.User;
@@ -12,94 +14,31 @@ import java.util.List;
 @Component
 public class LoanDAO {
 
-    private static final String URL = "jdbc:postgresql://localhost:5432/Users";
-    private static final String USERNAME = "postgres";
-    private static final String PASSWORD = "password";
-    private static Connection connection;
+    private final JdbcTemplate jdbcTemplate;
 
-    static {
-        try {
-            Class.forName("org.postgresql.Driver");
-            connection = DriverManager.getConnection(URL, USERNAME, PASSWORD);
-        } catch (ClassNotFoundException e) {
-            System.out.println("Class not found");
-        } catch (SQLException e) {
-            System.out.println("Database connection error");
-        }
+    public LoanDAO(JdbcTemplate jdbcTemplate) {
+        this.jdbcTemplate = jdbcTemplate;
     }
 
     public List<Loan> loanList() {
-        List<Loan> loans = new ArrayList<>();
+        return jdbcTemplate.query("SELECT * FROM \"Loan\"", new BeanPropertyRowMapper<>(Loan.class));
+    }
 
-        try {
-            Statement statement = connection.createStatement();
-            String SQL = "SELECT * FROM \"Loan\"";
-            ResultSet resultSet = statement.executeQuery(SQL);
-
-            while (resultSet.next()) {
-                Loan loan = new Loan();
-
-                loan.setIssueDate(resultSet.getDate("issuedate"));
-                loan.setSumm(resultSet.getDouble("sum"));
-                loan.setInterestRate(resultSet.getDouble("interestrate"));
-                loan.setMonthlyPayment(resultSet.getDouble("monthlypayment"));
-                loan.setCreditTerm(resultSet.getInt("creditterm"));
-
-                loans.add(loan);
-            }
-        } catch (SQLException e) {
-            System.out.println("index error");
-        }
-        return loans;
+    public Loan show(int key) {
+        return jdbcTemplate.query("SELECT * FROM \"Loan\" WHERE id=?", new Object[]{key}, new BeanPropertyRowMapper<>(Loan.class))
+                .stream().findAny().orElse(null);
     }
 
     public void save(Loan loan) {
-        try {
-            PreparedStatement preparedStatement =
-                    connection.prepareStatement("INSERT INTO \"Loan\"(issuedate, sum, interestrate, monthlypayment, creditterm) VALUES(?, ?, ?, ?, ?)");
-
-            preparedStatement.setDate(1, new java.sql.Date(loan.getIssueDate().getTime()),
-                    Calendar.getInstance());
-            preparedStatement.setDouble(2, loan.getSumm());
-            preparedStatement.setDouble(3, loan.getInterestRate());
-            preparedStatement.setDouble(4, loan.getMonthlyPayment());
-            preparedStatement.setInt(5, loan.getCreditTerm());
-            preparedStatement.executeUpdate();
-        } catch (SQLException throwables) {
-            System.out.println("save error");
-        }
+        jdbcTemplate.update("INSERT INTO \"Loan\"(issuedate, sum, interestrate, monthlypayment, creditterm) VALUES(?, ?, ?, ?, ?)",new java.sql.Date(loan.getIssueDate().getTime()) , loan.getSumm(), loan.getInterestRate(), loan.getMonthlyPayment(), loan.getCreditTerm());
     }
 
-    public void update(String key, Loan loanFromUpdated) {
-//        authUser = userForUpdate;
-        try {
-            PreparedStatement preparedStatement = connection.prepareStatement("UPDATE \"Loan\" SET issuedate=?, sum=?, interestrate=?, monthlypayment=?, creditterm=? WHERE key=?");
-
-            preparedStatement.setDate(1, new java.sql.Date(loanFromUpdated.getIssueDate().getTime()),
-                    Calendar.getInstance());
-            preparedStatement.setDouble(2, loanFromUpdated.getSumm());
-            preparedStatement.setDouble(3, loanFromUpdated.getInterestRate());
-            preparedStatement.setDouble(4, loanFromUpdated.getMonthlyPayment());
-            preparedStatement.setInt(5, loanFromUpdated.getCreditTerm());
-
-            preparedStatement.executeUpdate();
-        } catch (SQLException throwables) {
-            System.out.println("Update error");
-        }
+    public void update(String key, Loan loan) {
+        jdbcTemplate.update("UPDATE \"Loan\" SET issuedate=?, sum=?, interestrate=?, monthlypayment=?, creditterm=? WHERE key=?", new java.sql.Date(loan.getIssueDate().getTime()), loan.getSumm(), loan.getInterestRate(), loan.getMonthlyPayment(), loan.getCreditTerm());
     }
 
     public void delete(String key) {
-        PreparedStatement preparedStatement =
-                null;
-        try {
-            preparedStatement = connection.prepareStatement("DELETE FROM \"Loan\" WHERE key=?");
-
-            preparedStatement.setString(1, key);
-
-            preparedStatement.executeUpdate();
-        } catch (SQLException throwables) {
-            System.out.println("Delete error");
-        }
+        jdbcTemplate.update("DELETE FROM \"Loan\" WHERE key=?", key);
     }
 
 }
