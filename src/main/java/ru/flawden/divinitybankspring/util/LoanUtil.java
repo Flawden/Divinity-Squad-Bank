@@ -1,5 +1,8 @@
 package ru.flawden.divinitybankspring.util;
 
+import ru.flawden.divinitybankspring.dto.LoanDTO;
+import ru.flawden.divinitybankspring.entity.Loan;
+
 public class LoanUtil {
 
     public int getInterestRate(String product) {
@@ -29,6 +32,16 @@ public class LoanUtil {
         }
 
         return sum;
+    }
+
+    public Loan doLoan(LoanDTO loanDTO) {
+
+        double sum = loanDTO.getSumm();
+        int term = loanDTO.getLoanTerm();
+        int interestRate = getInterestRate(loanDTO.getProduct());
+        double monthlyPayment = calculateSumPerMonth(loanDTO.getSumm(), term);
+
+        return new Loan(sum, interestRate, monthlyPayment, term);
     }
 
 

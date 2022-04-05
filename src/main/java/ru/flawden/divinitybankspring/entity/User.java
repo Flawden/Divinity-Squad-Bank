@@ -7,7 +7,7 @@ import java.util.*;
 public class User implements Serializable{
 
     //Убрать примитивы
-    private int id;
+    private Integer id;
     private Date registrationDate = new Date();
     private final SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd.MM.yyyy"); //Только там, где она непосредственно используется
     private String firstName;
@@ -15,7 +15,7 @@ public class User implements Serializable{
     private String email;
     private String password;
     private Date birthdate = new Date();
-    private boolean gender;
+    private Boolean gender;
     private List<Loan> loanList = new ArrayList<>();
     private List<DebitCard> debitCardList = new ArrayList<>();
 

@@ -34,7 +34,6 @@ public class DebitController {
             return "redirect:/authorization";
         } else {
             userDAO.authUser.setDebitCardList(debitCardDAO.index(user.getEmail()));
-            String debit = userDAO.authUser.getDebitCardList().toString();
             model.addAttribute("User" , user);
         }
         return "profile/debit-card";
@@ -44,7 +43,7 @@ public class DebitController {
     @GetMapping("/create-debit")
     public String createDebit(Model model) {
         User user = userDAO.authUser;
-
+//Внедрить работу с БД
         if (user == null) {
             return "mainpages/authorization";
         } else {
