@@ -1,42 +1,79 @@
 package ru.flawden.divinitybankspring.dao;
 
-import org.springframework.jdbc.core.BeanPropertyRowMapper;
-import org.springframework.jdbc.core.JdbcTemplate;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import ru.flawden.divinitybankspring.entity.User;
+import org.springframework.transaction.annotation.Transactional;
+import ru.flawden.divinitybankspring.dto.UserDTO;
+import ru.flawden.divinitybankspring.entity.UserEntity;
 
-import java.sql.*;
-import java.util.*;
+import javax.persistence.Query;
+import java.util.ArrayList;
+import java.util.List;
 
 @Component
 public class UserDAO {
 
-    private final JdbcTemplate jdbcTemplate;
-    public User authUser;
+    private final SessionFactory sessionFactory;
+    public static UserEntity authUser;
 
-    public UserDAO(JdbcTemplate jdbcTemplate) {
-        this.jdbcTemplate = jdbcTemplate;
+    @Autowired
+    public UserDAO(SessionFactory sessionFactory) {
+        this.sessionFactory = sessionFactory;
     }
 
-    public List<User> index() {
-        return jdbcTemplate.query("SELECT * FROM \"User\"", new BeanPropertyRowMapper<>(User.class));
+    @Transactional(readOnly = true)
+    public List<UserEntity> index() {
+        Session session = sessionFactory.getCurrentSession();
+
+        return session.createQuery("select p from UserEntity p", UserEntity.class)
+                .getResultList();
     }
 
-    public User show(int id) {
-        return jdbcTemplate.query("SELECT * FROM \"User\" WHERE id=?", new Object[]{id}, new BeanPropertyRowMapper<>(User.class))
-                .stream().findAny().orElse(null);
+    @Transactional(readOnly = true)
+    public UserEntity show(Long id) {
+        Session session = sessionFactory.getCurrentSession();
+        return session.get(UserEntity.class, id);
     }
 
-    public void save(User user) {
-        jdbcTemplate.update("INSERT INTO \"User\"(firstname, lastname, email, password, registrationdate) VALUES(?, ?, ?, ?, ?)", user.getFirstName(), user.getLastName(), user.getEmail(), user.getPassword(), new java.sql.Date(user.getRegistrationDate().getTime()));
+    @Transactional(readOnly = true)
+    public UserEntity findByEmailAndPassword(UserDTO userDTO) {
+        Session session = sessionFactory.getCurrentSession();
+        Query query = session.createQuery("from UserEntity where email=:email and password=:password");
+        query.setParameter("email", userDTO.getEmail());
+        query.setParameter("password", userDTO.getPassword());
+        List userList = query.getResultList();
+        UserEntity userEntity = null;
+        try {
+            userEntity = (UserEntity) userList.get(0);
+            authUser = userEntity;
+        } catch (Exception e) {
+
+        }
+        return userEntity;
     }
 
-    public void update(int id, User user) {
-        jdbcTemplate.update("UPDATE \"User\" SET firstname=?, lastname=?, email=?, password=? WHERE id=?", user.getFirstName(), user.getLastName(), user.getEmail(), user.getPassword(), user.getId());
+    @Transactional
+    public void save(UserEntity user) {
+        Session session = sessionFactory.getCurrentSession();
+        session.save(user);
     }
 
+    @Transactional
+    public void update(int id, UserEntity updatedUser) {
+        Session session = sessionFactory.getCurrentSession();
+        UserEntity personToBeUpdated = session.get(UserEntity.class, id);
+
+        personToBeUpdated.setFirstName(updatedUser.getFirstName());
+        personToBeUpdated.setLastName(updatedUser.getLastName());
+        personToBeUpdated.setEmail(updatedUser.getEmail());
+        personToBeUpdated.setPassword(updatedUser.getPassword());
+    }
+
+    @Transactional
     public void delete(int id) {
-        jdbcTemplate.update("DELETE FROM \"User\" WHERE id=?", id);
+        Session session = sessionFactory.getCurrentSession();
+        session.remove(session.get(UserEntity.class, id));
     }
-
 }

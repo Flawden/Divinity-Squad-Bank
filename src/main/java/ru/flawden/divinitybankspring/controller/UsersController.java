@@ -6,7 +6,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import ru.flawden.divinitybankspring.dao.UserDAO;
 import ru.flawden.divinitybankspring.dto.UserDTO;
-import ru.flawden.divinitybankspring.entity.User;
+import ru.flawden.divinitybankspring.entity.UserEntity;
 
 @Controller
 @RequestMapping("/users")
@@ -21,12 +21,15 @@ public class UsersController {
 
     @GetMapping()
     public String index(@ModelAttribute("userDTO") UserDTO userDTO) {
+        if (userDAO.authUser != null) {
+            return "redirect:/users/" + userDAO.authUser.getId();
+        }
         return "/mainpages/authorization";
     }
 
     @PostMapping()
     public String authVer(@ModelAttribute("userDTO") UserDTO userDTO) {
-        if (userDTO.checkAuth(userDAO)) {
+        if (userDTO.checkAuth(userDAO, userDTO)) {
             return "redirect:/users/" + userDAO.authUser.getId();
         } else {
             return "/mainpages/authorization";
@@ -35,17 +38,21 @@ public class UsersController {
     }
 
     @GetMapping("/{id}")
-    public String show(@PathVariable("id") int id, Model model) {
-        if (!userDAO.authUser.equals(userDAO.show(id))) {
+    public String show(@PathVariable("id") Long id, Model model) {
+        UserEntity user = userDAO.show(id);
+        System.out.println(user + " AND " + userDAO.authUser);
+        if (!userDAO.authUser.equals(user)) {
+            System.out.println("Ошибка авторизации");
             return "redirect:/users";
         }
-        model.addAttribute("User", userDAO.show(id));
+        System.out.println("Авторизация прошла");
+        model.addAttribute("User", user);
         return "/profile/user-page";
     }
 
     @GetMapping("/{id}/edit")
-    public String edit(@PathVariable("id") int id, Model model) {
-        User user = userDAO.show(id);
+    public String edit(@PathVariable("id") Long id, Model model) {
+        UserEntity user = userDAO.show(id);
         if (!userDAO.authUser.equals(user)) {
             return "redirect:/users";
         }
@@ -55,18 +62,18 @@ public class UsersController {
     }
 
     @PatchMapping("/{id}/edit")
-    public String update(@ModelAttribute("user") User user, @PathVariable("id") int id, Model model) {
+    public String update(@ModelAttribute("user") UserEntity user, @PathVariable("id") int id, Model model) {
         userDAO.update(id, user);
         return "redirect:/users/" + userDAO.authUser.getId();
     }
 
     @GetMapping("/registration")
-    public String newUser(@ModelAttribute("user") User user) {
+    public String newUser(@ModelAttribute("user") UserEntity user) {
         return "mainpages/registration";
     }
 
     @PostMapping("/registration")
-    public String create(@ModelAttribute("user") User user) {
+    public String create(@ModelAttribute("user") UserEntity user) {
         userDAO.save(user);
         return "redirect:/users/";
     }
@@ -79,7 +86,7 @@ public class UsersController {
 
     @GetMapping("{id}/profile")
     public String returnProfile(Model model) {
-        User user = userDAO.authUser;
+        UserEntity user = userDAO.authUser;
         if (user == null) {
             return "redirect:/authorization";
         } else {
