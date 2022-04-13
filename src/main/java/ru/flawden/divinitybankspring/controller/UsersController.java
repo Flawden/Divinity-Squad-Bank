@@ -40,12 +40,9 @@ public class UsersController {
     @GetMapping("/{id}")
     public String show(@PathVariable("id") Long id, Model model) {
         UserEntity user = userDAO.show(id);
-        System.out.println(user + " AND " + userDAO.authUser);
         if (!userDAO.authUser.equals(user)) {
-            System.out.println("Ошибка авторизации");
             return "redirect:/users";
         }
-        System.out.println("Авторизация прошла");
         model.addAttribute("User", user);
         return "/profile/user-page";
     }

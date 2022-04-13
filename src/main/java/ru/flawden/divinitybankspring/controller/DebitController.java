@@ -47,9 +47,7 @@ public class DebitController {
         if (user == null) {
             return "mainpages/authorization";
         } else {
-//            String key = user.getEmail();
             DebitCardEntity debitCard = debitCreator.doDebitCard();
-//            debitCardDAO.save(debitCard);
             userDAO.addDebitCard(debitCard);
         }
         return "redirect:/users/" + user.getId();

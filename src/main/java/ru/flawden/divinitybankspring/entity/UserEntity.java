@@ -30,12 +30,26 @@ public class UserEntity {
     })
     List<DebitCardEntity> debitCardList;
 
+    @OneToMany(fetch = FetchType.EAGER ,mappedBy = "user", cascade = {
+            CascadeType.PERSIST, CascadeType.MERGE,
+            CascadeType.DETACH, CascadeType.REFRESH
+    })
+    List<DebitCardEntity> loanList;
+
     public List<DebitCardEntity> getDebitCardList() {
         return debitCardList;
     }
 
     public void setDebitCardList(List<DebitCardEntity> debitCardList) {
         this.debitCardList = debitCardList;
+    }
+
+    public List<DebitCardEntity> getLoanList() {
+        return loanList;
+    }
+
+    public void setLoanList(List<DebitCardEntity> loanList) {
+        this.loanList = loanList;
     }
 
     public Long getId() {
