@@ -1,6 +1,7 @@
 package ru.flawden.divinitybankspring.entity;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name = "userentity")
@@ -22,6 +23,20 @@ public class UserEntity {
 
     @Column(name = "password")
     private String password;
+
+    @OneToMany(fetch = FetchType.EAGER ,mappedBy = "user", cascade = {
+            CascadeType.PERSIST, CascadeType.MERGE,
+            CascadeType.DETACH, CascadeType.REFRESH
+    })
+    List<DebitCardEntity> debitCardList;
+
+    public List<DebitCardEntity> getDebitCardList() {
+        return debitCardList;
+    }
+
+    public void setDebitCardList(List<DebitCardEntity> debitCardList) {
+        this.debitCardList = debitCardList;
+    }
 
     public Long getId() {
         return id;

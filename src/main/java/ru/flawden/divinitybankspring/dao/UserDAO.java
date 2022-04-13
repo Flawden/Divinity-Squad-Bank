@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 import ru.flawden.divinitybankspring.dto.UserDTO;
+import ru.flawden.divinitybankspring.entity.DebitCardEntity;
 import ru.flawden.divinitybankspring.entity.UserEntity;
 
 import javax.persistence.Query;
@@ -58,6 +59,17 @@ public class UserDAO {
     public void save(UserEntity user) {
         Session session = sessionFactory.getCurrentSession();
         session.save(user);
+    }
+
+    @Transactional
+    public void addDebitCard(DebitCardEntity debitCard) {
+        Session session = sessionFactory.getCurrentSession();
+        if(authUser.getDebitCardList() == null) {
+            authUser.setDebitCardList(new ArrayList<>());
+        }
+        debitCard.setUser(authUser);
+//        authUser.getDebitCardList().add(debitCard);
+        session.save(debitCard);
     }
 
     @Transactional
