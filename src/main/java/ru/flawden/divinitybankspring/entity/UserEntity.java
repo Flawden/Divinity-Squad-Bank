@@ -25,8 +25,7 @@ public class UserEntity {
     private String password;
 
     @OneToMany(fetch = FetchType.EAGER ,mappedBy = "user", cascade = {
-            CascadeType.PERSIST, CascadeType.MERGE,
-            CascadeType.DETACH, CascadeType.REFRESH
+            CascadeType.ALL
     })
     List<DebitCardEntity> debitCardList;
 

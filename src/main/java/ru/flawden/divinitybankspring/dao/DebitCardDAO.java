@@ -16,7 +16,6 @@ import java.util.List;
 public class DebitCardDAO {
 
     private final SessionFactory sessionFactory;
-    public static UserEntity authUser;
 
     @Autowired
     public DebitCardDAO(SessionFactory sessionFactory) {
@@ -37,18 +36,6 @@ public class DebitCardDAO {
     public DebitCardEntity show(Long id) {
         Session session = sessionFactory.getCurrentSession();
         return session.get(DebitCardEntity.class, id);
-    }
-
-    @Transactional
-    public void save(DebitCardEntity debitCard) {
-        Session session = sessionFactory.getCurrentSession();
-        session.save(debitCard);
-    }
-
-    @Transactional
-    public void delete(int id) {
-        Session session = sessionFactory.getCurrentSession();
-        session.remove(session.get(DebitCardEntity.class, id));
     }
 
 }

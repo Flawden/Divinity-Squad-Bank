@@ -83,7 +83,7 @@ public class UserDAO {
     }
 
     @Transactional
-    public void update(int id, UserEntity updatedUser) {
+    public void update(Long id, UserEntity updatedUser) {
         Session session = sessionFactory.getCurrentSession();
         UserEntity personToBeUpdated = session.get(UserEntity.class, id);
 
@@ -94,7 +94,7 @@ public class UserDAO {
     }
 
     @Transactional
-    public void delete(int id) {
+    public void delete(Long id) {
         Session session = sessionFactory.getCurrentSession();
         session.remove(session.get(UserEntity.class, id));
     }

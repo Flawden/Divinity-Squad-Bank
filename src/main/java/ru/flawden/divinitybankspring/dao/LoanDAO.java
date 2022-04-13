@@ -16,7 +16,6 @@ import java.util.List;
 public class LoanDAO {
 
     private final SessionFactory sessionFactory;
-    public static UserEntity authUser;
 
     @Autowired
     public LoanDAO(SessionFactory sessionFactory) {
@@ -33,22 +32,6 @@ public class LoanDAO {
         return loanList;
     }
 
-    @Transactional(readOnly = true)
-    public DebitCardEntity show(Long id) {
-        Session session = sessionFactory.getCurrentSession();
-        return session.get(DebitCardEntity.class, id);
-    }
 
-    @Transactional
-    public void save(LoanEntity loanEntity) {
-        Session session = sessionFactory.getCurrentSession();
-        session.save(loanEntity);
-    }
-
-    @Transactional
-    public void delete(Long id) {
-        Session session = sessionFactory.getCurrentSession();
-        session.remove(session.get(LoanEntity.class, id));
-    }
 
 }

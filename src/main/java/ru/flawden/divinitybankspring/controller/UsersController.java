@@ -59,7 +59,7 @@ public class UsersController {
     }
 
     @PatchMapping("/{id}/edit")
-    public String update(@ModelAttribute("user") UserEntity user, @PathVariable("id") int id, Model model) {
+    public String update(@ModelAttribute("user") UserEntity user, @PathVariable("id") Long id, Model model) {
         userDAO.update(id, user);
         return "redirect:/users/" + userDAO.authUser.getId();
     }
@@ -76,9 +76,10 @@ public class UsersController {
     }
 
     @DeleteMapping("/{id}")
-    public String delete(@PathVariable("id") int id, Model model) {
+    public String delete(@PathVariable("id") Long id) {
         userDAO.delete(id);
-        return "redirect:/users";
+        userDAO.authUser = null;
+        return "/mainpages/authorization";
     }
 
     @GetMapping("{id}/profile")
