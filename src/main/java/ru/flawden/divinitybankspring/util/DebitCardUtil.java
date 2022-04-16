@@ -33,8 +33,14 @@ public class DebitCardUtil {
 
     }
 
-    public DebitCardEntity doDebitCard() {
-        String num = createCardNumber();
+    public DebitCardEntity doDebitCard(UserDAO userDAO) {
+        String num = null;
+        while (true) {
+            num = createCardNumber();
+            if (num != null) {
+                break;
+            }
+        }
         int cvv = createCVV();
         return new DebitCardEntity(num, cvv);
     }

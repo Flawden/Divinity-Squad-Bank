@@ -63,11 +63,20 @@ public class UserDAO {
     }
 
     @Transactional
+    public String checkCardNumExist(String num) {
+        Session session = sessionFactory.getCurrentSession();
+        Query query = session.createQuery("FROM DebitCardEntity WHERE cardNumber=:cardNumber");
+        query.setParameter("cardNumber", num);
+        num = (String) query.getResultStream().findAny().get();
+        System.out.println(num);
+        return num;
+    }
+    @Transactional
     public void addDebitCard(DebitCardEntity debitCard) {
         Session session = sessionFactory.getCurrentSession();
-        if(authUser.getDebitCardList() == null) {
-            authUser.setDebitCardList(new ArrayList<>());
-        }
+//        if(authUser.getDebitCardList() == null) {
+//            authUser.setDebitCardList(new ArrayList<>());
+//            }
         debitCard.setUser(authUser);
         session.save(debitCard);
     }
@@ -75,9 +84,9 @@ public class UserDAO {
     @Transactional
     public void addLoan(LoanEntity loan) {
         Session session = sessionFactory.getCurrentSession();
-        if(authUser.getDebitCardList() == null) {
-            authUser.setDebitCardList(new ArrayList<>());
-        }
+//        if(authUser.getDebitCardList() == null) {
+//            authUser.setDebitCardList(new ArrayList<>());
+//        }
         loan.setUser(authUser);
         session.save(loan);
     }
@@ -96,6 +105,6 @@ public class UserDAO {
     @Transactional
     public void delete(Long id) {
         Session session = sessionFactory.getCurrentSession();
-        session.remove(session.get(UserEntity.class, id));
+        session.delete(session.get(UserEntity.class, id));
     }
 }

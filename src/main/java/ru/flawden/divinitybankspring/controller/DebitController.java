@@ -47,7 +47,7 @@ public class DebitController {
         if (user == null) {
             return "mainpages/authorization";
         } else {
-            DebitCardEntity debitCard = debitCreator.doDebitCard();
+            DebitCardEntity debitCard = debitCreator.doDebitCard(userDAO);
             userDAO.addDebitCard(debitCard);
         }
         return "redirect:/users/" + user.getId();
