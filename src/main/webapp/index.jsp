@@ -7,8 +7,8 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <link rel="stylesheet" href="resources/css/style.css">
-    <link type="image/x-icon" href="resources/img/ico/Logo.svg" rel="icon">
+    <link rel="stylesheet" href="resources/static/css/style.css">
+    <link type="image/x-icon" href="resources/static/img/ico/Logo.svg" rel="icon">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><%= bundle.getString("bank_name") %></title>
@@ -43,7 +43,7 @@
                 </nav>
 
                 <div class="header__logo">
-                    <img src="resources/img/ico/Logo.svg" alt="">
+                    <img src="resources/static/img/ico/Logo.svg" alt="">
                 </div>
 
             </div>
@@ -54,7 +54,7 @@
 
         <div class="main-screen">
             <div class="main-screen__bg ibg">
-                <img src="resources/img/bg_main.png" alt="">
+                <img src="resources/static/img/bg_main.png" alt="">
             </div>
         </div>
     </main>
@@ -69,8 +69,8 @@
 </main>
 </div>
 
-<script type="text/javascript" src="resources/js/jquery-3.6.0.min.js"></script>
-<script type="text/javascript" src="resources/js/Script.js"></script>
+<script type="text/javascript" src="resources/static/js/jquery-3.6.0.min.js"></script>
+<script type="text/javascript" src="resources/static/js/Script.js"></script>
 
 </body>
 </html>
