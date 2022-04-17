@@ -26,15 +26,15 @@
             </div>
             <!-- Main - start -->
             <div class="main">
-                <div class="main__card block">
-                    <h2 class="card__header header">Debit cards:</h2>
-
-                    <div class="card">
-                        <div class="card__block">
-                            <div class="card__sum sum" th:text="${User.getDebitCardList()}">10 000$</div>
+                <th:block class="loan" th:each="card: ${debitCardList}">
+                    <div class="main__card block">
+                        <div class="card">
+                            <div class="card__block">
+                                <div class="card__sum sum" th:text="*{card.toString()}">10 000$</div>
+                            </div>
                         </div>
                     </div>
-                </div>
+                </th:block>
             </div>
             <!-- Main - finish -->
         </div>

@@ -2,6 +2,7 @@ package ru.flawden.divinitybankspring.entity;
 
 import javax.persistence.*;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "userentity")
@@ -24,16 +25,15 @@ public class UserEntity {
     @Column(name = "password")
     private String password;
 
-    @OneToMany(fetch = FetchType.EAGER ,mappedBy = "user", cascade = {
+    @OneToMany(fetch = FetchType.LAZY ,mappedBy = "cardOwner", cascade = {
             CascadeType.ALL
     })
     List<DebitCardEntity> debitCardList;
 
-    @OneToMany(fetch = FetchType.EAGER ,mappedBy = "user", cascade = {
-            CascadeType.PERSIST, CascadeType.MERGE,
-            CascadeType.DETACH, CascadeType.REFRESH
+    @OneToMany(fetch = FetchType.LAZY ,mappedBy = "loanOwner", cascade = {
+            CascadeType.ALL
     })
-    List<DebitCardEntity> loanList;
+    List<LoanEntity> loanList;
 
     public List<DebitCardEntity> getDebitCardList() {
         return debitCardList;
@@ -43,11 +43,11 @@ public class UserEntity {
         this.debitCardList = debitCardList;
     }
 
-    public List<DebitCardEntity> getLoanList() {
+    public List<LoanEntity> getLoanList() {
         return loanList;
     }
 
-    public void setLoanList(List<DebitCardEntity> loanList) {
+    public void setLoanList(List<LoanEntity> loanList) {
         this.loanList = loanList;
     }
 
@@ -111,20 +111,16 @@ public class UserEntity {
 
         UserEntity that = (UserEntity) o;
 
-        if (id != null ? !id.equals(that.id) : that.id != null) return false;
-        if (firstName != null ? !firstName.equals(that.firstName) : that.firstName != null) return false;
-        if (lastName != null ? !lastName.equals(that.lastName) : that.lastName != null) return false;
-        if (email != null ? !email.equals(that.email) : that.email != null) return false;
-        return password != null ? password.equals(that.password) : that.password == null;
+        if (!id.equals(that.id)) return false;
+        if (!email.equals(that.email)) return false;
+        return password.equals(that.password);
     }
 
     @Override
     public int hashCode() {
-        int result = id != null ? id.hashCode() : 0;
-        result = 31 * result + (firstName != null ? firstName.hashCode() : 0);
-        result = 31 * result + (lastName != null ? lastName.hashCode() : 0);
-        result = 31 * result + (email != null ? email.hashCode() : 0);
-        result = 31 * result + (password != null ? password.hashCode() : 0);
+        int result = id.hashCode();
+        result = 31 * result + email.hashCode();
+        result = 31 * result + password.hashCode();
         return result;
     }
 }

@@ -74,9 +74,6 @@ public class UserDAO {
     @Transactional
     public void addDebitCard(DebitCardEntity debitCard) {
         Session session = sessionFactory.getCurrentSession();
-//        if(authUser.getDebitCardList() == null) {
-//            authUser.setDebitCardList(new ArrayList<>());
-//            }
         debitCard.setUser(authUser);
         session.save(debitCard);
     }
@@ -84,10 +81,8 @@ public class UserDAO {
     @Transactional
     public void addLoan(LoanEntity loan) {
         Session session = sessionFactory.getCurrentSession();
-//        if(authUser.getDebitCardList() == null) {
-//            authUser.setDebitCardList(new ArrayList<>());
-//        }
         loan.setUser(authUser);
+        System.out.println(loan);
         session.save(loan);
     }
 

@@ -26,13 +26,13 @@
             </div>
             <!-- Main - start -->
             <div class="main">
-                <div class="main__loan block">
-                    <h2 class="loan__header header">Loans:</h2>
-
-                    <div class="loan">
-                        <div class="loan__sum sum" th:text="${User.getLoanList()}">30 000.00</div>
-                    </div>
-                </div>
+                <th:block class="loan" th:each="loan: ${loanList}">
+                        <div class="main__loan block">
+                            <div class="loan">
+                                <div class="loan__sum sum" th:text="*{loan.toString()}">30 000.00</div>
+                            </div>
+                        </div>
+                </th:block>
             </div>
             <!-- Main - finish -->
         </div>

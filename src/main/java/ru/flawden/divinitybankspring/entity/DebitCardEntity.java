@@ -42,15 +42,15 @@ public class DebitCardEntity {
     private int cvv;
 
     @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "user_id")
-    private UserEntity user;
+    @JoinColumn(name = "cardowner_id")
+    private UserEntity cardOwner;
 
     public UserEntity getUser() {
-        return user;
+        return cardOwner;
     }
 
     public void setUser(UserEntity user) {
-        this.user = user;
+        this.cardOwner = user;
     }
 
     public DebitCardEntity() {}

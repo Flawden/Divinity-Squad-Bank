@@ -39,7 +39,7 @@ public class LoanUtil {
         double sum = loanDTO.getSumm();
         int term = loanDTO.getLoanTerm();
         int interestRate = getInterestRate(loanDTO.getProduct());
-        double monthlyPayment = calculateSumPerMonth(loanDTO.getSumm(), term);
+        double monthlyPayment = calculateSumPerMonth(sum, term);
 
         return new LoanEntity(sum, interestRate, monthlyPayment, term);
     }

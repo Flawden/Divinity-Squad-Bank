@@ -26,7 +26,7 @@ public class DebitCardDAO {
     public List<DebitCardEntity> index(UserEntity authUser) {
         Session session = sessionFactory.getCurrentSession();
 
-        Query query = session.createQuery("FROM DebitCardEntity WHERE user=:user");
+        Query query = session.createQuery("FROM DebitCardEntity WHERE cardOwner=:user");
         query.setParameter("user", authUser);
         List debitCardList = query.getResultList();
         return debitCardList;

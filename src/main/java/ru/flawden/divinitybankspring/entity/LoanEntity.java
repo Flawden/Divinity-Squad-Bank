@@ -7,7 +7,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 @Entity
-@Table(name = "Loan")
+@Table(name = "loan")
 public class LoanEntity {
 
     @Transient
@@ -16,9 +16,9 @@ public class LoanEntity {
     @Id
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    private Long id;
 
-    @Column(name = "issueDate")
+    @Column(name = "issuedate")
     @Temporal(TemporalType.DATE)
     @DateTimeFormat(pattern = "dd/MM/yyyy") // дд/мм/гггг
     private Date issueDate = new Date();
@@ -37,14 +37,14 @@ public class LoanEntity {
 
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "user_id")
-    private UserEntity user;
+    private UserEntity loanOwner;
 
     public UserEntity getUser() {
-        return user;
+        return loanOwner;
     }
 
     public void setUser(UserEntity user) {
-        this.user = user;
+        this.loanOwner = user;
     }
 
     public LoanEntity() {

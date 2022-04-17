@@ -23,10 +23,10 @@ public class LoanDAO {
     }
 
     @Transactional(readOnly = true)
-    public List<DebitCardEntity> index(UserEntity authUser) {
+    public List<LoanEntity> index(UserEntity authUser) {
         Session session = sessionFactory.getCurrentSession();
 
-        Query query = session.createQuery("FROM LoanEntity WHERE user=:user");
+        Query query = session.createQuery("FROM LoanEntity WHERE loanOwner=:user");
         query.setParameter("user", authUser);
         List loanList = query.getResultList();
         return loanList;

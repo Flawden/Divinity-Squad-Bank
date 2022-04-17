@@ -11,11 +11,12 @@ import ru.flawden.divinitybankspring.entity.*;
 import ru.flawden.divinitybankspring.util.LoanUtil;
 
 import java.util.Date;
+import java.util.List;
 
 @Controller
 public class LoanController {
 
-    LoanUtil loanUtil = new LoanUtil();
+    private LoanUtil loanUtil;
     private final UserDAO userDAO;
     private final LoanDAO loanDAO;
 
@@ -23,6 +24,7 @@ public class LoanController {
     public LoanController(UserDAO userDAO, LoanDAO loanDAO) {
         this.userDAO = userDAO;
         this.loanDAO = loanDAO;
+        this.loanUtil = new LoanUtil();
     }
 
 
@@ -33,8 +35,9 @@ public class LoanController {
         if (user == null) {
             return "mainpages/authorization";
         } else {
-            userDAO.authUser.setLoanList(loanDAO.index(user));
+            List<LoanEntity> loanList = loanDAO.index(user);
             model.addAttribute("User" , user);
+            model.addAttribute("loanList", loanList);
         }
 
         return "profile/loan";
@@ -50,7 +53,6 @@ public class LoanController {
         }
     }
 
-    //Реквест парамы нахер
     @PostMapping("/create-loan")
     public String createLoan(@ModelAttribute("loan") LoanDTO loanDTO) {
         UserEntity user = userDAO.authUser;

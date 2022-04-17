@@ -6,16 +6,21 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import ru.flawden.divinitybankspring.dao.DebitCardDAO;
+import ru.flawden.divinitybankspring.dao.LoanDAO;
 import ru.flawden.divinitybankspring.dao.UserDAO;
 import ru.flawden.divinitybankspring.entity.DebitCardEntity;
+import ru.flawden.divinitybankspring.entity.LoanEntity;
 import ru.flawden.divinitybankspring.entity.UserEntity;
 import ru.flawden.divinitybankspring.util.DebitCardUtil;
+
+import java.util.List;
 
 @Controller
 public class DebitController {
 
     private final UserDAO userDAO;
     private final DebitCardDAO debitCardDAO;
+
     private final DebitCardUtil debitCreator;
 
     @Autowired
@@ -33,17 +38,16 @@ public class DebitController {
         if (user == null) {
             return "redirect:/authorization";
         } else {
-            userDAO.authUser.setDebitCardList(debitCardDAO.index(userDAO.authUser));
+            List<DebitCardEntity> loanList = debitCardDAO.index(user);
             model.addAttribute("User" , user);
+            model.addAttribute("debitCardList", loanList);
         }
         return "profile/debit-card";
     }
 
-    //Может пост?
     @GetMapping("/create-debit")
     public String createDebit(Model model) {
         UserEntity user = userDAO.authUser;
-//Внедрить работу с БД
         if (user == null) {
             return "mainpages/authorization";
         } else {

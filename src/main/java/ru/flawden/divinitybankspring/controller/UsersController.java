@@ -22,6 +22,7 @@ public class UsersController {
     @GetMapping()
     public String index(@ModelAttribute("userDTO") UserDTO userDTO) {
         if (userDAO.authUser != null) {
+            System.out.println(userDAO.authUser);
             return "redirect:/users/" + userDAO.authUser.getId();
         }
         return "/mainpages/authorization";
@@ -79,7 +80,7 @@ public class UsersController {
     public String delete(@PathVariable("id") Long id) {
         userDAO.delete(id);
         userDAO.authUser = null;
-        return "/mainpages/authorization";
+        return "redirect:/users";
     }
 
     @GetMapping("{id}/profile")
