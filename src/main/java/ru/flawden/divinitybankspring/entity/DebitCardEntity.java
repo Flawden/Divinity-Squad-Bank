@@ -70,6 +70,10 @@ public class DebitCardEntity {
         this.createdDate = createdDate;
     }
 
+    public Double getBalance() {
+        return balance;
+    }
+
     public void setBalance(double balance) {
         this.balance = balance;
     }

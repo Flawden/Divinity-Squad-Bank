@@ -44,20 +44,20 @@
                 <div class="main__balance block">
                     <h2 class="balance__header header">Available funds:</h2>
                   
-                    <h3 class="balance__text name">Balance: <p class="balance__sum sum"}>In developing</p></h3>
+                    <h3 class="balance__text name">Balance: <p class="balance__sum sum" th:text="${balance}"}>In developing</p></h3>
                 </div>
 
                 <div class="main__card block">
                     <h2 class="card__header header">Debit cards:</h2>
 
-                    <div class="card">
+                    <th:block class="card" th:each="card: ${debitCardList}">
                         <div class="card__block">
-                            <div class="card__name name">In developing</div>
+                            <div class="card__name name" th:text="*{card.cardNumber}">In developing</div>
                         </div>
                        <div class="card__block">
-                            <div class="card__sum sum">In developing</div>
+                            <div class="card__sum sum" th:text="*{card.getBalance()}">In developing</div>
                         </div>
-                    </div>
+                    </th:block>
 
                     <a href="/create-debit" class="debit__takenew takenew">Issue a card</a>
                 </div>
@@ -65,10 +65,10 @@
                 <div class="main__loan block">
                     <h2 class="loan__header header">Loans:</h2>
                   
-                    <div class="loan">
-                        <div class="loan__name name">In developing</div>
-                        <div class="loan__sum sum">In developing</div>
-                    </div>
+                    <th:block class="loan" th:each="loan: ${loanList}">
+                        <div class="loan__name name" th:text="*{loan.issueDate}">In developing</div>
+                        <div class="loan__sum sum" th:text="*{loan.sum}">In developing</div>
+                    </th:block>
 
                     <a href="/create-loan" class="loan__takenew takenew">Apply for a loan</a>
                 </div>

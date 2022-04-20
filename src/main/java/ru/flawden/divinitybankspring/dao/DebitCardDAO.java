@@ -33,6 +33,34 @@ public class DebitCardDAO {
     }
 
     @Transactional(readOnly = true)
+    public Double getBalance(UserEntity authUser) {
+        Session session = sessionFactory.getCurrentSession();
+
+        Double sum = 0.0;
+
+        Query query = session.createQuery("FROM DebitCardEntity WHERE cardOwner=:user");
+        query.setParameter("user", authUser);
+        List<DebitCardEntity> debitCardList = query.getResultList();
+
+        for (DebitCardEntity debitCard: debitCardList) {
+            sum += debitCard.getBalance();
+        }
+
+        return sum;
+    }
+
+    @Transactional(readOnly = true)
+    public List<DebitCardEntity> getTwoDebitCard(UserEntity authUser) {
+        Session session = sessionFactory.getCurrentSession();
+
+        Query query = session.createQuery("FROM DebitCardEntity WHERE cardOwner=:user");
+        query.setParameter("user", authUser);
+        query.setMaxResults(2);
+        List debitCardList = query.getResultList();
+        return debitCardList;
+    }
+
+    @Transactional(readOnly = true)
     public DebitCardEntity show(Long id) {
         Session session = sessionFactory.getCurrentSession();
         return session.get(DebitCardEntity.class, id);

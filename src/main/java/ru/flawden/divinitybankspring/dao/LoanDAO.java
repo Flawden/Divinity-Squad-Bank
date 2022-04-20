@@ -32,6 +32,15 @@ public class LoanDAO {
         return loanList;
     }
 
+    @Transactional(readOnly = true)
+    public List<LoanEntity> getTwoLoan(UserEntity authUser) {
+        Session session = sessionFactory.getCurrentSession();
 
+        Query query = session.createQuery("FROM LoanEntity WHERE loanOwner=:user");
+        query.setParameter("user", authUser);
+        query.setMaxResults(2);
+        List loanList = query.getResultList();
+        return loanList;
+    }
 
 }

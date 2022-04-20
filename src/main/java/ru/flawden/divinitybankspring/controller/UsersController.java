@@ -4,19 +4,28 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import ru.flawden.divinitybankspring.dao.DebitCardDAO;
+import ru.flawden.divinitybankspring.dao.LoanDAO;
 import ru.flawden.divinitybankspring.dao.UserDAO;
 import ru.flawden.divinitybankspring.dto.UserDTO;
+import ru.flawden.divinitybankspring.entity.DebitCardEntity;
 import ru.flawden.divinitybankspring.entity.UserEntity;
+
+import java.util.List;
 
 @Controller
 @RequestMapping("/users")
 public class UsersController {
 
     private final UserDAO userDAO;
+    private final DebitCardDAO debitCardDAO;
+    private final LoanDAO loanDAO;
 
     @Autowired
-    public UsersController(UserDAO userDAO) {
+    public UsersController(UserDAO userDAO, DebitCardDAO debitCardDAO, LoanDAO loanDAO) {
         this.userDAO = userDAO;
+        this.debitCardDAO = debitCardDAO;
+        this.loanDAO = loanDAO;
     }
 
     @GetMapping()
@@ -44,7 +53,10 @@ public class UsersController {
         if (!userDAO.authUser.equals(user)) {
             return "redirect:/users";
         }
+        model.addAttribute("debitCardList", debitCardDAO.getTwoDebitCard(user));
         model.addAttribute("User", user);
+        model.addAttribute("balance", debitCardDAO.getBalance(user));
+        model.addAttribute("loanList", loanDAO.getTwoLoan(user));
         return "/profile/user-page";
     }
 
