@@ -1,5 +1,6 @@
 package ru.flawden.divinitybankspring.util;
 
+import org.springframework.security.core.userdetails.User;
 import ru.flawden.divinitybankspring.dao.UserDAO;
 import ru.flawden.divinitybankspring.entity.DebitCardEntity;
 
@@ -16,6 +17,7 @@ public class DebitCardUtil {
     }
 
     public String createCardNumber() {
+        UserDAO userDAO;
         Random rnd = new Random();
         int part = 0;
         String num = "";
@@ -26,7 +28,6 @@ public class DebitCardUtil {
                 num += part + " ";
             }
             break;
-            //Написать логику по проверке номеров карт на уникальность
         }
 
         return num;
@@ -37,7 +38,7 @@ public class DebitCardUtil {
         String num = null;
         while (true) {
             num = createCardNumber();
-            if (num != null) {
+            if (!userDAO.checkCardNumExist(num)) {
                 break;
             }
         }

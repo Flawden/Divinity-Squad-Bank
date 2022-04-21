@@ -63,13 +63,18 @@ public class UserDAO {
     }
 
     @Transactional
-    public String checkCardNumExist(String num) {
+    public Boolean checkCardNumExist(String num) {
         Session session = sessionFactory.getCurrentSession();
+        boolean exist = false;
         Query query = session.createQuery("FROM DebitCardEntity WHERE cardNumber=:cardNumber");
         query.setParameter("cardNumber", num);
-        num = (String) query.getResultStream().findAny().get();
+        List<String> cardNums = query.getResultList();
+        if (!cardNums.isEmpty()) {
+            return exist = true;
+        }
+
         System.out.println(num);
-        return num;
+        return exist;
     }
     @Transactional
     public void addDebitCard(DebitCardEntity debitCard) {
