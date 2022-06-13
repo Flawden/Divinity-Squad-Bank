@@ -3,6 +3,7 @@ package ru.flawden.divinitybankspring.config;
 import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
 import org.springframework.web.filter.CharacterEncodingFilter;
 import org.springframework.web.filter.HiddenHttpMethodFilter;
+import ru.flawden.divinitybankspring.security.RootConfiguration;
 
 
 import javax.servlet.DispatcherType;
@@ -14,7 +15,7 @@ import java.util.EnumSet;
 public class MySpringMvcDispatcherSerlvetIntitializer extends AbstractAnnotationConfigDispatcherServletInitializer {
     @Override
     protected Class<?>[] getRootConfigClasses() {
-        return null;
+        return new Class<?>[] { RootConfiguration.class };
     }
 
     @Override

@@ -19,7 +19,21 @@
       </configuration>
     </facet>
     <facet type="Spring" name="Spring">
-      <configuration />
+      <configuration>
+        <fileset id="initializer ru.flawden.divinitybankspring.security.MessageWebApplicationInitializer servlet context" name="MVC dispatcher initializer servlet context" removed="true" />
+        <fileset id="initializer ru.flawden.divinitybankspring.security.MessageWebApplicationInitializer root context" name="MVC dispatcher initializer root context" removed="true">
+          <file>file://$MODULE_DIR$/src/main/java/ru/flawden/divinitybankspring/security/RootConfiguration.java</file>
+        </fileset>
+        <fileset id="initializer ru.flawden.divinitybankspring.config.MySpringMvcDispatcherSerlvetIntitializer servlet context" name="MVC dispatcher initializer servlet context" removed="true">
+          <file>file://$MODULE_DIR$/src/main/java/ru/flawden/divinitybankspring/config/SpringConfig.java</file>
+        </fileset>
+        <fileset id="initializer ru.flawden.divinitybankspring.config.MySpringMvcDispatcherSerlvetIntitializer root context" name="MVC dispatcher initializer root context" removed="true" />
+        <fileset id="fileset" name="SpringContext" removed="false">
+          <file>file://$MODULE_DIR$/src/main/java/ru/flawden/divinitybankspring/security/RootConfiguration.java</file>
+          <file>file://$MODULE_DIR$/src/main/java/ru/flawden/divinitybankspring/config/SpringConfig.java</file>
+          <file>file://$MODULE_DIR$/src/main/java/ru/flawden/divinitybankspring/security/SecurityConfig.java</file>
+        </fileset>
+      </configuration>
     </facet>
   </component>
   <component name="NewModuleRootManager" LANGUAGE_LEVEL="JDK_17">
