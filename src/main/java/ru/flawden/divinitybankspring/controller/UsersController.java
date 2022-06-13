@@ -17,6 +17,8 @@ import java.util.List;
 @RequestMapping("/users")
 public class UsersController {
 
+
+    //Автовайрить серис, а в них DAO
     private final UserDAO userDAO;
     private final DebitCardDAO debitCardDAO;
     private final LoanDAO loanDAO;
@@ -29,16 +31,16 @@ public class UsersController {
     }
 
     @GetMapping()
-    public String index(@ModelAttribute("userDTO") UserDTO userDTO) {
+    public String loginPage(@ModelAttribute("userDTO") UserDTO userDTO) {
         if (userDAO.authUser != null) {
             System.out.println(userDAO.authUser);
             return "redirect:/users/" + userDAO.authUser.getId();
         }
         return "/mainpages/authorization";
     }
-
+//Аутентификация
     @PostMapping()
-    public String authVer(@ModelAttribute("userDTO") UserDTO userDTO) {
+    public String aufication(@ModelAttribute("userDTO") UserDTO userDTO) {
         if (userDTO.checkAuth(userDAO, userDTO)) {
             return "redirect:/users/" + userDAO.authUser.getId();
         } else {
@@ -67,7 +69,6 @@ public class UsersController {
             return "redirect:/users";
         }
         model.addAttribute("user", user);
-        System.out.println("Get edit отправлен");
         return "/mainpages/edit";
     }
 

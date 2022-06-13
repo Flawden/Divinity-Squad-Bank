@@ -1,13 +1,19 @@
 package ru.flawden.divinitybankspring.util;
 
-import org.springframework.security.core.userdetails.User;
+import org.springframework.stereotype.Component;
 import ru.flawden.divinitybankspring.dao.UserDAO;
 import ru.flawden.divinitybankspring.entity.DebitCardEntity;
 
 import java.util.Random;
 
-
+@Component
 public class DebitCardUtil {
+
+    private final UserDAO userDAO;
+
+    public DebitCardUtil(UserDAO userDAO) {
+        this.userDAO = userDAO;
+    }
 
     public int createCVV() {
         Random rnd = new Random();
@@ -17,7 +23,6 @@ public class DebitCardUtil {
     }
 
     public String createCardNumber() {
-        UserDAO userDAO;
         Random rnd = new Random();
         int part = 0;
         String num = "";
@@ -34,8 +39,8 @@ public class DebitCardUtil {
 
     }
 
-    public DebitCardEntity doDebitCard(UserDAO userDAO) {
-        String num = null;
+    public DebitCardEntity doDebitCard() {
+        String num;
         while (true) {
             num = createCardNumber();
             if (!userDAO.checkCardNumExist(num)) {

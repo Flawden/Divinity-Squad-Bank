@@ -16,7 +16,7 @@ import java.util.List;
 @Controller
 public class LoanController {
 
-    private LoanUtil loanUtil;
+    private final LoanUtil loanUtil;
     private final UserDAO userDAO;
     private final LoanDAO loanDAO;
 
@@ -37,7 +37,7 @@ public class LoanController {
         } else {
             List<LoanEntity> loanList = loanDAO.index(user);
             model.addAttribute("User" , user);
-            model.addAttribute("loanList", loanList);
+            model.addAttribute("loanList", loanList); //Убрать и использовать user.getLoanList()
         }
 
         return "profile/loan";

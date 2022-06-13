@@ -4,12 +4,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 import ru.flawden.divinitybankspring.dao.DebitCardDAO;
-import ru.flawden.divinitybankspring.dao.LoanDAO;
 import ru.flawden.divinitybankspring.dao.UserDAO;
 import ru.flawden.divinitybankspring.entity.DebitCardEntity;
-import ru.flawden.divinitybankspring.entity.LoanEntity;
 import ru.flawden.divinitybankspring.entity.UserEntity;
 import ru.flawden.divinitybankspring.util.DebitCardUtil;
 
@@ -20,14 +17,13 @@ public class DebitController {
 
     private final UserDAO userDAO;
     private final DebitCardDAO debitCardDAO;
-
     private final DebitCardUtil debitCreator;
 
-    @Autowired
-    public DebitController(UserDAO userDAO, DebitCardDAO debitCardDAO) {
+
+    public DebitController(UserDAO userDAO, DebitCardDAO debitCardDAO, DebitCardUtil debitCardUtil) {
         this.userDAO = userDAO;
         this.debitCardDAO = debitCardDAO;
-        this.debitCreator = new DebitCardUtil();
+        this.debitCreator = debitCardUtil;
     }
 
     @GetMapping("/users/{id}/debit-card")
@@ -51,7 +47,7 @@ public class DebitController {
         if (user == null) {
             return "mainpages/authorization";
         } else {
-            DebitCardEntity debitCard = debitCreator.doDebitCard(userDAO);
+            DebitCardEntity debitCard = debitCreator.doDebitCard();
             userDAO.addDebitCard(debitCard);
         }
         return "redirect:/users/" + user.getId();

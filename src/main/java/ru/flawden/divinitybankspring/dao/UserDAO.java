@@ -26,14 +26,6 @@ public class UserDAO {
     }
 
     @Transactional(readOnly = true)
-    public List<UserEntity> index() {
-        Session session = sessionFactory.getCurrentSession();
-
-        return session.createQuery("select p from UserEntity p", UserEntity.class)
-                .getResultList();
-    }
-
-    @Transactional(readOnly = true)
     public UserEntity show(Long id) {
         Session session = sessionFactory.getCurrentSession();
         return session.get(UserEntity.class, id);
@@ -76,13 +68,14 @@ public class UserDAO {
         System.out.println(num);
         return exist;
     }
+    //К переезду
     @Transactional
     public void addDebitCard(DebitCardEntity debitCard) {
         Session session = sessionFactory.getCurrentSession();
         debitCard.setUser(authUser);
         session.save(debitCard);
     }
-
+//К переезду
     @Transactional
     public void addLoan(LoanEntity loan) {
         Session session = sessionFactory.getCurrentSession();

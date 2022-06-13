@@ -72,6 +72,7 @@ public class SpringConfig implements WebMvcConfigurer {
         registry.viewResolver(resolver);
     }
 
+    //В отдельный класс
     @Bean
     public DataSource dataSource() {
         DriverManagerDataSource dataSource = new DriverManagerDataSource();
@@ -84,6 +85,7 @@ public class SpringConfig implements WebMvcConfigurer {
         return dataSource;
     }
 
+    //В отдельный класс
     private Properties hibernateProperties() {
         Properties properties = new Properties();
         properties.put("hibernate.dialect", env.getRequiredProperty("hibernate.dialect"));
@@ -91,7 +93,7 @@ public class SpringConfig implements WebMvcConfigurer {
 
         return properties;
     }
-
+    //В отдельный класс
     @Bean
     public LocalSessionFactoryBean sessionFactory() {
         LocalSessionFactoryBean sessionFactory = new LocalSessionFactoryBean();

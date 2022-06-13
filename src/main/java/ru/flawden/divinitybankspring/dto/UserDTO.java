@@ -37,12 +37,7 @@ public class UserDTO {
 
     public boolean checkAuth(UserDAO userDAO, UserDTO userDTO) {
         UserEntity user = userDAO.findByEmailAndPassword(userDTO);
-//        for(User user: userDAO.index()) {
-//            if (user.getEmail().equals(this.email) && user.getPassword().equals(this.password)) {
-//                userDAO.authUser = user;
-//                return true;
-//            }
-//        }
+
         if (user == null) {
             return false;
         } else {

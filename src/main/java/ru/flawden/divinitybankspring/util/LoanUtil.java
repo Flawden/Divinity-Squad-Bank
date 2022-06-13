@@ -1,10 +1,12 @@
 package ru.flawden.divinitybankspring.util;
 
+import org.springframework.stereotype.Component;
 import ru.flawden.divinitybankspring.dto.LoanDTO;
 import ru.flawden.divinitybankspring.entity.LoanEntity;
 
+@Component
 public class LoanUtil {
-
+//Сделать как с DebitCardUtil
     public int getInterestRate(String product) {
         int interestRate = 0;
 
@@ -20,18 +22,6 @@ public class LoanUtil {
     }
     public double calculateSumPerMonth(double totalSum, int term) {
         return totalSum / term;
-    }
-
-    public double calculateCreditSum(double sum, int term, int interestRate) {
-        double dInterestRate = interestRate;
-        sum = sum * (1 + (dInterestRate / 100));
-
-        while (term > 12) {
-            term -= 12;
-            sum = sum * (1 + (dInterestRate / 100));
-        }
-
-        return sum;
     }
 
     public LoanEntity doLoan(LoanDTO loanDTO) {
