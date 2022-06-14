@@ -31,22 +31,8 @@ public class UsersController {
     }
 
     @GetMapping()
-    public String loginPage(@ModelAttribute("userDTO") UserDTO userDTO) {
-        if (userDAO.authUser != null) {
-            System.out.println(userDAO.authUser);
-            return "redirect:/users/" + userDAO.authUser.getId();
-        }
-        return "/mainpages/authorization";
-    }
-//Аутентификация
-    @PostMapping()
-    public String aufication(@ModelAttribute("userDTO") UserDTO userDTO) {
-        if (userDTO.checkAuth(userDAO, userDTO)) {
-            return "redirect:/users/" + userDAO.authUser.getId();
-        } else {
-            return "/mainpages/authorization";
-        }
-
+    public String loginPage() {
+        return "/profile/profile";
     }
 
     @GetMapping("/{id}")
@@ -83,6 +69,8 @@ public class UsersController {
         return "mainpages/registration";
     }
 
+
+
     @PostMapping("/registration")
     public String create(@ModelAttribute("user") UserEntity user) {
         userDAO.save(user);
@@ -94,6 +82,11 @@ public class UsersController {
         userDAO.delete(id);
         userDAO.authUser = null;
         return "redirect:/users";
+    }
+
+    @GetMapping("/login")
+    public String LoginUser() {
+        return "mainpages/authorization";
     }
 
     @GetMapping("{id}/profile")
