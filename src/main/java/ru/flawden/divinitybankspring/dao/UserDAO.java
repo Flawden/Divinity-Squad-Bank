@@ -8,10 +8,11 @@ import org.springframework.transaction.annotation.Transactional;
 import ru.flawden.divinitybankspring.dto.UserDTO;
 import ru.flawden.divinitybankspring.entity.DebitCardEntity;
 import ru.flawden.divinitybankspring.entity.LoanEntity;
+import ru.flawden.divinitybankspring.entity.Role;
 import ru.flawden.divinitybankspring.entity.UserEntity;
 
 import javax.persistence.Query;
-import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 @Component
@@ -42,6 +43,21 @@ public class UserDAO {
         try {
             userEntity = (UserEntity) userList.get(0);
             authUser = userEntity;
+        } catch (Exception e) {
+
+        }
+        return userEntity;
+    }
+
+    @Transactional(readOnly = true)
+    public UserEntity findByEmail(String email) {
+        Session session = sessionFactory.getCurrentSession();
+        Query query = session.createQuery("from UserEntity where email=:email");
+        query.setParameter("email", email);
+        List userList = query.getResultList();
+        UserEntity userEntity = null;
+        try {
+            userEntity = (UserEntity) userList.get(0);
         } catch (Exception e) {
 
         }

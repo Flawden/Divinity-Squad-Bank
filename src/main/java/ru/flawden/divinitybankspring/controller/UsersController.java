@@ -9,8 +9,10 @@ import ru.flawden.divinitybankspring.dao.LoanDAO;
 import ru.flawden.divinitybankspring.dao.UserDAO;
 import ru.flawden.divinitybankspring.dto.UserDTO;
 import ru.flawden.divinitybankspring.entity.DebitCardEntity;
+import ru.flawden.divinitybankspring.entity.Role;
 import ru.flawden.divinitybankspring.entity.UserEntity;
 
+import java.util.Collections;
 import java.util.List;
 
 @Controller
@@ -73,6 +75,7 @@ public class UsersController {
 
     @PostMapping("/registration")
     public String create(@ModelAttribute("user") UserEntity user) {
+        user.setEnabled(true);
         userDAO.save(user);
         return "redirect:/users/";
     }

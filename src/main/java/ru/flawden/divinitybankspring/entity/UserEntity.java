@@ -9,8 +9,8 @@ import java.util.List;
 import java.util.Set;
 
 @Entity
-@Table(name = "userentity")
-public class UserEntity {
+@Table(name = "users")
+public class UserEntity implements UserDetails {
 
     @Id
     @Column(name = "id")
@@ -29,6 +29,9 @@ public class UserEntity {
     @Column(name = "password")
     private String password;
 
+    @Column(name = "enabled")
+    private Boolean enabled;
+
     @OneToMany(fetch = FetchType.LAZY ,mappedBy = "cardOwner", cascade = {
             CascadeType.ALL
     })
@@ -38,6 +41,11 @@ public class UserEntity {
             CascadeType.ALL
     })
     List<LoanEntity> loanList;
+
+    @ElementCollection(targetClass = Role.class, fetch = FetchType.EAGER)
+    @CollectionTable(name = "authority", joinColumns = @JoinColumn(name = "username"))
+    @Enumerated(EnumType.STRING)
+    private Set<Role> roles;
 
     public List<DebitCardEntity> getDebitCardList() {
         return debitCardList;
@@ -53,6 +61,22 @@ public class UserEntity {
 
     public void setLoanList(List<LoanEntity> loanList) {
         this.loanList = loanList;
+    }
+
+    public Set<Role> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(Set<Role> roles) {
+        this.roles = roles;
+    }
+
+    public Boolean getEnabled() {
+        return enabled;
+    }
+
+    public void setEnabled(Boolean enabled) {
+        this.enabled = enabled;
     }
 
     public Long getId() {
@@ -87,8 +111,38 @@ public class UserEntity {
         this.email = email;
     }
 
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return null;
+    }
+
     public String getPassword() {
         return password;
+    }
+
+    @Override
+    public String getUsername() {
+        return email;
+    }
+
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return true;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return enabled;
     }
 
     public void setPassword(String password) {
