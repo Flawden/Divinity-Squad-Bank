@@ -10,6 +10,7 @@ import ru.flawden.divinitybankspring.dto.LoanDTO;
 import ru.flawden.divinitybankspring.entity.*;
 import ru.flawden.divinitybankspring.util.LoanUtil;
 
+import java.security.Principal;
 import java.util.Date;
 import java.util.List;
 
@@ -28,41 +29,28 @@ public class LoanController {
     }
 
 
-    @GetMapping("users/{id}/loan")
-    public String returnLoan(Model model) {
-        UserEntity user = userDAO.authUser;
-
-        if (user == null) {
-            return "mainpages/authorization";
-        } else {
-            List<LoanEntity> loanList = loanDAO.index(user);
-            model.addAttribute("User" , user);
-            model.addAttribute("loanList", loanList); //Убрать и использовать user.getLoanList()
-        }
-
+    @GetMapping("users/loan")
+    public String returnLoan(Model model, Principal principal) {
+        UserEntity user = userDAO.findByEmail(principal.getName());
+        List<LoanEntity> loanList = loanDAO.index(user);
+        System.out.println(loanList.size());
+        model.addAttribute("User" , user);
+        model.addAttribute("loanList", loanList); //Убрать и использовать user.getLoanList()
         return "profile/loan";
     }
 
     @GetMapping("/create-loan")
-    public String createLoanForm(@ModelAttribute("loanDTO") LoanDTO loanDTO) {
-        UserEntity user = userDAO.authUser;
-        if (user == null) {
-            return "mainpages/authorization";
-        } else {
-            return "profile/loan/create-loan";
-        }
+    public String createLoanForm(@ModelAttribute("loanDTO") LoanDTO loanDTO, Principal principal) {
+        UserEntity user = userDAO.findByEmail(principal.getName());
+        return "profile/loan/create-loan";
     }
 
     @PostMapping("/create-loan")
-    public String createLoan(@ModelAttribute("loan") LoanDTO loanDTO) {
-        UserEntity user = userDAO.authUser;
-        if (user == null) {
-            return "redirect:/authorization";
-        } else {
-              LoanEntity loan = loanUtil.doLoan(loanDTO);
-              userDAO.addLoan(loan);
-            return "redirect:/users/" + userDAO.authUser.getId();
-        }
+    public String createLoan(@ModelAttribute("loan") LoanDTO loanDTO, Principal principal) {
+        UserEntity user = userDAO.findByEmail(principal.getName());
+        LoanEntity loan = loanUtil.doLoan(loanDTO);
+        userDAO.addLoan(loan, user);
+        return "redirect:/users/";
     }
 
 }

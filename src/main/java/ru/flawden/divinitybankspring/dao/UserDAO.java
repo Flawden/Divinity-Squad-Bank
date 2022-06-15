@@ -20,7 +20,6 @@ import java.util.List;
 public class UserDAO {
 
     private final SessionFactory sessionFactory;
-    public static UserEntity authUser;
 
     @Autowired
     public UserDAO(SessionFactory sessionFactory) {
@@ -43,7 +42,6 @@ public class UserDAO {
         UserEntity userEntity = null;
         try {
             userEntity = (UserEntity) userList.get(0);
-            authUser = userEntity;
         } catch (Exception e) {
 
         }
@@ -103,16 +101,16 @@ public class UserDAO {
     }
     //К переезду
     @Transactional
-    public void addDebitCard(DebitCardEntity debitCard) {
+    public void addDebitCard(DebitCardEntity debitCard, UserEntity user) {
         Session session = sessionFactory.getCurrentSession();
-        debitCard.setUser(authUser);
+        debitCard.setUser(user);
         session.save(debitCard);
     }
 //К переезду
     @Transactional
-    public void addLoan(LoanEntity loan) {
+    public void addLoan(LoanEntity loan, UserEntity user) {
         Session session = sessionFactory.getCurrentSession();
-        loan.setUser(authUser);
+        loan.setUser(user);
         System.out.println(loan);
         session.save(loan);
     }

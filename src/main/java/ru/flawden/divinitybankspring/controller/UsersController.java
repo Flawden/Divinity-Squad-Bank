@@ -44,33 +44,25 @@ public class UsersController {
         return "/profile/user-page";
     }
 
-    @GetMapping("/{id}")
-    public String show(@PathVariable("id") Long id, Model model) {
-        UserEntity user = userDAO.show(id);
-        if (!userDAO.authUser.equals(user)) {
-            return "redirect:/users";
-        }
-        model.addAttribute("debitCardList", debitCardDAO.getTwoDebitCard(user));
+    @GetMapping("/profile")
+    public String show(Principal principal, Model model) {
+        UserEntity user = userDAO.findByEmail(principal.getName());
         model.addAttribute("User", user);
-        model.addAttribute("balance", debitCardDAO.getBalance(user));
-        model.addAttribute("loanList", loanDAO.getTwoLoan(user));
-        return "/profile/user-page";
+        return "/profile/profile";
     }
 
-    @GetMapping("/{id}/edit")
-    public String edit(@PathVariable("id") Long id, Model model) {
-        UserEntity user = userDAO.show(id);
-        if (!userDAO.authUser.equals(user)) {
-            return "redirect:/users";
-        }
+    @GetMapping("/edit")
+    public String edit(Model model, Principal principal) {
+        UserEntity user = userDAO.findByEmail(principal.getName());
         model.addAttribute("user", user);
         return "/mainpages/edit";
     }
 
-    @PatchMapping("/{id}/edit")
-    public String update(@ModelAttribute("user") UserEntity user, @PathVariable("id") Long id, Model model) {
-        userDAO.update(id, user);
-        return "redirect:/users/" + userDAO.authUser.getId();
+    @PatchMapping("/edit")
+    public String update(Principal principal) {
+        UserEntity user = userDAO.findByEmail(principal.getName());
+        userDAO.update(user.getId(), user);
+        return "redirect:/users/";
     }
 
     @GetMapping("/registration")
@@ -89,10 +81,10 @@ public class UsersController {
         return "redirect:/users/login";
     }
 
-    @DeleteMapping("/{id}")
-    public String delete(@PathVariable("id") Long id) {
-        userDAO.delete(id);
-        userDAO.authUser = null;
+    @DeleteMapping("/")
+    public String delete(Principal principal) {
+        UserEntity user = userDAO.findByEmail(principal.getName());
+        userDAO.delete(user.getId());
         return "redirect:/users";
     }
 
@@ -101,21 +93,9 @@ public class UsersController {
         return "mainpages/authorization";
     }
 
-    @GetMapping("{id}/profile")
-    public String returnProfile(Model model) {
-        UserEntity user = userDAO.authUser;
-        if (user == null) {
-            return "redirect:/authorization";
-        } else {
-            model.addAttribute("User" , user);
-        }
-        return "profile/profile";
-    }
-
     @GetMapping("/exit")
     public String exit() {
-        userDAO.authUser = null;
-        return "redirect:/users";
+        return "redirect:/logout";
     }
 
 }
