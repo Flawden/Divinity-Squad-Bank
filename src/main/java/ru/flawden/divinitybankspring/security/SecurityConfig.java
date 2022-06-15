@@ -34,21 +34,16 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                     .permitAll()
                 .and()
                     .logout().permitAll()
+                    .logoutUrl("/logout")
                 .and()
                 .httpBasic();
     }
 
     @Autowired
     public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
-//        auth
-//                .inMemoryAuthentication()
-//                .withUser("user@mail.ru").password("password").roles("USER")
-//                .and()
-//                .passwordEncoder(NoOpPasswordEncoder.getInstance());
-
         auth.jdbcAuthentication().dataSource(dataSource)
-                .usersByUsernameQuery("SELECT email, password, enabled FROM users where email = ?")
-                .authoritiesByUsernameQuery("SELECT username, authority from authorities where username = ?")
+                .usersByUsernameQuery("SELECT email, password, enabled FROM users WHERE email = ?")
+                .authoritiesByUsernameQuery("SELECT email, roles FROM authorities INNER JOIN users ON username = users.id WHERE email = ?")
                 .passwordEncoder(NoOpPasswordEncoder.getInstance());
     }
 

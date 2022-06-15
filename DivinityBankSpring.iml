@@ -13,7 +13,7 @@
         <setting name="validation-enabled" value="true" />
         <setting name="provider-name" value="Hibernate" />
         <datasource-mapping>
-          <factory-entry name="DivinityBankSpring" />
+          <factory-entry name="DivinityBankSpring" value="6f76d607-7e60-4a16-a7ec-1cb5141bb84a" />
         </datasource-mapping>
         <naming-strategy-map />
       </configuration>

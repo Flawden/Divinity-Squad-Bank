@@ -28,28 +28,22 @@ public class DebitController {
 
     @GetMapping("/users/{id}/debit-card")
     public String returnDebitCard(Model model) {
-
         UserEntity user = userDAO.authUser;
 
-        if (user == null) {
-            return "redirect:/authorization";
-        } else {
-            List<DebitCardEntity> loanList = debitCardDAO.index(user);
-            model.addAttribute("User" , user);
-            model.addAttribute("debitCardList", loanList);
-        }
+        List<DebitCardEntity> loanList = debitCardDAO.index(user);
+        model.addAttribute("User" , user);
+        model.addAttribute("debitCardList", loanList);
+
         return "profile/debit-card";
     }
 
     @GetMapping("/create-debit")
     public String createDebit(Model model) {
         UserEntity user = userDAO.authUser;
-        if (user == null) {
-            return "mainpages/authorization";
-        } else {
-            DebitCardEntity debitCard = debitCreator.doDebitCard();
-            userDAO.addDebitCard(debitCard);
-        }
+
+        DebitCardEntity debitCard = debitCreator.doDebitCard();
+        userDAO.addDebitCard(debitCard);
+
         return "redirect:/users/" + user.getId();
     }
 

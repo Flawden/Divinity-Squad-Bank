@@ -75,9 +75,11 @@ public class UsersController {
 
     @PostMapping("/registration")
     public String create(@ModelAttribute("user") UserEntity user) {
-        user.setEnabled(true);
-        userDAO.save(user);
-        return "redirect:/users/";
+        user.setEnabled(true);;
+        user = userDAO.save(user);
+        user.setRoles(Collections.singleton(Role.USER));
+        userDAO.update(user.getId(), user);
+        return "redirect:/users/login";
     }
 
     @DeleteMapping("/{id}")

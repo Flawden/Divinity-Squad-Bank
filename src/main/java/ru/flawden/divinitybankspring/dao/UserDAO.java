@@ -65,9 +65,10 @@ public class UserDAO {
     }
 
     @Transactional
-    public void save(UserEntity user) {
+    public UserEntity save(UserEntity user) {
         Session session = sessionFactory.getCurrentSession();
         session.save(user);
+        return user = findByEmail(user.getEmail());
     }
 
     @Transactional
@@ -109,6 +110,7 @@ public class UserDAO {
         personToBeUpdated.setLastName(updatedUser.getLastName());
         personToBeUpdated.setEmail(updatedUser.getEmail());
         personToBeUpdated.setPassword(updatedUser.getPassword());
+        personToBeUpdated.setRoles(updatedUser.getRoles());
     }
 
     @Transactional
@@ -116,4 +118,5 @@ public class UserDAO {
         Session session = sessionFactory.getCurrentSession();
         session.delete(session.get(UserEntity.class, id));
     }
+
 }
