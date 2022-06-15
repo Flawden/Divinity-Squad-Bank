@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 import ru.flawden.divinitybankspring.dto.UserDTO;
+import ru.flawden.divinitybankspring.dto.UserDetailsDTO;
 import ru.flawden.divinitybankspring.entity.DebitCardEntity;
 import ru.flawden.divinitybankspring.entity.LoanEntity;
 import ru.flawden.divinitybankspring.entity.Role;
@@ -69,6 +70,21 @@ public class UserDAO {
         Session session = sessionFactory.getCurrentSession();
         session.save(user);
         return user = findByEmail(user.getEmail());
+    }
+
+    @Transactional
+    public UserDetailsDTO findUserDetailByUsername(String email) {
+        Session session = sessionFactory.getCurrentSession();
+        Query query = session.createQuery("SELECT id, firstName, lastName, email FROM UserEntity WHERE email=:email");
+        query.setParameter("email", email);
+        List userList = query.getResultList();
+        UserDetailsDTO user = null;
+        try {
+            user = (UserDetailsDTO) userList.get(0);
+        } catch (Exception e) {
+
+        }
+        return user;
     }
 
     @Transactional

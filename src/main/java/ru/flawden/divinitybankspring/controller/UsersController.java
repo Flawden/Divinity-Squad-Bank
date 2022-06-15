@@ -8,10 +8,12 @@ import ru.flawden.divinitybankspring.dao.DebitCardDAO;
 import ru.flawden.divinitybankspring.dao.LoanDAO;
 import ru.flawden.divinitybankspring.dao.UserDAO;
 import ru.flawden.divinitybankspring.dto.UserDTO;
+import ru.flawden.divinitybankspring.dto.UserDetailsDTO;
 import ru.flawden.divinitybankspring.entity.DebitCardEntity;
 import ru.flawden.divinitybankspring.entity.Role;
 import ru.flawden.divinitybankspring.entity.UserEntity;
 
+import java.security.Principal;
 import java.util.Collections;
 import java.util.List;
 
@@ -33,8 +35,13 @@ public class UsersController {
     }
 
     @GetMapping()
-    public String loginPage() {
-        return "/profile/profile";
+    public String homePage(Model model, Principal principal) {
+        UserEntity user = userDAO.findByEmail(principal.getName());
+        System.out.println(principal.getName());
+        model.addAttribute("debitCardList", debitCardDAO.getTwoDebitCard(user));
+        model.addAttribute("User", user);
+        model.addAttribute("loanList", loanDAO.getTwoLoan(user));
+        return "/profile/user-page";
     }
 
     @GetMapping("/{id}")
