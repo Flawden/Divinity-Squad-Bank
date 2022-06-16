@@ -23,20 +23,19 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     public void configure(HttpSecurity http) throws Exception {
         http
                 .authorizeRequests()
-                .antMatchers("/", "/users/registration").permitAll()
+                .antMatchers("/", "/users/registration", "/resources/**").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .formLogin()
                     .loginPage("/users/login")
                     .loginProcessingUrl("/perform-login")
+                    .defaultSuccessUrl("/users")
                     .usernameParameter("username")
                     .passwordParameter("password")
                     .permitAll()
                 .and()
                     .logout().permitAll()
-                    .logoutUrl("/logout")
-                .and()
-                .httpBasic();
+                    .logoutUrl("/logout");
     }
 
     @Autowired

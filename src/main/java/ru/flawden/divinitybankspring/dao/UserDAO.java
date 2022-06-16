@@ -3,6 +3,7 @@ package ru.flawden.divinitybankspring.dao;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 import ru.flawden.divinitybankspring.dto.UserDTO;
@@ -116,15 +117,23 @@ public class UserDAO {
     }
 
     @Transactional
-    public void update(Long id, UserEntity updatedUser) {
+    public boolean update(Long id, UserEntity currentUser) {
         Session session = sessionFactory.getCurrentSession();
         UserEntity personToBeUpdated = session.get(UserEntity.class, id);
 
-        personToBeUpdated.setFirstName(updatedUser.getFirstName());
-        personToBeUpdated.setLastName(updatedUser.getLastName());
-        personToBeUpdated.setEmail(updatedUser.getEmail());
-        personToBeUpdated.setPassword(updatedUser.getPassword());
-        personToBeUpdated.setRoles(updatedUser.getRoles());
+        boolean isLoginPasswordChanged = false;
+
+        if (!((personToBeUpdated.getEmail().equals(currentUser.getEmail())) || (personToBeUpdated.getPassword().equals(currentUser.getPassword())))) {
+            isLoginPasswordChanged = true;
+            System.out.println("IT'S WORK!!!");
+        }
+
+        personToBeUpdated.setFirstName(currentUser.getFirstName());
+        personToBeUpdated.setLastName(currentUser.getLastName());
+        personToBeUpdated.setEmail(currentUser.getEmail());
+        personToBeUpdated.setPassword(currentUser.getPassword());
+
+        return isLoginPasswordChanged;
     }
 
     @Transactional
