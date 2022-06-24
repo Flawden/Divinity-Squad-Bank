@@ -3,18 +3,15 @@ package ru.flawden.divinitybankspring.dao;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 import ru.flawden.divinitybankspring.dto.UserDTO;
 import ru.flawden.divinitybankspring.dto.UserDetailsDTO;
 import ru.flawden.divinitybankspring.entity.DebitCardEntity;
 import ru.flawden.divinitybankspring.entity.LoanEntity;
-import ru.flawden.divinitybankspring.entity.Role;
 import ru.flawden.divinitybankspring.entity.UserEntity;
 
 import javax.persistence.Query;
-import java.util.Collections;
 import java.util.List;
 
 @Component
@@ -123,9 +120,8 @@ public class UserDAO {
 
         boolean isLoginPasswordChanged = false;
 
-        if (!((personToBeUpdated.getEmail().equals(currentUser.getEmail())) || (personToBeUpdated.getPassword().equals(currentUser.getPassword())))) {
+        if ((!(personToBeUpdated.getEmail().equals(currentUser.getEmail())) || (!(personToBeUpdated.getPassword().equals(currentUser.getPassword()))))) {
             isLoginPasswordChanged = true;
-            System.out.println("IT'S WORK!!!");
         }
 
         personToBeUpdated.setFirstName(currentUser.getFirstName());

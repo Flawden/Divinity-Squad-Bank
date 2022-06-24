@@ -1,19 +1,15 @@
 package ru.flawden.divinitybankspring.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import ru.flawden.divinitybankspring.dao.DebitCardDAO;
 import ru.flawden.divinitybankspring.dao.LoanDAO;
-import ru.flawden.divinitybankspring.dao.UserDAO;
 import ru.flawden.divinitybankspring.entity.Role;
 import ru.flawden.divinitybankspring.entity.UserEntity;
 import ru.flawden.divinitybankspring.service.UserService;
 
-import javax.servlet.http.HttpServletRequest;
 import java.security.Principal;
 import java.util.Collections;
 
@@ -61,7 +57,6 @@ public class UsersController {
     public String update(@ModelAttribute UserEntity user, Principal principal) {
         UserEntity userForUpdate = userService.findByEmail(principal.getName());
         userService.update(userForUpdate.getId(), user);
-        System.out.println("Program is here!");
         return "redirect:/users";
     }
 
