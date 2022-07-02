@@ -13,17 +13,13 @@ import java.util.Set;
 @Table(name = "users")
 public class UserEntity implements UserDetails {
 
-    @Id
-    @Column(name = "id")
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-
     @Column(name = "first_name")
     private String firstName;
 
     @Column(name = "last_name")
     private String lastName;
 
+    @Id
     @Column(name = "email")
     private String email;
 
@@ -78,14 +74,6 @@ public class UserEntity implements UserDetails {
 
     public void setEnabled(Boolean enabled) {
         this.enabled = enabled;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
     }
 
     public String getFirstName() {
@@ -170,14 +158,14 @@ public class UserEntity implements UserDetails {
 
         UserEntity that = (UserEntity) o;
 
-        if (!id.equals(that.id)) return false;
+//        if (!id.equals(that.id)) return false;
         if (!email.equals(that.email)) return false;
         return password.equals(that.password);
     }
 
     @Override
     public int hashCode() {
-        int result = id.hashCode();
+        int result = email.hashCode();
         result = 31 * result + email.hashCode();
         result = 31 * result + password.hashCode();
         return result;

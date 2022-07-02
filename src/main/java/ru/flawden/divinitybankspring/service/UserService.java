@@ -1,10 +1,12 @@
 package ru.flawden.divinitybankspring.service;
 
+import org.springframework.context.annotation.Bean;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import ru.flawden.divinitybankspring.dao.UserDAO;
 import ru.flawden.divinitybankspring.entity.UserEntity;
@@ -14,8 +16,12 @@ public class UserService implements UserDetailsService {
 
     private final UserDAO userDAO;
 
-    public UserService(UserDAO userDAO) {
+    private final PasswordEncoder encoder;
+
+
+    public UserService(UserDAO userDAO, PasswordEncoder encoder) {
         this.userDAO = userDAO;
+        this.encoder = encoder;
     }
 
     @Override
@@ -27,20 +33,20 @@ public class UserService implements UserDetailsService {
         return userDAO.findByEmail(username);
     }
 
-    public void update(Long id, UserEntity user) throws UsernameNotFoundException {
-        user.setId(0L);
-        boolean isLoginPasswordChanged = userDAO.update(id, user);
+    public void update(String email, UserEntity user) throws UsernameNotFoundException {
+        boolean isLoginPasswordChanged = userDAO.update(email, user);
         if(isLoginPasswordChanged) {
             SecurityContextHolder.getContext().setAuthentication(null);
         }
     }
 
     public UserEntity save(UserEntity user) throws UsernameNotFoundException {
+        user.setPassword(encoder.encode(user.getPassword()));
         return userDAO.save(user);
     }
 
-    public void delete(Long id) throws UsernameNotFoundException {
-        userDAO.delete(id);
+    public void delete(String email) throws UsernameNotFoundException {
+        userDAO.delete(email);
         SecurityContextHolder.getContext().setAuthentication(null);
     }
 }

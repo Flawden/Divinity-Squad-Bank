@@ -5,40 +5,38 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.crypto.password.NoOpPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import javax.sql.DataSource;
 
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
-    @Autowired
+    private final PasswordEncoder passwordEncoder;
+
     private DataSource dataSource;
+
+    public SecurityConfig(PasswordEncoder passwordEncoder, DataSource dataSource) {
+        this.passwordEncoder = passwordEncoder;
+        this.dataSource = dataSource;
+    }
 
     public void configure(HttpSecurity http) throws Exception {
         http
                 .authorizeRequests()
-                .antMatchers("/", "/users/registration", "/resources/**").permitAll()
+                .antMatchers("/", "/users/registration", "/resources/**", "/perform-login").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .formLogin()
                     .loginPage("/users/login")
                     .loginProcessingUrl("/perform-login")
                     .defaultSuccessUrl("/users")
-                    .usernameParameter("username")
+                    .usernameParameter("email")
                     .passwordParameter("password")
                     .permitAll()
                 .and()
                     .logout().permitAll()
                     .logoutUrl("/logout");
-    }
-
-    @Autowired
-    public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
-        auth.jdbcAuthentication().dataSource(dataSource)
-                .usersByUsernameQuery("SELECT email, password, enabled FROM users WHERE email = ?")
-                .authoritiesByUsernameQuery("SELECT email, roles FROM authorities INNER JOIN users ON username = users.id WHERE email = ?")
-                .passwordEncoder(NoOpPasswordEncoder.getInstance());
     }
 
 }

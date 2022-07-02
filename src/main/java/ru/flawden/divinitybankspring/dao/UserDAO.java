@@ -114,9 +114,9 @@ public class UserDAO {
     }
 
     @Transactional
-    public boolean update(Long id, UserEntity currentUser) {
+    public boolean update(String email, UserEntity currentUser) {
         Session session = sessionFactory.getCurrentSession();
-        UserEntity personToBeUpdated = session.get(UserEntity.class, id);
+        UserEntity personToBeUpdated = session.get(UserEntity.class, email);
 
         boolean isLoginPasswordChanged = false;
 
@@ -133,9 +133,9 @@ public class UserDAO {
     }
 
     @Transactional
-    public void delete(Long id) {
+    public void delete(String email) {
         Session session = sessionFactory.getCurrentSession();
-        session.delete(session.get(UserEntity.class, id));
+        session.delete(session.get(UserEntity.class, email));
     }
 
 }

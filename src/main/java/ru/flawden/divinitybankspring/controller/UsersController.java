@@ -17,8 +17,6 @@ import java.util.Collections;
 @RequestMapping("/users")
 public class UsersController {
 
-
-    //Автовайрить серис, а в них DAO
     private final DebitCardDAO debitCardDAO;
     private final LoanDAO loanDAO;
     private final UserService userService;
@@ -56,7 +54,7 @@ public class UsersController {
     @PatchMapping("/edit")
     public String update(@ModelAttribute UserEntity user, Principal principal) {
         UserEntity userForUpdate = userService.findByEmail(principal.getName());
-        userService.update(userForUpdate.getId(), user);
+        userService.update(userForUpdate.getEmail(), user);
         return "redirect:/users";
     }
 
@@ -65,21 +63,19 @@ public class UsersController {
         return "mainpages/registration";
     }
 
-
-
     @PostMapping("/registration")
     public String create(@ModelAttribute("user") UserEntity user) {
         user.setEnabled(true);;
         user = userService.save(user);
         user.setRoles(Collections.singleton(Role.USER));
-        userService.update(user.getId(), user);
+        userService.update(user.getEmail(), user);
         return "redirect:/users/login";
     }
 
     @DeleteMapping()
     public String delete(Principal principal) {
         UserEntity user = userService.findByEmail(principal.getName());
-        userService.delete(user.getId());
+        userService.delete(user.getEmail());
         return "redirect:/users";
     }
 
