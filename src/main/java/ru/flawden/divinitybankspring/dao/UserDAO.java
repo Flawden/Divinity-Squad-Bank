@@ -93,8 +93,6 @@ public class UserDAO {
         if (!cardNums.isEmpty()) {
             return exist = true;
         }
-
-        System.out.println(num);
         return exist;
     }
     //К переезду

@@ -35,6 +35,9 @@ public class LoanEntity {
     @Column(name = "credit_term")
     private Integer creditTerm;
 
+    @Column(name = "credit_name")
+    private String creditName;
+
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "user_id")
     private UserEntity loanOwner;
@@ -51,7 +54,8 @@ public class LoanEntity {
 
     }
 
-    public LoanEntity(double sum, double interestRate, double monthlyPayment, int creditTerm) {
+    public LoanEntity(double sum, double interestRate, double monthlyPayment, int creditTerm, String creditName) {
+        this.creditName = creditName;
         this.issueDate = new Date();
         this.sum = sum;
         this.interestRate = interestRate;

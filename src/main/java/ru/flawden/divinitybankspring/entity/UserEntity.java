@@ -5,7 +5,6 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 
@@ -34,7 +33,7 @@ public class UserEntity implements UserDetails {
     })
     List<DebitCardEntity> debitCardList;
 
-    @OneToMany(fetch = FetchType.LAZY ,mappedBy = "loanOwner", cascade = {
+    @OneToMany(fetch = FetchType.EAGER ,mappedBy = "loanOwner", cascade = {
             CascadeType.ALL
     })
     List<LoanEntity> loanList;
