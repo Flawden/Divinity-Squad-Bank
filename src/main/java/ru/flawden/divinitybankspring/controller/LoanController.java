@@ -10,7 +10,6 @@ import ru.flawden.divinitybankspring.dto.LoanDTO;
 import ru.flawden.divinitybankspring.entity.*;
 import ru.flawden.divinitybankspring.service.LoanService;
 import ru.flawden.divinitybankspring.service.UserService;
-import ru.flawden.divinitybankspring.util.LoanUtil;
 
 import java.security.Principal;
 import java.util.ArrayList;

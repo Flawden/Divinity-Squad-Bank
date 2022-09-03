@@ -1,15 +1,12 @@
 package ru.flawden.divinitybankspring.service;
 
-import org.springframework.context.annotation.Bean;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import ru.flawden.divinitybankspring.dao.UserDAO;
-import ru.flawden.divinitybankspring.entity.LoanEntity;
 import ru.flawden.divinitybankspring.entity.UserEntity;
 
 @Service
