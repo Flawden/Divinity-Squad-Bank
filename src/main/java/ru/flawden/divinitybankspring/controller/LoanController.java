@@ -1,59 +1,59 @@
 package ru.flawden.divinitybankspring.controller;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
-import ru.flawden.divinitybankspring.dao.LoanDAO;
-import ru.flawden.divinitybankspring.dao.UserDAO;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import ru.flawden.divinitybankspring.dto.LoanDTO;
-import ru.flawden.divinitybankspring.entity.*;
+import ru.flawden.divinitybankspring.entity.Card;
+import ru.flawden.divinitybankspring.entity.Loan;
+import ru.flawden.divinitybankspring.entity.LoanOffer;
+import ru.flawden.divinitybankspring.entity.Person;
+import ru.flawden.divinitybankspring.service.LoanOfferService;
 import ru.flawden.divinitybankspring.service.LoanService;
-import ru.flawden.divinitybankspring.service.UserService;
+import ru.flawden.divinitybankspring.service.PeopleService;
 
 import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
 
 @Controller
+@RequestMapping("/loans")
 public class LoanController {
-    private final LoanService loanService;
-    private final UserService userService;
-    private final UserDAO userDAO;
-    private final LoanDAO loanDAO;
 
-    @Autowired
-    public LoanController(LoanService loanService, UserService userService, UserDAO userDAO, LoanDAO loanDAO) {
+    private final LoanService loanService;
+    private final LoanOfferService loanOfferService;
+    private final PeopleService peopleService;
+
+    public LoanController(LoanService loanService, LoanOfferService loanOfferService, PeopleService peopleService) {
         this.loanService = loanService;
-        this.userService = userService;
-        this.userDAO = userDAO;
-        this.loanDAO = loanDAO;
+        this.loanOfferService = loanOfferService;
+        this.peopleService = peopleService;
     }
 
-
-    @GetMapping("users/loan")
-    public String returnLoan(Model model, Principal principal) {
-        UserEntity user = userService.findByEmail(principal.getName());
-        model.addAttribute("User" , user);
-        model.addAttribute("loanList", user.getLoanList());
+    @GetMapping
+    public String getLoanListPage(Model model, Principal principal) {
+        Person person = peopleService.findByEmail(principal.getName());
+        List<Loan> loans = loanService.findAllByPerson(person);
+        model.addAttribute("loans", loans);
         return "profile/loan";
     }
 
     @GetMapping("/create-loan")
-    public String createLoanForm(@ModelAttribute("loanDTO") LoanDTO loanDTO, Model model) {
+    public String createLoanPage(@ModelAttribute LoanDTO loanDTO, Model model) {
+        List<LoanOffer> offers = loanOfferService.findAll();
         List<String> options = new ArrayList<>();
-        List<LoanOffer> loanOffers = loanDAO.getAllLoanOffer();
-        loanOffers.forEach(offer -> options.add(offer.getCreditName()));
+        offers.forEach(offer -> options.add(offer.getCreditName()));
         model.addAttribute("options", options);
         return "profile/loan/create-loan";
     }
 
-    @PostMapping("/create-loan")
-    public String createLoan(@ModelAttribute("loan") LoanDTO loanDTO, Principal principal) {
-        UserEntity user = userService.findByEmail(principal.getName());
-        LoanEntity loan = loanService.doLoan(loanDTO);;
-        loanService.addLoan(loan, user);
-        return "redirect:/users/";
+    @PostMapping
+    public String createLoan(@ModelAttribute LoanDTO loanDTO, Principal principal) {
+        loanService.save(loanDTO, principal.getName());
+        return "redirect:/account";
     }
 
 }

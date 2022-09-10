@@ -1,33 +1,22 @@
 package ru.flawden.divinitybankspring.config;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import org.modelmapper.ModelMapper;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.PropertySource;
-import org.springframework.core.env.Environment;
-import org.springframework.orm.hibernate5.HibernateTransactionManager;
-import org.springframework.transaction.PlatformTransactionManager;
-import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.web.servlet.config.annotation.*;
 import org.thymeleaf.spring5.SpringTemplateEngine;
 import org.thymeleaf.spring5.templateresolver.SpringResourceTemplateResolver;
 import org.thymeleaf.spring5.view.ThymeleafViewResolver;
 
-/**
- * @author Neil Alishev
- */
 @Configuration
 @ComponentScan("ru.flawden.divinitybankspring")
-@PropertySource("classpath:hibernate.properties")
-@EnableTransactionManagement
 @EnableWebMvc
 public class SpringConfig implements WebMvcConfigurer {
+
     private final ApplicationContext applicationContext;
 
-
-    @Autowired
     public SpringConfig(ApplicationContext applicationContext) {
         this.applicationContext = applicationContext;
     }
@@ -48,7 +37,6 @@ public class SpringConfig implements WebMvcConfigurer {
         templateResolver.setApplicationContext(applicationContext);
         templateResolver.setPrefix("/WEB-INF/views/");
         templateResolver.setSuffix(".html");
-        templateResolver.setCharacterEncoding("UTF-8");
         return templateResolver;
     }
 
@@ -64,10 +52,12 @@ public class SpringConfig implements WebMvcConfigurer {
     public void configureViewResolvers(ViewResolverRegistry registry) {
         ThymeleafViewResolver resolver = new ThymeleafViewResolver();
         resolver.setTemplateEngine(templateEngine());
-        resolver.setCharacterEncoding("UTF-8");
-
         registry.viewResolver(resolver);
     }
 
+    @Bean
+    public ModelMapper mapper() {
+        return new ModelMapper();
+    }
 
 }

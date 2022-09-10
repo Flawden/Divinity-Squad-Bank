@@ -1,14 +1,14 @@
 package ru.flawden.divinitybankspring.entity;
 
 import org.springframework.format.annotation.DateTimeFormat;
+import ru.flawden.divinitybankspring.entity.card.CreditCard;
 
 import javax.persistence.*;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
 @Entity
-@Table(name = "loan")
-public class LoanEntity {
+public class Loan {
 
     @Transient
     private final SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd.MM.yyyy");
@@ -20,7 +20,7 @@ public class LoanEntity {
 
     @Column(name = "issuedate")
     @Temporal(TemporalType.DATE)
-    @DateTimeFormat(pattern = "dd/MM/yyyy") // дд/мм/гггг
+    @DateTimeFormat(pattern = "dd/MM/yyyy")
     private Date issueDate = new Date();
 
     @Column(name = "sum")
@@ -40,27 +40,29 @@ public class LoanEntity {
 
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "user_id")
-    private UserEntity loanOwner;
+    private Person owner;
 
-    public UserEntity getUser() {
-        return loanOwner;
-    }
+    @OneToOne
+    private CreditCard card;
 
-    public void setUser(UserEntity user) {
-        this.loanOwner = user;
-    }
+    public Loan() {}
 
-    public LoanEntity() {
-
-    }
-
-    public LoanEntity(double sum, double interestRate, double monthlyPayment, int creditTerm, String creditName) {
+    public Loan(double sum, double interestRate, double monthlyPayment, int creditTerm, String creditName, CreditCard card) {
         this.creditName = creditName;
         this.issueDate = new Date();
         this.sum = sum;
         this.interestRate = interestRate;
         this.monthlyPayment = monthlyPayment;
         this.creditTerm = creditTerm;
+        this.card = card;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public Date getIssueDate() {
@@ -103,6 +105,22 @@ public class LoanEntity {
         this.creditTerm = creditTerm;
     }
 
+    public String getCreditName() {
+        return creditName;
+    }
+
+    public void setCreditName(String creditName) {
+        this.creditName = creditName;
+    }
+
+    public Person getOwner() {
+        return owner;
+    }
+
+    public void setOwner(Person owner) {
+        this.owner = owner;
+    }
+
     @Override
     public String toString() {
         return "Credit:\n" +
@@ -110,5 +128,4 @@ public class LoanEntity {
                 "Monthly payment: " + monthlyPayment + " rub\n" +
                 "Taken: " + simpleDateFormat.format(issueDate) + "\n";
     }
-
 }

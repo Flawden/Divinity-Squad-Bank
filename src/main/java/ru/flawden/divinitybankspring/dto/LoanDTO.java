@@ -35,4 +35,5 @@ public class LoanDTO {
     public void setLoanTerm(Integer loanTerm) {
         this.loanTerm = loanTerm;
     }
+
 }

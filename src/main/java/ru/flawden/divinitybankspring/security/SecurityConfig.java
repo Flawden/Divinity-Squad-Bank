@@ -1,10 +1,13 @@
 package ru.flawden.divinitybankspring.security;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import javax.sql.DataSource;
@@ -22,21 +25,29 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
     public void configure(HttpSecurity http) throws Exception {
-        http
+        http.csrf().disable()
                 .authorizeRequests()
-                .antMatchers("/", "/users/registration", "/resources/**", "/perform-login").permitAll()
+                .antMatchers("/", "/registration", "/registration/perform", "/resources/**", "/perform-login").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .formLogin()
-                    .loginPage("/users/login")
+                    .loginPage("/login")
                     .loginProcessingUrl("/perform-login")
-                    .defaultSuccessUrl("/users")
+                    .defaultSuccessUrl("/account", true)
+                    .failureUrl("/login?error")
                     .usernameParameter("email")
                     .passwordParameter("password")
                     .permitAll()
-                .and()
-                    .logout().permitAll()
-                    .logoutUrl("/logout");
+                .and().logout()
+                    .logoutUrl("/logout")
+                    .logoutSuccessUrl("/login?logout")
+                    .permitAll();
     }
+
+
+//    @Bean
+//    public PasswordEncoder getPasswordEncoder() {
+//        return new BCryptPasswordEncoder(8);
+//    }
 
 }

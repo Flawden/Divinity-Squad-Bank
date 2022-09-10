@@ -11,12 +11,6 @@
         <div class="registration-cssave">
             <form name="f" th:action="@{/perform-login}" method="post">
                 <input name="${_csrf.parametrName}" value="_csrf.token" type="hidden">
-                <div th:if="${param.error}" class="alert alert-error">
-                    Invalid username and password.
-                </div>
-                <div th:if="${param.logout}" class="alert alert-success">
-                    You have been logged out.
-                </div>
 
                 <h3 class="text-center">Log in</h3>
 
@@ -30,8 +24,14 @@
 
                 <div class="form-group">
                     <a href="#">Forgot password?</a>
-                    <div class="not_register">Not registered yet? <a href="/users/registration">SIGN UP</a></div>
+                    <div class="not_register">Not registered yet? <a href="/registration">SIGN UP</a></div>
                     <button class="btn btn-primary btn-block create-account" type="submit">Log in</button>
+                </div>
+                <div th:if="${param.error}" class="alert alert-error">
+                    Invalid username and password.
+                </div>
+                <div th:if="${param.logout}" class="alert alert-success">
+                    You have been logged out.
                 </div>
             </form>
         </div>

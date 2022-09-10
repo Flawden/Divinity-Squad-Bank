@@ -16,17 +16,17 @@
                     <img src="../../../resources/static/img/ico/Logo.svg" alt="Logo">
 
                     <ul>
-                        <li><a th:href="@{/users}">Main</a></li>
+                        <li><a th:href="@{/account}">Main</a></li>
                         <li><a href="#" class="active">Loan</a></li>
-                        <li><a th:href="@{/users/debit-card}">DebitCards</a></li>
-                        <li><a th:href="@{/users/profile}">Profile</a></li>
-                        <li><a th:href="@{/users/exit}">Exit</a></li>
+                        <li><a th:href="@{/cards}">Cards</a></li>
+                        <li><a th:href="@{/account/profile}">Profile</a></li>
+                        <li><a th:href="@{/account/exit}">Exit</a></li>
                     </ul>
                 </div>
             </div>
             <!-- Main - start -->
             <div class="main">
-                <th:block class="loan" th:each="loan: ${loanList}">
+                <th:block class="loan" th:each="loan: ${loans}">
                         <div class="main__loan block">
                             <div class="loan">
                                 <div class="loan__sum sum" th:text="*{loan.toString()}">30 000.00</div>

@@ -17,10 +17,10 @@
 
                     <ul>
                         <li><a href="#" class="active">Main</a></li>
-                        <li><a th:href="@{/users/loan}">Loan</a></li>
-                        <li><a th:href="@{/users/debit-card}">DebitCards</a></li>
-                        <li><a th:href="@{/users/profile}">Profile</a></li>
-                        <li><a th:href="@{/users/exit}">Exit</a></li>
+                        <li><a th:href="@{/loans}">Loan</a></li>
+                        <li><a th:href="@{/cards}">Cards</a></li>
+                        <li><a th:href="@{/account/profile}">Profile</a></li>
+                        <li><a th:href="@{/account/exit}">Exit</a></li>
                     </ul>
                 </div>
             </div>
@@ -30,13 +30,11 @@
                     <h3 class="user__greeting">Greetings</h3>
 
                     <div class="user__block">
-                        <p class="user__name" th:text="${User.getFullName()}">Name Lastname</p>
+                        <p class="user__name" th:text="${person.getFullName()}">Name Lastname</p>
                     </div>
                     <div class="user__block">
-                        <a class="debit__takenew takenew" th:href="@{/users/edit}">Edit user</a>
-                        <form th:method="DELETE" th:action="@{/users}">
-                            <button class="takenew" type="submit">Delete user</button>
-                        </form>
+                        <a class="debit__takenew takenew" th:href="@{/account/update}">Edit user</a><br>
+                        <a class="debit__takenew takenew" th:href="@{/account/delete}">Delete user</a>
                     </div>
 
                 </div>
@@ -59,7 +57,7 @@
                         </div>
                     </th:block>
 
-                    <a href="/create-debit" class="debit__takenew takenew">Issue a card</a>
+                    <a href="cards/select-card" class="debit__takenew takenew">Issue a card</a>
                 </div>
 
                 <div class="main__loan block">
@@ -70,7 +68,7 @@
                         <div class="loan__sum sum" th:text="*{loan.sum}">In developing</div>
                     </th:block>
 
-                    <a href="/create-loan" class="loan__takenew takenew">Apply for a loan</a>
+                    <a href="/loans/create-loan" class="loan__takenew takenew">Apply for a loan</a>
                 </div>
             </div>
 

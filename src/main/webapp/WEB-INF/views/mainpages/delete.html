@@ -10,13 +10,13 @@
 <div class="wrapper">
     <main class="page">
         <div class="registration-cssave">
-            <form name="f" th:action="@{/logout}" method="post">
+            <form th:method="DELETE" th:action="@{/account}">
 
-                <h3 class="text-center">Are you really want to logout?</h3>
+                <h3 class="text-center">Are you really want to delete your account?</h3>
 
                 <div class="form-group">
                     <div><a href="/account">Return to profile</a></div>
-                    <button class="btn btn-primary btn-block create-account" type="submit">Logout</button>
+                    <button class="btn btn-primary btn-block create-account" type="submit">Delete account</button>
                 </div>
             </form>
         </div>

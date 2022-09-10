@@ -32,7 +32,7 @@ body {
 
 .registration-cssave .item {
   border-radius:10px;
-  margin-bottom:25px;
+  margin-bottom:0px;
   padding:10px 20px;
 }
 
@@ -45,6 +45,10 @@ body {
   border:none;
   color:white;
   margin-top:20px;
+}
+
+.registration-cssave .form-group {
+  margin-bottom:15px;
 }
 
 .not_register {

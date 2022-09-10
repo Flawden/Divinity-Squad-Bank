@@ -9,7 +9,7 @@
 <div class="wrapper">
     <main class="page">
         <div class="registration-cssave">
-            <form th:method="POST" th:action="@{/create-loan}" th:object="${loanDTO}">
+            <form th:method="POST" th:action="@{/loans}" th:object="${loanDTO}">
                 <h3 class="text-center">Create loan</h3>
                 <div class="form-group">
                     <select class="form-control item" size="1" id="product" th:field="*{product}">
