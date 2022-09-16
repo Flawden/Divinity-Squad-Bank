@@ -62,7 +62,7 @@ public class AccountController {
         Person person = mapper.convertPersonDTOToPerson(personDTO);
         personValidator.genderValidator(person.getGender(), bindingResult);
         if(bindingResult.hasErrors()) {
-            return "mainpages/registration";
+            return "mainpages/update";
         }
         peopleService.update(principal.getName(), person);
         return "redirect:/account";

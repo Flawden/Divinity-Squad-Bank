@@ -9,15 +9,21 @@ import ru.flawden.divinitybankspring.entity.card.CreditCard;
 @Component
 public class LoanUtil {
 
-    public double calculateSumPerMonth(double totalSum, int term) {
-        return totalSum / term;
+    public double calculateSumPerMonth(double totalSum, int term, double interestRate) {
+        double termPerMonth = interestRate / (100d * interestRate);
+        return (double) totalSum * (termPerMonth / (1 - (Math.pow((termPerMonth + 1), -term))));
+    }
+
+    public double calculateSumTotalWithInterestRate(double monthlyPayment, int term) {
+        return monthlyPayment * term;
     }
 
     public Loan doLoan(LoanDTO loanDTO, LoanOffer loanOffer, CreditCard card) {
         double sum = loanDTO.getSumm();
         int term = loanDTO.getLoanTerm();
         double interestRate = loanOffer.getInterestRate();
-        double monthlyPayment = calculateSumPerMonth(sum, term);
+        double monthlyPayment = calculateSumPerMonth(sum, term, loanOffer.getInterestRate());
+        sum = calculateSumTotalWithInterestRate(monthlyPayment, term);
         return new Loan(sum, interestRate, monthlyPayment, term, loanDTO.getProduct(), card);
     }
 }

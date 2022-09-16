@@ -17,6 +17,7 @@ class LoanUtilTest {
     private LoanUtil loanUtil;
     private final Double summTest = 120000D;
     private final int loanTermTest = 15;
+    private final double testInterestRate = 12;
 
     @BeforeEach
     void setup() {
@@ -24,17 +25,13 @@ class LoanUtilTest {
     }
 
     @Test
-    void calculateSumPerMonth() {
-        Assertions.assertEquals(loanUtil.calculateSumPerMonth(10,2), 5);
-        Assertions.assertEquals(loanUtil.calculateSumPerMonth(20,2), 10);
-        Assertions.assertEquals(loanUtil.calculateSumPerMonth(12,2), 6);
+    void calculateSumTotalWithInterestRate() {
+        Assertions.assertEquals(158545.44, loanUtil.calculateSumTotalWithInterestRate(13212.12, 12));
     }
 
     @Test
-    void calculateSumPerMonthIndivisible() {
-        Assertions.assertEquals(loanUtil.calculateSumPerMonth(9,2), 4.5);
-        Assertions.assertEquals(loanUtil.calculateSumPerMonth(3,2), 1.5);
-        Assertions.assertEquals(loanUtil.calculateSumPerMonth(4,3), 1.3333333333333333);
+    void calculateSumPerMonth() {
+        Assertions.assertEquals(664.2861962570233, loanUtil.calculateSumPerMonth(20000,36, testInterestRate));
     }
 
     @Test
@@ -44,8 +41,7 @@ class LoanUtilTest {
         loanOffer.setInterestRate(5D);
         CreditCard card = new CreditCard();
         Loan loan = loanUtil.doLoan(loanDTO, loanOffer, card);
-        Assertions.assertEquals(loan.getInterestRate(), 5);
-        Assertions.assertEquals(loan.getCreditTerm(), loanTermTest);
-        Assertions.assertEquals(loan.getMonthlyPayment(), loanUtil.calculateSumPerMonth(summTest, loanTermTest));
+        Assertions.assertEquals(5, loan.getInterestRate());
+        Assertions.assertEquals(loanTermTest, loan.getCreditTerm());
     }
 }

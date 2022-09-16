@@ -22,7 +22,7 @@ public class PersonValidator {
     }
 
     public void genderValidator(String gender, BindingResult bindingResult) {
-       if(!((gender.toLowerCase().equals("male")) || (gender.toLowerCase().equals("female")))) {
+       if(!((gender.equalsIgnoreCase("male")) || (gender.equalsIgnoreCase("female")))) {
            bindingResult.rejectValue("gender", "", "You have entered a non-existent gender.");
        }
    }
