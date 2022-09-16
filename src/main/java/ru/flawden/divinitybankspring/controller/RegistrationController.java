@@ -30,7 +30,7 @@ public class RegistrationController {
 
     @GetMapping
     public String registationPage(@ModelAttribute("person") PersonDTO personDTO) {
-        return "mainpages/registration";
+        return "/mainpages/registration";
     }
 
     @PostMapping

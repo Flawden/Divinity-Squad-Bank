@@ -4,13 +4,14 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import javax.validation.constraints.*;
+import java.lang.annotation.Annotation;
 import java.util.Date;
 import java.util.List;
 import java.util.Set;
 
 @Entity
 @Table(name = "person")
-public class Person {
+public class Person implements Annotation {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -148,4 +149,8 @@ public class Person {
         this.enabled = enabled;
     }
 
+    @Override
+    public Class<? extends Annotation> annotationType() {
+        return null;
+    }
 }

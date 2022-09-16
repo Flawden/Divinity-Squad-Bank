@@ -17,4 +17,8 @@ public class PeopleMapper {
     public Person convertPersonDTOToPerson(PersonDTO personDTO) {
         return mapper.map(personDTO, Person.class);
     }
+
+    public PersonDTO convertPersonToPersonDTO(Person person) {
+        return mapper.map(person, PersonDTO.class);
+    }
 }

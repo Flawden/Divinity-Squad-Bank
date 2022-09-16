@@ -34,12 +34,12 @@ public class CardController {
     }
 
     @GetMapping("/select-card")
-    private String selectCard() {
+    public String selectCard() {
         return "profile/card/select-card";
     }
 
     @GetMapping("/create-debit-card")
-    private String createDebitCard(Principal principal) {
+    public String createDebitCard(Principal principal) {
         cardsService.save(principal.getName());
         return "redirect:/account";
     }
