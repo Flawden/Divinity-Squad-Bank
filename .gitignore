@@ -2,3 +2,4 @@
 target
 out
 /src/main/webapp/resources/hibernate.properties
+/src/test/resources/hibernate.properties
