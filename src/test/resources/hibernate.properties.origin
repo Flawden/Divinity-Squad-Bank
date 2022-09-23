@@ -1,8 +1,8 @@
-hibernate.driver_class=org.h2.Driver
-hibernate.connection.url=jdbc:h2:mem:testdb
-hibernate.connection.username=flawden
-hibernate.connection.password=password
-hibernate.hbm2ddl.auto=create
+hibernate.driver_class=
+hibernate.connection.url=
+hibernate.connection.username=
+hibernate.connection.password=
+hibernate.hbm2ddl.auto=
 
-hibernate.dialect=org.hibernate.dialect.PostgreSQLDialect
-hibernate.show_sql=true
+hibernate.dialect=
+hibernate.show_sql=

@@ -72,8 +72,6 @@ Next, enter the following 2 commands in turn:
 > mvn clean
 > mvn install
 
-A "Target" folder will appear in the root of the project. Log into it via the console. The folder will contain a .jar file
+In the "Target" folder that appears, there will be a WAR archive ready for deployment to the server.
 
-Run it with the command:
->  java -jar <Full_name_of_jar_file>
 
