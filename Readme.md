@@ -26,11 +26,17 @@ Make a copy of the hibernate.properties.origin file, removing the ".origin" exte
 Open the resulting file, we will carry out a couple of manipulations:
 
 > hibernate.driver_class= (Enter your database driver here)
+> 
 > hibernate.connection.url= (Enter your database link here)
+> 
 > hibernate.connection.username= (Here enter your database username)
+> 
 > hibernate.connection.password= (Enter your database password here)
+> 
 > hibernate.hbm2ddl.auto= (Here enter the mode of your database creation process (create, update or whatever you need)
+> 
 > hibernate.dialect= (Enter your database dialect)
+> 
 > hibernate.show_sql=false (Change to true if you want to see information on hibernate queries to the database)
 
 Congratulations. The application is ready to build.
