@@ -1,53 +1,74 @@
 package ru.flawden.divinitybankspring.security;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.context.annotation.Bean;
-import org.springframework.http.HttpMethod;
-import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-
-import javax.sql.DataSource;
+import org.springframework.security.web.SecurityFilterChain;
+import ru.flawden.divinitybankspring.repository.PeopleRepository;
+import ru.flawden.divinitybankspring.service.PersonDetailService;
 
 @EnableWebSecurity
-public class SecurityConfig extends WebSecurityConfigurerAdapter {
+public class SecurityConfig {
 
-    private final PasswordEncoder passwordEncoder;
+    private final PeopleRepository peopleRepository;
 
-    private DataSource dataSource;
-
-    public SecurityConfig(PasswordEncoder passwordEncoder, DataSource dataSource) {
-        this.passwordEncoder = passwordEncoder;
-        this.dataSource = dataSource;
+    public SecurityConfig(PeopleRepository peopleRepository) {
+        this.peopleRepository = peopleRepository;
     }
 
-    public void configure(HttpSecurity http) throws Exception {
-        http.csrf().disable()
-                .authorizeRequests()
-                .antMatchers("/", "/registration", "/registration/perform", "/resources/**", "/perform-login").permitAll()
-                .anyRequest().authenticated()
-                .and()
-                .formLogin()
-                    .loginPage("/login")
-                    .loginProcessingUrl("/perform-login")
-                    .defaultSuccessUrl("/account", true)
-                    .failureUrl("/login?error")
-                    .usernameParameter("email")
-                    .passwordParameter("password")
-                    .permitAll()
-                .and().logout()
-                    .logoutUrl("/logout")
-                    .logoutSuccessUrl("/login?logout")
-                    .permitAll();
+    @Bean
+    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+        http
+                .authorizeHttpRequests(auth -> auth
+                        .requestMatchers("/", "/registration", "/registration/perform", "/resources/**", "/perform-login").permitAll()
+                        .anyRequest().authenticated()
+                )
+                .formLogin(form -> form
+                        .loginPage("/login")
+                        .loginProcessingUrl("/perform-login")
+                        .defaultSuccessUrl("/account", true)
+                        .failureUrl("/login?error")
+                        .usernameParameter("email")
+                        .passwordParameter("password")
+                        .permitAll()
+                )
+                .logout(logout -> logout
+                        .logoutUrl("/logout")
+                        .logoutSuccessUrl("/login?logout")
+                        .permitAll()
+                )
+                .exceptionHandling(exceptionHandling -> exceptionHandling
+                        .authenticationEntryPoint((request, response, authException) -> {
+                            System.out.println("Authentication failed: " + authException.getMessage());
+                            response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Authentication failed");
+                        })
+                );
+
+        return http.build();
+
     }
 
+    @Bean
+    public DaoAuthenticationProvider daoAuthenticationProvider() {
+        DaoAuthenticationProvider provider = new DaoAuthenticationProvider();
+        provider.setUserDetailsService(userDetailsService());
+        provider.setPasswordEncoder(passwordEncoder());
+        return provider;
+    }
 
-//    @Bean
-//    public PasswordEncoder getPasswordEncoder() {
-//        return new BCryptPasswordEncoder(8);
-//    }
+    @Bean
+    public PasswordEncoder passwordEncoder() {
+        return NoOpPasswordEncoder.getInstance();
+    }
+
+    @Bean
+    public UserDetailsService userDetailsService() {
+        return new PersonDetailService(peopleRepository);
+    }
 
 }

@@ -1,5 +1,6 @@
 package ru.flawden.divinitybankspring.security;
 
+import lombok.Getter;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import ru.flawden.divinitybankspring.entity.Person;
@@ -7,6 +8,7 @@ import ru.flawden.divinitybankspring.entity.Person;
 import java.util.ArrayList;
 import java.util.Collection;
 
+@Getter
 public class PersonDetails implements UserDetails {
 
     private final Person person;
@@ -50,7 +52,4 @@ public class PersonDetails implements UserDetails {
         return this.person.getEnabled();
     }
 
-    public Person getPerson() {
-        return this.person;
-    }
 }

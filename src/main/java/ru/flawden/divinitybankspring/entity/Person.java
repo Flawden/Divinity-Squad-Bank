@@ -2,16 +2,16 @@ package ru.flawden.divinitybankspring.entity;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
-import javax.persistence.*;
+import jakarta.persistence.*;
+
 import javax.validation.constraints.*;
-import java.lang.annotation.Annotation;
 import java.util.Date;
 import java.util.List;
 import java.util.Set;
 
 @Entity
 @Table(name = "person")
-public class Person implements Annotation {
+public class Person {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -137,7 +137,8 @@ public class Person implements Annotation {
 
     public String getFullName() { return firstname + " " + surname; }
 
-    public Person(){}
+    public Person() {
+    }
 
     public Person(String firstname, String surname, String gender, Date dateOfBirth, String email, String password, Boolean enabled) {
         this.firstname = firstname;
@@ -149,8 +150,4 @@ public class Person implements Annotation {
         this.enabled = enabled;
     }
 
-    @Override
-    public Class<? extends Annotation> annotationType() {
-        return null;
-    }
 }

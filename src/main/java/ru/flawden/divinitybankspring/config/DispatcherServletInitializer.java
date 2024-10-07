@@ -1,27 +1,27 @@
 package ru.flawden.divinitybankspring.config;
 
+import jakarta.servlet.Filter;
+import jakarta.servlet.ServletContext;
+import jakarta.servlet.ServletException;
 import org.springframework.web.filter.HiddenHttpMethodFilter;
 import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
-import ru.flawden.divinitybankspring.security.RootConfiguration;
+import ru.flawden.divinitybankspring.security.SecurityConfig;
 
-import javax.servlet.ServletContext;
-import javax.servlet.ServletException;
-
-public class MySpringMvcDispatcherServletInitializer extends AbstractAnnotationConfigDispatcherServletInitializer {
+public class DispatcherServletInitializer extends AbstractAnnotationConfigDispatcherServletInitializer {
 
     @Override
     protected Class<?>[] getRootConfigClasses() {
-        return new Class<?>[] { RootConfiguration.class };
+        return null;
     }
 
     @Override
     protected Class<?>[] getServletConfigClasses() {
-        return new Class[] {SpringConfig.class, HibernateConfig.class};
+        return new Class[]{SpringConfig.class, SpringDataJpaConfig.class, SecurityConfig.class};
     }
 
     @Override
     protected String[] getServletMappings() {
-        return new String[] {"/"};
+        return new String[]{"/"};
     }
 
     @Override
@@ -32,7 +32,7 @@ public class MySpringMvcDispatcherServletInitializer extends AbstractAnnotationC
 
     private void registerHiddenFieldFilter(ServletContext servletContext) {
         servletContext.addFilter("hiddenHttpMethodFilter",
-                new HiddenHttpMethodFilter()).addMappingForUrlPatterns(null, true, "/*");
+                (Filter) new HiddenHttpMethodFilter()).addMappingForUrlPatterns(null, true, "/*");
     }
 
 }

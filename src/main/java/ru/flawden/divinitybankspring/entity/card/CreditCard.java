@@ -5,8 +5,8 @@ import ru.flawden.divinitybankspring.entity.Loan;
 import ru.flawden.divinitybankspring.entity.Person;
 import ru.flawden.divinitybankspring.exception.card.NegativeBalanceException;
 
-import javax.persistence.Entity;
-import javax.persistence.OneToOne;
+import jakarta.persistence.Entity;
+import jakarta.persistence.OneToOne;
 
 @Entity
 public class CreditCard extends Card {

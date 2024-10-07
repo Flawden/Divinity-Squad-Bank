@@ -1,6 +1,6 @@
 package ru.flawden.divinitybankspring.entity;
 
-import javax.persistence.*;
+import jakarta.persistence.*;
 import javax.validation.constraints.Min;
 import java.util.Random;
 

@@ -1,5 +1,7 @@
 package ru.flawden.divinitybankspring.service;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -28,7 +30,7 @@ public class PeopleService {
 
     @Transactional
     public void save(Person person) {
-        person.setEnabled(true);;
+        person.setEnabled(true);
         person.setRoles(Collections.singleton(Role.USER));
         person.setPassword(encoder.encode(person.getPassword()));
         peopleRepository.save(person);

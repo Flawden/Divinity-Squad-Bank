@@ -3,7 +3,7 @@ package ru.flawden.divinitybankspring.entity;
 import org.springframework.format.annotation.DateTimeFormat;
 import ru.flawden.divinitybankspring.entity.card.CreditCard;
 
-import javax.persistence.*;
+import jakarta.persistence.*;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 

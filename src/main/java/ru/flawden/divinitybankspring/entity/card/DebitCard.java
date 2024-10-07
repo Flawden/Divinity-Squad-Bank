@@ -4,7 +4,8 @@ import ru.flawden.divinitybankspring.entity.Card;
 import ru.flawden.divinitybankspring.entity.Person;
 import ru.flawden.divinitybankspring.exception.card.NegativeBalanceException;
 
-import javax.persistence.*;
+import jakarta.persistence.*;
+
 @Entity
 public class DebitCard extends Card {
 
