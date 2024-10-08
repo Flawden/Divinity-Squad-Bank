@@ -11,30 +11,40 @@
         <div class="registration-cssave">
             <form th:method="POST" th:action="@{/loans}" th:object="${loanDTO}">
                 <h3 class="text-center">Create loan</h3>
-                <div class="form-group">
-                    <select class="form-control item" size="1" id="product" th:field="*{product}">
-                        <option value="0" selected disabled>select option</option>
-                        <option th:each="option : ${options}" th:value="${option}" th:text="${option}"></option>
-                    </select></p>
+
+                <!-- Проверка на наличие кредитных предложений -->
+                <div th:if="${options.empty}">
+                    <p class="alert alert-warning">Oops! We don't have any offers for you right now!</p>
                 </div>
 
-                <div class="form-group">
-                    <input class="form-control item" type="number" th:field="*{loanTerm}" id="loanterm" placeholder="Loan term" required>
-                </div>
+                <!-- Отображение формы, если есть кредитные предложения -->
+                <div th:if="${not options.empty}">
+                    <div class="form-group">
+                        <select class="form-control item" size="1" id="creditName" th:field="*{creditName}">
+                            <option value="0" selected disabled>select option</option>
+                            <option th:each="option : ${options}"
+                                    th:value="${option.creditName}"
+                                    th:text="${option.creditName}"></option>
+                        </select>
+                    </div>
 
-                <div class="form-group">
-                    <span>
-                        Loan amount:  <input type="number" id="loanamount" th:field="*{summ}">
-                    </span>
-                </div>
+                    <div class="form-group">
+                        <input class="form-control item" type="number" th:field="*{creditTerm}" id="creditTerm" placeholder="Loan term" required>
+                    </div>
 
-                <div class="form-group">
-                    <button class="btn btn-primary btn-block create-account" type="submit">CREATE</button>
+                    <div class="form-group">
+                        <span>
+                            Loan amount:  <input type="number" id="sum" th:field="*{sum}">
+                        </span>
+                    </div>
+
+                    <div class="form-group">
+                        <button class="btn btn-primary btn-block create-account" type="submit">CREATE</button>
+                    </div>
                 </div>
             </form>
         </div>
-    </main>>
+    </main>
 </div>
-
 </body>
 </html>

@@ -1,39 +1,24 @@
 package ru.flawden.divinitybankspring.dto;
 
+import lombok.Getter;
+import lombok.Setter;
+
+import java.beans.ConstructorProperties;
+
+@Getter
+@Setter
 public class LoanDTO {
 
-    private String product;
-    private Double summ;
-    private Integer loanTerm;
+    private String creditName;
+    private Double sum;
+    private Integer creditTerm;
 
-    public LoanDTO(String product, Double summ, Integer loanTerm) {
-        this.product = product;
-        this.summ = summ;
-        this.loanTerm = loanTerm;
+    @ConstructorProperties({"creditName", "sum", "creditTerm"})
+    public LoanDTO(String creditName, Double sum, Integer creditTerm) {
+        this.creditName = creditName;
+        this.sum = sum;
+        this.creditTerm = creditTerm;
     }
 
-    public String getProduct() {
-        return product;
-    }
-
-    public void setProduct(String product) {
-        this.product = product;
-    }
-
-    public Double getSumm() {
-        return summ;
-    }
-
-    public void setSumm(Double summ) {
-        this.summ = summ;
-    }
-
-    public Integer getLoanTerm() {
-        return loanTerm;
-    }
-
-    public void setLoanTerm(Integer loanTerm) {
-        this.loanTerm = loanTerm;
-    }
 
 }

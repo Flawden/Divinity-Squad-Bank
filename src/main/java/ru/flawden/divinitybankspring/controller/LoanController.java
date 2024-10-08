@@ -43,9 +43,7 @@ public class LoanController {
 
     @GetMapping("/create-loan")
     public String createLoanPage(@ModelAttribute LoanDTO loanDTO, Model model) {
-        List<LoanOffer> offers = loanOfferService.findAll();
-        List<String> options = new ArrayList<>();
-        offers.forEach(offer -> options.add(offer.getCreditName()));
+        List<LoanOffer> options = loanOfferService.findAll();
         model.addAttribute("options", options);
         return "profile/loan/create-loan";
     }

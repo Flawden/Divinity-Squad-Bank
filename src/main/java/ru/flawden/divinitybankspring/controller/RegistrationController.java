@@ -41,7 +41,7 @@ public class RegistrationController {
             return "mainpages/registration";
         }
         peopleService.save(person);
-        return "redirect:/index";
+        return "redirect:/";
     }
 
 }

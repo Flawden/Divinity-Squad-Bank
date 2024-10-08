@@ -35,8 +35,8 @@ public class LoanService {
     @Transactional
     public void save(LoanDTO loanDTO, String ownerEmail) {
         Person person = peopleService.findByEmail(ownerEmail);
-        LoanOffer loanOffer = loanOfferRepository.findLoanOfferByCreditName(loanDTO.getProduct()).orElseThrow(() -> new RuntimeException("Loan offer doesn't exist"));
-        CreditCard card = cardsRepository.save(new CreditCard(loanDTO.getSumm(), person, "Default credit card"));
+        LoanOffer loanOffer = loanOfferRepository.findLoanOfferByCreditName(loanDTO.getCreditName()).orElseThrow(() -> new RuntimeException("Loan offer doesn't exist"));
+        CreditCard card = cardsRepository.save(new CreditCard(loanDTO.getSum(), person, "Default credit card"));
         Loan loan = loanUtil.doLoan(loanDTO, loanOffer, card);
         loan.setOwner(person);
         Loan loanId = loanRepository.save(loan);

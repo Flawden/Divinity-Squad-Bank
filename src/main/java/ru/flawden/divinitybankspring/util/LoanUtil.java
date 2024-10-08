@@ -19,11 +19,11 @@ public class LoanUtil {
     }
 
     public Loan doLoan(LoanDTO loanDTO, LoanOffer loanOffer, CreditCard card) {
-        double sum = loanDTO.getSumm();
-        int term = loanDTO.getLoanTerm();
+        double sum = loanDTO.getSum();
+        int term = loanDTO.getCreditTerm();
         double interestRate = loanOffer.getInterestRate();
         double monthlyPayment = calculateSumPerMonth(sum, term, loanOffer.getInterestRate());
         sum = calculateSumTotalWithInterestRate(monthlyPayment, term);
-        return new Loan(sum, interestRate, monthlyPayment, term, loanDTO.getProduct(), card);
+        return new Loan(sum, interestRate, monthlyPayment, term, loanDTO.getCreditName(), card);
     }
 }
