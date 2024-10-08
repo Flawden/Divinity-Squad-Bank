@@ -1,10 +1,15 @@
 package ru.flawden.divinitybankspring.entity;
 
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
+
 import javax.validation.constraints.Min;
 import java.util.Random;
 
 @Entity
+@Getter
+@Setter
 public abstract class Card {
 
     @Id
@@ -16,26 +21,6 @@ public abstract class Card {
     protected final String number;
     protected String name;
     protected final Integer cvv;
-
-    public Double getBalance() {
-        return balance;
-    }
-
-    public String getNumber() {
-        return number;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public Integer getCvv() {
-        return cvv;
-    }
 
     @ManyToOne
     @JoinColumn(name = "person_id", referencedColumnName = "id")
@@ -72,7 +57,6 @@ public abstract class Card {
         while (true) {
             for (int i = 0; i < 4; i++) {
                 part = rnd.nextInt(8888) + 1111;
-//                part = rnd.nextInt(1111,9999);
                 num.append(part).append(" ");
             }
             break;
@@ -82,7 +66,6 @@ public abstract class Card {
 
     protected final int createCVV() {
         Random rnd = new Random();
-//        return rnd.nextInt(111,999);
         return rnd.nextInt(888) + 111;
     }
 

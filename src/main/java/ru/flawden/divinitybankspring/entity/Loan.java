@@ -1,5 +1,7 @@
 package ru.flawden.divinitybankspring.entity;
 
+import lombok.Getter;
+import lombok.Setter;
 import org.springframework.format.annotation.DateTimeFormat;
 import ru.flawden.divinitybankspring.entity.card.CreditCard;
 
@@ -8,6 +10,8 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 @Entity
+@Getter
+@Setter
 public class Loan {
 
     @Transient
@@ -55,70 +59,6 @@ public class Loan {
         this.monthlyPayment = monthlyPayment;
         this.creditTerm = creditTerm;
         this.card = card;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public Date getIssueDate() {
-        return issueDate;
-    }
-
-    public void setIssueDate(Date issueDate) {
-        this.issueDate = issueDate;
-    }
-
-    public Double getSum() {
-        return sum;
-    }
-
-    public void setSum(Double sum) {
-        this.sum = sum;
-    }
-
-    public Double getInterestRate() {
-        return interestRate;
-    }
-
-    public void setInterestRate(Double interestRate) {
-        this.interestRate = interestRate;
-    }
-
-    public Double getMonthlyPayment() {
-        return monthlyPayment;
-    }
-
-    public void setMonthlyPayment(Double monthlyPayment) {
-        this.monthlyPayment = monthlyPayment;
-    }
-
-    public Integer getCreditTerm() {
-        return creditTerm;
-    }
-
-    public void setCreditTerm(Integer creditTerm) {
-        this.creditTerm = creditTerm;
-    }
-
-    public String getCreditName() {
-        return creditName;
-    }
-
-    public void setCreditName(String creditName) {
-        this.creditName = creditName;
-    }
-
-    public Person getOwner() {
-        return owner;
-    }
-
-    public void setOwner(Person owner) {
-        this.owner = owner;
     }
 
     @Override
