@@ -16,6 +16,11 @@ import javax.sql.DataSource;
 import java.util.Objects;
 import java.util.Properties;
 
+/**
+ * Configuration class for setting up Spring Data JPA, transaction management, and database connection properties.
+ * @author Flawden
+ * @version 1.0
+ */
 @Configuration
 @EnableTransactionManagement
 @EnableJpaRepositories("ru.flawden.divinitybankspring.repository")
@@ -28,6 +33,11 @@ public class SpringDataJpaConfig {
         this.env = env;
     }
 
+    /**
+     * Bean for setting up the data source using properties defined in application.properties.
+     *
+     * @return The configured DataSource.
+     */
     @Bean
     public DataSource dataSource() {
         DriverManagerDataSource dataSource = new DriverManagerDataSource();
@@ -38,6 +48,11 @@ public class SpringDataJpaConfig {
         return dataSource;
     }
 
+    /**
+     * Loads Hibernate-specific properties from the environment.
+     *
+     * @return A Properties object containing Hibernate settings.
+     */
     private Properties hibernateProperties() {
         Properties properties = new Properties();
         properties.put("hibernate.dialect", env.getRequiredProperty("hibernate.dialect"));
@@ -46,6 +61,11 @@ public class SpringDataJpaConfig {
         return properties;
     }
 
+    /**
+     * Bean for setting up the EntityManagerFactory, configuring it with the data source and Hibernate properties.
+     *
+     * @return The LocalContainerEntityManagerFactoryBean configured for JPA.
+     */
     @Bean
     public LocalContainerEntityManagerFactoryBean entityManagerFactory() {
         LocalContainerEntityManagerFactoryBean em = new LocalContainerEntityManagerFactoryBean();
@@ -59,6 +79,11 @@ public class SpringDataJpaConfig {
         return em;
     }
 
+    /**
+     * Bean for configuring the transaction manager to use JPA with the EntityManagerFactory.
+     *
+     * @return A PlatformTransactionManager using JPA.
+     */
     @Bean
     public PlatformTransactionManager transactionManager() {
         JpaTransactionManager transactionManager = new JpaTransactionManager();

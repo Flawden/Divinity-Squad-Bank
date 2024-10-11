@@ -8,76 +8,77 @@
     <title>DSbank</title>
 </head>
 <body>
-    <div class="page">
-        <div class="wrapper">
-            <!-- Header - start -->
-            <div class="header">
-                <div class="nav">
-                    <img src="../../../resources/static/img/ico/Logo.svg" alt="Logo">
+<div class="page">
+    <div class="wrapper">
+        <!-- Header - start -->
+        <div class="header">
+            <div class="nav">
+                <img src="../../../resources/static/img/ico/Logo.svg" alt="Logo">
 
-                    <ul>
-                        <li><a href="#" class="active">Main</a></li>
-                        <li><a th:href="@{/loans}">Loan</a></li>
-                        <li><a th:href="@{/cards}">Cards</a></li>
-                        <li><a th:href="@{/account/profile}">Profile</a></li>
-                        <li><a th:href="@{/account/exit}">Exit</a></li>
-                    </ul>
-                </div>
+                <ul>
+                    <li><a href="#" class="active">Main</a></li>
+                    <li><a th:href="@{/loans}">Loan</a></li>
+                    <li><a th:href="@{/cards}">Cards</a></li>
+                    <li><a th:href="@{/account/profile}">Profile</a></li>
+                    <li><a th:href="@{/account/exit}">Exit</a></li>
+                </ul>
             </div>
-            <!-- Main - start -->
-            <div class="main">
-                <div class="main__user block">
-                    <h3 class="user__greeting">Greetings</h3>
-
-                    <div class="user__block">
-                        <p class="user__name" th:text="${person.getFullName()}">Name Lastname</p>
-                    </div>
-                    <div class="user__block">
-                        <a class="debit__takenew takenew" th:href="@{/account/update}">Edit user</a><br>
-                        <a class="debit__takenew takenew" th:href="@{/account/delete}">Delete user</a>
-                    </div>
-
-                </div>
-        
-                <div class="main__balance block">
-                    <h2 class="balance__header header">Available funds:</h2>
-
-                    <h3 class="balance__text name">Balance: <p class="balance__sum sum" th:text="${balance}"}>In developing</p></h3>
-                </div>
-
-                <div class="main__card block">
-                    <h2 class="card__header header">Debit cards:</h2>
-
-                    <th:block class="card" th:each="card: ${debitCardList}">
-                        <div class="card__block">
-                            <div class="card__name name" th:text="*{card.cardNumber}">In developing</div>
-                        </div>
-                       <div class="card__block">
-                            <div class="card__sum sum" th:text="*{card.getBalance()}">In developing</div>
-                        </div>
-                    </th:block>
-
-                    <a href="cards/select-card" class="debit__takenew takenew">Issue a card</a>
-                </div>
-
-                <div class="main__loan block">
-                    <h2 class="loan__header header">Loans:</h2>
-                  
-                    <th:block class="loan" th:each="loan: ${loanList}">
-                        <div class="loan__name name" th:text="*{loan.issueDate}">In developing</div>
-                        <div class="loan__sum sum" th:text="*{loan.sum}">In developing</div>
-                    </th:block>
-
-                    <a href="/loans/create-loan" class="loan__takenew takenew">Apply for a loan</a>
-                </div>
-            </div>
-
-            <!-- Main - finish -->
-
         </div>
-    </div>
+        <!-- Main - start -->
+        <div class="main">
+            <div class="main__user block">
+                <h3 class="user__greeting">Greetings</h3>
 
-    <script type="text/javascript" src="js/jquery-3.6.0.min.js"></script>
-    <script type="text/javascript" src="js/Script.js"></script>
+                <div class="user__block">
+                    <p class="user__name" th:text="${person.getFullName()}">Name Lastname</p>
+                </div>
+                <div class="user__block">
+                    <a class="debit__takenew takenew" th:href="@{/account/update}">Edit user</a><br>
+                    <a class="debit__takenew takenew" th:href="@{/account/delete}">Delete user</a>
+                </div>
+
+            </div>
+
+            <div class="main__balance block">
+                <h2 class="balance__header header">Available funds:</h2>
+
+                <h3 class="balance__text name">Balance: <p class="balance__sum sum" th:text="${balance}" }>In
+                    developing</p></h3>
+            </div>
+
+            <div class="main__card block">
+                <h2 class="card__header header">Debit cards:</h2>
+
+                <th:block class="card" th:each="card: ${debitCardList}">
+                    <div class="card__block">
+                        <div class="card__name name" th:text="*{card.cardNumber}">In developing</div>
+                    </div>
+                    <div class="card__block">
+                        <div class="card__sum sum" th:text="*{card.getBalance()}">In developing</div>
+                    </div>
+                </th:block>
+
+                <a href="cards/select-card" class="debit__takenew takenew">Issue a card</a>
+            </div>
+
+            <div class="main__loan block">
+                <h2 class="loan__header header">Loans:</h2>
+
+                <th:block class="loan" th:each="loan: ${loanList}">
+                    <div class="loan__name name" th:text="*{loan.issueDate}">In developing</div>
+                    <div class="loan__sum sum" th:text="*{loan.sum}">In developing</div>
+                </th:block>
+
+                <a href="/loans/create-loan" class="loan__takenew takenew">Apply for a loan</a>
+            </div>
+        </div>
+
+        <!-- Main - finish -->
+
+    </div>
+</div>
+
+<script type="text/javascript" src="js/jquery-3.6.0.min.js"></script>
+<script type="text/javascript" src="js/Script.js"></script>
 </body>
 </html>

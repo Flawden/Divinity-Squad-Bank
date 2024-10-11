@@ -13,36 +13,44 @@
             <form th:method="PATCH" th:action="@{/account}" th:object="${person}">
                 <h3 class="text-center">Update account</h3>
                 <div class="form-group">
-                    <input class="form-control item" type="text" th:field="*{firstname}" id="firstname" placeholder="Firstname" required><br>
+                    <input class="form-control item" type="text" th:field="*{firstname}" id="firstname"
+                           placeholder="Firstname" required><br>
                     <span style="color: red" th:if="${#fields.hasErrors('firstname')}" th:errors="*{firstname}">Error's name</span>
                 </div>
 
                 <div class="form-group">
-                    <input class="form-control item" type="text" th:field="*{surname}" id="surname" placeholder="Surname" required><br>
-                    <span style="color: red" th:if="${#fields.hasErrors('surname')}" th:errors="*{surname}">Error's name</span>
+                    <input class="form-control item" type="text" th:field="*{surname}" id="surname"
+                           placeholder="Surname" required><br>
+                    <span style="color: red" th:if="${#fields.hasErrors('surname')}"
+                          th:errors="*{surname}">Error's name</span>
                 </div>
 
                 <div class="form-group">
                     <select class="form-control item" size="1" th:field="*{gender}" id="gender">
-                        <option value="null" disabled selected >Gender</option>
+                        <option value="null" disabled selected>Gender</option>
                         <option value="male">Male</option>
                         <option value="female">Female</option>
                     </select><br>
-                    <span style="color: red" th:if="${#fields.hasErrors('gender')}" th:errors="*{gender}">Error's name</span>
+                    <span style="color: red" th:if="${#fields.hasErrors('gender')}"
+                          th:errors="*{gender}">Error's name</span>
                 </div>
 
                 <div class="form-group">
-                    <input class="form-control item" type="date" th:field="*{dateOfBirth}" id="dateOfBirth" placeholder="Birth date" required><br>
+                    <input class="form-control item" type="date" th:field="*{dateOfBirth}" id="dateOfBirth"
+                           placeholder="Birth date" required><br>
                     <span style="color: red" th:if="${#fields.hasErrors('dateOfBirth')}" th:errors="*{dateOfBirth}">Error's name</span>
                 </div>
 
                 <div class="form-group">
-                    <input class="form-control item" type="email" th:field="*{email}" id="email" placeholder="Email" required><br>
-                    <span style="color: red" th:if="${#fields.hasErrors('email')}" th:errors="*{email}">Error's name</span>
+                    <input class="form-control item" type="email" th:field="*{email}" id="email" placeholder="Email"
+                           required><br>
+                    <span style="color: red" th:if="${#fields.hasErrors('email')}"
+                          th:errors="*{email}">Error's name</span>
                 </div>
 
                 <div class="form-group">
-                    <input class="form-control item" type="password" th:field="*{password}" minlength="6" id="password" placeholder="Password" required><br>
+                    <input class="form-control item" type="password" th:field="*{password}" minlength="6" id="password"
+                           placeholder="Password" required><br>
                     <span style="color: red" th:if="${#fields.hasErrors('password')}" th:errors="*{password}">Error's name</span>
                 </div>
 
@@ -51,7 +59,8 @@
                 </div>
             </form>
         </div>
-    </main>>
+    </main>
+    >
 </div>
 
 </body>

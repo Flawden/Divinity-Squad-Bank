@@ -1,11 +1,11 @@
 package ru.flawden.divinitybankspring.entity;
 
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.format.annotation.DateTimeFormat;
 import ru.flawden.divinitybankspring.entity.card.CreditCard;
 
-import jakarta.persistence.*;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -49,7 +49,8 @@ public class Loan {
     @OneToOne
     private CreditCard card;
 
-    public Loan() {}
+    public Loan() {
+    }
 
     public Loan(double sum, double interestRate, double monthlyPayment, int creditTerm, String creditName, CreditCard card) {
         this.creditName = creditName;

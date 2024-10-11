@@ -14,6 +14,13 @@ import ru.flawden.divinitybankspring.util.LoanUtil;
 
 import java.util.List;
 
+/**
+ * Service class for managing loans in the banking application.
+ * Provides methods to save loans and retrieve loans associated with a specific person.
+ *
+ * @author Flawden
+ * @version 1.0
+ */
 @Service
 @Transactional(readOnly = true)
 public class LoanService {
@@ -32,6 +39,13 @@ public class LoanService {
         this.loanRepository = loanRepository;
     }
 
+    /**
+     * Saves a loan based on the provided LoanDTO and owner's email.
+     * Creates a CreditCard, associates it with the loan, and sets the loan's owner.
+     *
+     * @param loanDTO     Data transfer object containing loan details.
+     * @param ownerEmail  Email of the person who owns the loan.
+     */
     @Transactional
     public void save(LoanDTO loanDTO, String ownerEmail) {
         Person person = peopleService.findByEmail(ownerEmail);
@@ -44,6 +58,12 @@ public class LoanService {
         cardsRepository.save(card);
     }
 
+    /**
+     * Retrieves all loans associated with a specific person.
+     *
+     * @param person The person whose loans are to be retrieved.
+     * @return A list of loans owned by the specified person.
+     */
     public List<Loan> findAllByPerson(Person person) {
         return loanRepository.findAllByOwner(person);
     }

@@ -6,12 +6,20 @@ import org.springframework.security.authentication.dao.DaoAuthenticationProvider
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import ru.flawden.divinitybankspring.repository.PeopleRepository;
 import ru.flawden.divinitybankspring.service.PersonDetailService;
 
+/**
+ * Configuration class for Spring Security.
+ * It defines security settings such as authorization rules, login and logout processes.
+ *
+ * @author Flawden
+ * @version 1.0
+ */
 @EnableWebSecurity
 public class SecurityConfig {
 
@@ -21,6 +29,13 @@ public class SecurityConfig {
         this.peopleRepository = peopleRepository;
     }
 
+    /**
+     * Configures security filter chain for the application.
+     *
+     * @param http HttpSecurity to be configured.
+     * @return The configured SecurityFilterChain.
+     * @throws Exception if an error occurs while configuring the security.
+     */
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
@@ -53,6 +68,11 @@ public class SecurityConfig {
 
     }
 
+    /**
+     * Provides a DaoAuthenticationProvider for user authentication.
+     *
+     * @return Configured DaoAuthenticationProvider.
+     */
     @Bean
     public DaoAuthenticationProvider daoAuthenticationProvider() {
         DaoAuthenticationProvider provider = new DaoAuthenticationProvider();
@@ -61,11 +81,21 @@ public class SecurityConfig {
         return provider;
     }
 
+    /**
+     * Provides a PasswordEncoder for encoding passwords.
+     *
+     * @return PasswordEncoder instance.
+     */
     @Bean
     public PasswordEncoder passwordEncoder() {
-        return NoOpPasswordEncoder.getInstance();
+        return new BCryptPasswordEncoder(8);
     }
 
+    /**
+     * Provides a UserDetailsService for loading user-specific data.
+     *
+     * @return UserDetailsService implementation.
+     */
     @Bean
     public UserDetailsService userDetailsService() {
         return new PersonDetailService(peopleRepository);

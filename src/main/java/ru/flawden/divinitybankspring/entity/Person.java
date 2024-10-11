@@ -1,12 +1,14 @@
 package ru.flawden.divinitybankspring.entity;
 
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.format.annotation.DateTimeFormat;
 
-import jakarta.persistence.*;
-
-import javax.validation.constraints.*;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
 import java.util.Date;
 import java.util.List;
 import java.util.Set;
@@ -56,7 +58,9 @@ public class Person {
     @Enumerated(EnumType.STRING)
     private Set<Role> roles;
 
-    public String getFullName() { return firstname + " " + surname; }
+    public String getFullName() {
+        return firstname + " " + surname;
+    }
 
     public Person() {
     }

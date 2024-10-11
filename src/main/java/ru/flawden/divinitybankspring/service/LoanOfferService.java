@@ -6,6 +6,13 @@ import ru.flawden.divinitybankspring.repository.LoanOfferRepository;
 
 import java.util.List;
 
+/**
+ * Service class for managing loan offers.
+ * Provides methods to retrieve all loan offers available in the system.
+ *
+ * @author Flawden
+ * @version 1.0
+ */
 @Service
 public class LoanOfferService {
 
@@ -15,6 +22,11 @@ public class LoanOfferService {
         this.loanOfferRepository = loanOfferRepository;
     }
 
+    /**
+     * Finds all loan offers available in the repository.
+     *
+     * @return A list of loan offers.
+     */
     public List<LoanOffer> findAll() {
         return loanOfferRepository.findAll();
     }

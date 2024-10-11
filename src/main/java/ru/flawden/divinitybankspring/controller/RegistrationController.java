@@ -14,6 +14,12 @@ import ru.flawden.divinitybankspring.util.PersonValidator;
 
 import javax.validation.Valid;
 
+/**
+ * Controller responsible for handling user registration requests.
+ *
+ * @author Flawden
+ * @version 1.0
+ */
 @Controller
 @RequestMapping("/registration")
 public class RegistrationController {
@@ -28,16 +34,29 @@ public class RegistrationController {
         this.personValidator = personValidator;
     }
 
+    /**
+     * Displays the registration page.
+     *
+     * @param personDTO DTO representing the person being registered.
+     * @return The name of the view for registration.
+     */
     @GetMapping
     public String registationPage(@ModelAttribute("person") PersonDTO personDTO) {
         return "/mainpages/registration";
     }
 
+    /**
+     * Processes the registration form submission.
+     *
+     * @param personDTO DTO containing the person's registration data.
+     * @param bindingResult Object to hold validation errors.
+     * @return Redirect to the home page if registration is successful, or back to the registration form if there are errors.
+     */
     @PostMapping
     public String savePerson(@ModelAttribute("person") @Valid PersonDTO personDTO, BindingResult bindingResult) {
         Person person = mapper.convertPersonDTOToPerson(personDTO);
         personValidator.validatePerson(person, bindingResult);
-        if(bindingResult.hasErrors()) {
+        if (bindingResult.hasErrors()) {
             return "mainpages/registration";
         }
         peopleService.save(person);
