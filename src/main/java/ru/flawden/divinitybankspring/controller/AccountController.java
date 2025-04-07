@@ -1,5 +1,6 @@
 package ru.flawden.divinitybankspring.controller;
 
+import jakarta.validation.Valid;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -7,10 +8,10 @@ import org.springframework.web.bind.annotation.*;
 import ru.flawden.divinitybankspring.dto.PersonDTO;
 import ru.flawden.divinitybankspring.entity.Person;
 import ru.flawden.divinitybankspring.service.PeopleService;
+import ru.flawden.divinitybankspring.util.AuthUtil;
 import ru.flawden.divinitybankspring.util.PeopleMapper;
 import ru.flawden.divinitybankspring.util.PersonValidator;
 
-import javax.validation.Valid;
 import java.security.Principal;
 
 /**
@@ -23,11 +24,13 @@ import java.security.Principal;
 @RequestMapping("/account")
 public class AccountController {
 
+    private final AuthUtil authUtil;
     private final PeopleService peopleService;
     private final PeopleMapper mapper;
     private final PersonValidator personValidator;
 
-    public AccountController(PeopleService peopleService, PeopleMapper mapper, PersonValidator personValidator) {
+    public AccountController(AuthUtil authUtil, PeopleService peopleService, PeopleMapper mapper, PersonValidator personValidator) {
+        this.authUtil = authUtil;
         this.peopleService = peopleService;
         this.mapper = mapper;
         this.personValidator = personValidator;
@@ -37,12 +40,11 @@ public class AccountController {
      * Displays the home page of the account, showing the user's profile.
      *
      * @param model Holds user information to be displayed in the view.
-     * @param principal The logged-in user's principal object.
      * @return The user profile view.
      */
     @GetMapping
-    public String homePage(Model model, Principal principal) {
-        Person person = peopleService.findByEmail(principal.getName());
+    public String homePage(Model model) {
+        Person person = authUtil.getCurrentUser();
         model.addAttribute("person", person);
         return "profile/user-page";
     }
@@ -81,13 +83,13 @@ public class AccountController {
      * Displays the account update page with the current user's information.
      *
      * @param model Holds user information for the update form.
-     * @param principal The logged-in user's principal object.
      * @return The update account view.
      */
     @GetMapping("/update")
-    public String updateAccountPage(Model model, Principal principal) {
-        Person person = peopleService.findByEmail(principal.getName());
-        person.setPassword(null);
+    public String updateAccountPage(Model model) {
+        Person person = authUtil.getCurrentUser();
+        PersonDTO personDTO = mapper.convertPersonToPersonDTO(person);
+        personDTO.setPassword(null);
         model.addAttribute("person", person);
         return "mainpages/update";
     }

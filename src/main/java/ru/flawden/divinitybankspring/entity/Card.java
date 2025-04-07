@@ -1,10 +1,10 @@
 package ru.flawden.divinitybankspring.entity;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Min;
 import lombok.Getter;
 import lombok.Setter;
 
-import javax.validation.constraints.Min;
 import java.util.Random;
 
 @Entity
@@ -51,17 +51,28 @@ public abstract class Card {
 
     protected final String createCardNumber() {
         Random rnd = new Random();
-        int part = 0;
         StringBuilder num = new StringBuilder();
-
-        while (true) {
-            for (int i = 0; i < 4; i++) {
-                part = rnd.nextInt(8888) + 1111;
-                num.append(part).append(" ");
-            }
-            break;
+        for (int i = 0; i < 15; i++) {
+            num.append(rnd.nextInt(10));
         }
-        return num.toString();
+        int sum = 0;
+        for (int i = 0; i < 15; i++) {
+            int digit = Character.getNumericValue(num.charAt(i));
+            if (i % 2 == 0) {
+                digit *= 2;
+                if (digit > 9) digit -= 9;
+            }
+            sum += digit;
+        }
+        int checkDigit = (10 - (sum % 10)) % 10;
+        num.append(checkDigit);
+
+        StringBuilder formatted = new StringBuilder();
+        for (int i = 0; i < num.length(); i++) {
+            if (i > 0 && i % 4 == 0) formatted.append(" ");
+            formatted.append(num.charAt(i));
+        }
+        return formatted.toString();
     }
 
     protected final int createCVV() {

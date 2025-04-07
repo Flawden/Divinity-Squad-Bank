@@ -1,5 +1,6 @@
 package ru.flawden.divinitybankspring.config;
 
+import liquibase.integration.spring.SpringLiquibase;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
@@ -57,7 +58,8 @@ public class SpringDataJpaConfig {
         Properties properties = new Properties();
         properties.put("hibernate.dialect", env.getRequiredProperty("hibernate.dialect"));
         properties.put("hibernate.show_sql", env.getRequiredProperty("hibernate.show_sql"));
-        properties.put("hibernate.hbm2ddl.auto", env.getRequiredProperty("hibernate.hbm2ddl.auto"));
+        properties.put("hibernate.jpa.compliance", "true");
+        properties.put("hibernate.hbm2ddl.auto", "none");
         return properties;
     }
 
@@ -71,6 +73,8 @@ public class SpringDataJpaConfig {
         LocalContainerEntityManagerFactoryBean em = new LocalContainerEntityManagerFactoryBean();
         em.setDataSource(dataSource());
         em.setPackagesToScan("ru.flawden.divinitybankspring.entity");
+
+        em.setEntityManagerFactoryInterface(jakarta.persistence.EntityManagerFactory.class);
 
         HibernateJpaVendorAdapter vendorAdapter = new HibernateJpaVendorAdapter();
         em.setJpaVendorAdapter(vendorAdapter);
@@ -90,4 +94,13 @@ public class SpringDataJpaConfig {
         transactionManager.setEntityManagerFactory(entityManagerFactory().getObject());
         return transactionManager;
     }
+
+    @Bean
+    public SpringLiquibase liquibase() {
+        SpringLiquibase liquibase = new SpringLiquibase();
+        liquibase.setDataSource(dataSource());
+        liquibase.setChangeLog("classpath:db/changelog/db.changelog-master.yaml");
+        return liquibase;
+    }
+
 }

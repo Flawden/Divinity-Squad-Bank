@@ -8,6 +8,7 @@ import ru.flawden.divinitybankspring.entity.Card;
 import ru.flawden.divinitybankspring.entity.Person;
 import ru.flawden.divinitybankspring.service.CardsService;
 import ru.flawden.divinitybankspring.service.PeopleService;
+import ru.flawden.divinitybankspring.util.AuthUtil;
 
 import java.security.Principal;
 import java.util.List;
@@ -23,23 +24,22 @@ import java.util.List;
 public class CardController {
 
     private final CardsService cardsService;
-    private final PeopleService peopleService;
+    private final AuthUtil authUtil;
 
-    public CardController(CardsService cardsService, PeopleService peopleService) {
+    public CardController(CardsService cardsService, AuthUtil authUtil) {
         this.cardsService = cardsService;
-        this.peopleService = peopleService;
+        this.authUtil = authUtil;
     }
 
     /**
      * Displays the card list page, showing all cards associated with the logged-in user.
      *
      * @param model Holds the list of cards to be displayed.
-     * @param principal The logged-in user's principal object.
      * @return The card list view.
      */
     @GetMapping
-    public String getCardListPage(Model model, Principal principal) {
-        Person person = peopleService.findByEmail(principal.getName());
+    public String getCardListPage(Model model) {
+        Person person = authUtil.getCurrentUser();
         List<Card> cards = cardsService.findAllByPerson(person);
         model.addAttribute("cards", cards);
         return "profile/cards";
@@ -58,12 +58,11 @@ public class CardController {
     /**
      * Creates a new debit card for the logged-in user and redirects to the account page.
      *
-     * @param principal The logged-in user's principal object.
      * @return Redirects to the account page after creating a debit card.
      */
     @GetMapping("/create-debit-card")
-    public String createDebitCard(Principal principal) {
-        cardsService.save(principal.getName());
+    public String createDebitCard() {
+        cardsService.save(authUtil.getCurrentUser().getEmail());
         return "redirect:/account";
     }
 

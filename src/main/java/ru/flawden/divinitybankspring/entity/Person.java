@@ -1,14 +1,14 @@
 package ru.flawden.divinitybankspring.entity;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.Pattern;
+import jakarta.validation.constraints.Size;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.format.annotation.DateTimeFormat;
 
-import javax.validation.constraints.Email;
-import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.Pattern;
-import javax.validation.constraints.Size;
 import java.util.Date;
 import java.util.List;
 import java.util.Set;
@@ -32,8 +32,10 @@ public class Person {
     @Size(min = 2, max = 15, message = "Surname should be between 2 and 30 characters")
     @Pattern(regexp = "[A-Za-z]+", message = "Surname must contain only Latin letters")
     private String surname;
+
     @NotEmpty(message = "Gender shouldn't be empty")
     private String gender;
+
     @Column(name = "date_of_birth")
     @Temporal(TemporalType.DATE)
     @DateTimeFormat(pattern = "yyyy-MM-dd")
@@ -45,6 +47,7 @@ public class Person {
 
     @NotEmpty(message = "Password shouldn't be empty")
     private String password;
+
     private Boolean enabled;
 
     @OneToMany(mappedBy = "owner")
@@ -54,7 +57,8 @@ public class Person {
     private List<Loan> loans;
 
     @ElementCollection(targetClass = Role.class, fetch = FetchType.EAGER)
-    @CollectionTable(name = "authorities", joinColumns = @JoinColumn(name = "username"))
+    @CollectionTable(name = "authorities", joinColumns = @JoinColumn(name = "username", referencedColumnName = "email"))
+    @Column(name = "authority")
     @Enumerated(EnumType.STRING)
     private Set<Role> roles;
 
@@ -75,4 +79,7 @@ public class Person {
         this.enabled = enabled;
     }
 
+    public boolean hasRole(Role role) {
+        return roles != null && roles.contains(role);
+    }
 }

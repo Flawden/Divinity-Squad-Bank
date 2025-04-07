@@ -1,0 +1,218 @@
+databaseChangeLog:
+  - databaseChangeLog:
+  - databaseChangeLog:
+  - databaseChangeLog:
+  - databaseChangeLog:
+  - databaseChangeLog:
+  - databaseChangeLog:
+  - databaseChangeLog:
+  - changeSet:
+      id: 1
+      author: Flawden
+      changes:
+        - createTable:
+            tableName: person
+            columns:
+              - column:
+                  name: id
+                  type: SERIAL
+                  constraints:
+                    primaryKey: true
+              - column:
+                  name: firstname
+                  type: VARCHAR(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: surname
+                  type: VARCHAR(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: gender
+                  type: VARCHAR(50)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: date_of_birth
+                  type: DATE
+              - column:
+                  name: email
+                  type: VARCHAR(255)
+                  constraints:
+                    nullable: false
+                    unique: true
+              - column:
+                  name: password
+                  type: VARCHAR(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: enabled
+                  type: BOOLEAN
+                  constraints:
+                    nullable: false
+        - createTable:
+            tableName: authorities
+            columns:
+              - column:
+                  name: username
+                  type: VARCHAR(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: authority
+                  type: VARCHAR(50)
+                  constraints:
+                    nullable: false
+        - addForeignKeyConstraint:
+            baseTableName: authorities
+            baseColumnNames: username
+            referencedTableName: person
+            referencedColumnNames: email
+            constraintName: fk_authorities_person
+        - createTable:
+            tableName: card
+            columns:
+              - column:
+                  name: id
+                  type: SERIAL
+                  constraints:
+                    primaryKey: true
+              - column:
+                  name: balance
+                  type: DOUBLE PRECISION
+                  constraints:
+                    nullable: false
+              - column:
+                  name: number
+                  type: VARCHAR(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: name
+                  type: VARCHAR(255)
+              - column:
+                  name: cvv
+                  type: INTEGER
+                  constraints:
+                    nullable: false
+              - column:
+                  name: person_id
+                  type: INTEGER
+              - column:
+                  name: dtype
+                  type: VARCHAR(255)
+                  constraints:
+                    nullable: false
+        - addForeignKeyConstraint:
+            baseTableName: card
+            baseColumnNames: person_id
+            referencedTableName: person
+            referencedColumnNames: id
+            constraintName: fk_card_person
+        - createTable:
+            tableName: loan_offers
+            columns:
+              - column:
+                  name: id
+                  type: SERIAL
+                  constraints:
+                    primaryKey: true
+              - column:
+                  name: interest_rate
+                  type: DOUBLE PRECISION
+                  constraints:
+                    nullable: false
+              - column:
+                  name: credit_name
+                  type: VARCHAR(255)
+                  constraints:
+                    nullable: false
+        - createTable:
+            tableName: loan
+            columns:
+              - column:
+                  name: id
+                  type: SERIAL
+                  constraints:
+                    primaryKey: true
+              - column:
+                  name: issuedate
+                  type: DATE
+                  constraints:
+                    nullable: false
+              - column:
+                  name: sum
+                  type: DOUBLE PRECISION
+                  constraints:
+                    nullable: false
+              - column:
+                  name: interest_rate
+                  type: DOUBLE PRECISION
+                  constraints:
+                    nullable: false
+              - column:
+                  name: monthly_payment
+                  type: DOUBLE PRECISION
+                  constraints:
+                    nullable: false
+              - column:
+                  name: credit_term
+                  type: INTEGER
+                  constraints:
+                    nullable: false
+              - column:
+                  name: credit_name
+                  type: VARCHAR(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: user_id
+                  type: INTEGER
+              - column:
+                  name: card_id
+                  type: INTEGER
+        - addForeignKeyConstraint:
+            baseTableName: loan
+            baseColumnNames: user_id
+            referencedTableName: person
+            referencedColumnNames: id
+            constraintName: fk_loan_person
+        - addForeignKeyConstraint:
+            baseTableName: loan
+            baseColumnNames: card_id
+            referencedTableName: card
+            referencedColumnNames: id
+            constraintName: fk_loan_card
+  - changeSet:
+      id: 2
+      author: Flawden
+      changes:
+        - insert:
+            tableName: loan_offers
+            columns:
+              - column:
+                  name: interest_rate
+                  value: 5.0
+              - column:
+                  name: credit_name
+                  value: "Personal Loan"
+        - insert:
+            tableName: loan_offers
+            columns:
+              - column:
+                  name: interest_rate
+                  value: 7.0
+              - column:
+                  name: credit_name
+                  value: "Car Loan"
+        - insert:
+            tableName: loan_offers
+            columns:
+              - column:
+                  name: interest_rate
+                  value: 3.5
+              - column:
+                  name: credit_name
+                  value: "Home Loan"

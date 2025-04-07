@@ -24,8 +24,8 @@ public class LoanUtil {
      * @return the calculated monthly payment.
      */
     public double calculateSumPerMonth(double totalSum, int term, double interestRate) {
-        double termPerMonth = interestRate / (100d * interestRate);
-        return (double) totalSum * (termPerMonth / (1 - (Math.pow((termPerMonth + 1), -term))));
+        double monthlyRate = interestRate / 100 / 12;
+        return totalSum * (monthlyRate * Math.pow(1 + monthlyRate, term)) / (Math.pow(1 + monthlyRate, term) - 1);
     }
 
     /**

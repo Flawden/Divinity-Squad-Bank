@@ -13,6 +13,7 @@ import ru.flawden.divinitybankspring.entity.Person;
 import ru.flawden.divinitybankspring.service.LoanOfferService;
 import ru.flawden.divinitybankspring.service.LoanService;
 import ru.flawden.divinitybankspring.service.PeopleService;
+import ru.flawden.divinitybankspring.util.AuthUtil;
 
 import java.security.Principal;
 import java.util.List;
@@ -27,11 +28,13 @@ import java.util.List;
 @RequestMapping("/loans")
 public class LoanController {
 
+    private final AuthUtil authUtil;
     private final LoanService loanService;
     private final LoanOfferService loanOfferService;
     private final PeopleService peopleService;
 
-    public LoanController(LoanService loanService, LoanOfferService loanOfferService, PeopleService peopleService) {
+    public LoanController(AuthUtil authUtil, LoanService loanService, LoanOfferService loanOfferService, PeopleService peopleService) {
+        this.authUtil = authUtil;
         this.loanService = loanService;
         this.loanOfferService = loanOfferService;
         this.peopleService = peopleService;
@@ -41,12 +44,11 @@ public class LoanController {
      * Displays the loan list page for the logged-in user.
      *
      * @param model Holds the list of loans to be displayed.
-     * @param principal The logged-in user's principal object.
      * @return The loan list view.
      */
     @GetMapping
-    public String getLoanListPage(Model model, Principal principal) {
-        Person person = peopleService.findByEmail(principal.getName());
+    public String getLoanListPage(Model model) {
+        Person person = authUtil.getCurrentUser();
         List<Loan> loans = loanService.findAllByPerson(person);
         model.addAttribute("loans", loans);
         return "profile/loan";
@@ -70,12 +72,11 @@ public class LoanController {
      * Handles the loan creation request and saves the new loan for the logged-in user.
      *
      * @param loanDTO Object holding loan creation form data.
-     * @param principal The logged-in user's principal object.
      * @return Redirects to the account page after creating the loan.
      */
     @PostMapping
-    public String createLoan(@ModelAttribute LoanDTO loanDTO, Principal principal) {
-        loanService.save(loanDTO, principal.getName());
+    public String createLoan(@ModelAttribute LoanDTO loanDTO) {
+        loanService.save(loanDTO, authUtil.getCurrentUser().getEmail());
         return "redirect:/account";
     }
 

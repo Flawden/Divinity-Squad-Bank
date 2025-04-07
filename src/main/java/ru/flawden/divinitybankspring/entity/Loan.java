@@ -14,9 +14,6 @@ import java.util.Date;
 @Setter
 public class Loan {
 
-    @Transient
-    private final SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd.MM.yyyy");
-
     @Id
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -67,6 +64,6 @@ public class Loan {
         return "Credit:\n" +
                 "Credit for the amount of " + sum + ", for a period of " + creditTerm + " months.\n" +
                 "Monthly payment: " + monthlyPayment + " rub\n" +
-                "Taken: " + simpleDateFormat.format(issueDate) + "\n";
+                "Taken: " + issueDate + "\n";
     }
 }

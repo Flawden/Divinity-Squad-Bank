@@ -1,5 +1,6 @@
 package ru.flawden.divinitybankspring.controller;
 
+import jakarta.validation.Valid;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -11,8 +12,6 @@ import ru.flawden.divinitybankspring.entity.Person;
 import ru.flawden.divinitybankspring.service.PeopleService;
 import ru.flawden.divinitybankspring.util.PeopleMapper;
 import ru.flawden.divinitybankspring.util.PersonValidator;
-
-import javax.validation.Valid;
 
 /**
  * Controller responsible for handling user registration requests.
