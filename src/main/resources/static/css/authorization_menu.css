@@ -7,56 +7,205 @@ html {
     background-repeat: no-repeat;
     background-size: cover;
     height: 100%;
+    margin: 0;
 }
 
 body {
     background-color: transparent;
+    margin: 0;
+    font-family: Montserrat, Roboto, Arial, sans-serif;
+}
+
+.wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    width: 100%;
+    position: relative;
+}
+
+.theme-toggle {
+    position: absolute;
+    right: 20px;
+    top: 20px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: #ffffff;
+}
+
+#theme-switch {
+    display: none;
+}
+
+#theme-switch:checked + .fa-moon {
+    color: #80A6FF;
+}
+
+#theme-switch:checked ~ .fa-sun {
+    color: #ffffff;
+}
+
+#theme-switch:checked ~ body {
+    background-color: #05060a;
+}
+
+#theme-switch:checked ~ body .wrapper {
+    background-color: #05060a;
 }
 
 .registration-cssave {
     padding: 50px 0;
+    width: 100%;
+    max-width: 500px;
 }
 
 .registration-cssave form {
-    max-width: 800px;
-    padding: 50px 70px;
-    border-radius: 10px;
-    box-shadow: 4px 4px 15px rgba(0, 0, 0, 0.2);
-    background-color: #fff;
+    max-width: 100%;
+    padding: 40px 50px;
+    border-radius: 15px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+    background-color: #ffffff;
+    transition: transform 0.3s ease, background-color 0.3s ease, color 0.3s ease;
+}
+
+body.dark-theme .registration-cssave form {
+    background-color: #1e252d;
+    color: #ffffff;
+}
+
+body.dark-theme .form-control.item {
+    background-color: #2a323b;
+    border-color: #444;
+    color: #ffffff;
+}
+
+body.dark-theme .form-control.item:focus {
+    border-color: #80A6FF;
+    box-shadow: 0 0 8px rgba(128, 166, 255, 0.3);
+}
+
+body.dark-theme .registration-cssave form h3 {
+    color: #ffffff;
+}
+
+body.dark-theme .not_register {
+    color: #bbb;
+}
+
+body.dark-theme .not_register a {
+    color: #80A6FF;
+}
+
+.registration-cssave form:hover {
+    transform: translateY(-5px);
 }
 
 .registration-cssave form h3 {
-    font-weight: bold;
+    font-weight: 700;
+    font-size: 24px;
     margin-bottom: 30px;
+    text-align: center;
+    color: #333;
 }
 
-.registration-cssave .item {
-    border-radius: 10px;
-    margin-bottom: 0px;
-    padding: 10px 20px;
+.form-group {
+    margin-bottom: 20px;
 }
 
-.registration-cssave .create-account {
-    border-radius: 30px;
-    padding: 10px 20px;
-    font-size: 18px;
-    font-weight: bold;
+.form-control.item {
+    border-radius: 8px;
+    padding: 12px 20px;
+    font-size: 16px;
+    border: 1px solid #ddd;
+    width: 100%;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.form-control.item:focus {
+    border-color: #80A6FF;
+    box-shadow: 0 0 8px rgba(128, 166, 255, 0.3);
+    outline: none;
+}
+
+.create-account {
+    border-radius: 25px;
+    padding: 12px 0;
+    font-size: 16px;
+    font-weight: 600;
     background-color: #05060a;
     border: none;
     color: white;
-    margin-top: 20px;
+    width: 100%;
+    transition: background-color 0.3s ease, transform 0.2s ease;
 }
 
-.registration-cssave .form-group {
-    margin-bottom: 15px;
+.create-account:hover {
+    background-color: #4040ff;
+    transform: scale(1.02);
+}
+
+.create-account:active {
+    transform: scale(0.98);
 }
 
 .not_register {
-    margin-top: 10px;
+    margin-top: 15px;
+    text-align: center;
+    font-size: 14px;
+    color: #666;
+}
+
+.not_register a {
+    color: #80A6FF;
+    font-weight: 600;
+    transition: color 0.3s ease;
+}
+
+.not_register a:hover {
+    color: #4040ff;
+}
+
+.alert {
+    margin-top: 15px;
+    padding: 10px;
+    border-radius: 5px;
+    text-align: center;
+    font-size: 14px;
+}
+
+.alert-error {
+    background-color: #ffe6e6;
+    color: #d32f2f;
+}
+
+.alert-success {
+    background-color: #e6ffe6;
+    color: #2e7d32;
 }
 
 @media (max-width: 576px) {
     .registration-cssave form {
-        padding: 50px 20px;
+        padding: 30px 20px;
+    }
+
+    .registration-cssave form h3 {
+        font-size: 20px;
+    }
+
+    .form-control.item {
+        padding: 10px 15px;
+        font-size: 14px;
+    }
+
+    .create-account {
+        padding: 10px 0;
+        font-size: 14px;
+    }
+
+    .theme-toggle {
+        right: 10px;
+        top: 10px;
     }
 }

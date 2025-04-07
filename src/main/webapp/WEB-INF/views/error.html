@@ -1,12 +1,47 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Error</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Error - DSbank</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" th:href="@{/resources/static/css/common.css}">
+    <link type="image/x-icon" th:href="@{/resources/static/img/ico/Logo.svg}" rel="icon">
 </head>
 <body>
-<h1>Error</h1>
-<p th:if="${message != null}" th:text="${message}">An error occurred</p>
-<p th:if="${message == null}">An unknown error occurred</p>
-<a th:href="@{/}">Back to Home</a>
+<div class="page">
+    <div class="wrapper">
+        <!-- Header - start -->
+        <div class="header">
+            <div class="nav">
+                <img th:src="@{/resources/static/img/ico/Logo.svg}" alt="Logo">
+                <div class="theme-toggle">
+                    <i class="fas fa-sun"></i>
+                    <input type="checkbox" id="theme-switch">
+                    <i class="fas fa-moon"></i>
+                </div>
+                <ul>
+                    <li><a th:href="@{/account}"><i class="fas fa-home"></i> Main</a></li>
+                    <li><a th:href="@{/loans}"><i class="fas fa-money-bill"></i> Loan</a></li>
+                    <li><a th:href="@{/cards}"><i class="fas fa-credit-card"></i> Cards</a></li>
+                    <li><a th:href="@{/account/profile}"><i class="fas fa-user"></i> Profile</a></li>
+                    <li><a th:href="@{/account/exit}"><i class="fas fa-sign-out-alt"></i> Exit</a></li>
+                </ul>
+            </div>
+        </div>
+        <!-- Main - start -->
+        <div class="main">
+            <div class="main__error block">
+                <h2 class="error__header header">Oops! Something Went Wrong</h2>
+                <p class="error__message" th:if="${message != null}" th:text="${message}">An error occurred</p>
+                <p class="error__message" th:if="${message == null}">An unknown error occurred</p>
+                <a th:href="@{/}" class="error__action takenew">Back to Home</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript" th:src="@{/resources/static/js/jquery-3.6.0.min.js}"></script>
+<script type="text/javascript" th:src="@{/resources/static/js/Script.js}"></script>
 </body>
 </html>

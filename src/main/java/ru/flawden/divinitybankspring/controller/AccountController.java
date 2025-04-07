@@ -55,7 +55,9 @@ public class AccountController {
      * @return The profile view.
      */
     @GetMapping("/profile")
-    public String profilePage() {
+    public String profilePage(Model model) {
+        Person person = authUtil.getCurrentUser();
+        model.addAttribute("person", person);
         return "profile/profile";
     }
 
